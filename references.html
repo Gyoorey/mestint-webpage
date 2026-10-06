@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>References · Embedded Machine Learning</title><meta name="description" content="The literature behind the course, grouped by topic. Every entry has been checked against its primary source; arXiv identifiers are given where they exist. The papers for the Session 5 presentations are listed with summaries on the presentations page."><link rel="stylesheet" href="assets/css/site.css"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script>try{var t=localStorage.getItem("eml-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script></head><body><a class="skip" href="#content">Skip to content</a><header class="topbar"><div class="in"><a class="brand" href="index.html">Embedded Machine Learning<span>PhD course</span></a><button class="menubtn" aria-expanded="false" aria-controls="topnav">Menu</button><nav class="topnav" id="topnav" aria-label="Course"><a href="index.html">Overview</a><a href="session-1.html"><em>S1</em>Embedded</a><a href="session-2.html"><em>S2</em>Data</a><a href="session-3.html"><em>S3</em>Models</a><a href="session-4.html"><em>S4</em>Hardware</a><a href="presentations.html"><em>S5</em>Presentations</a><a href="glossary.html">Glossary</a><a href="references.html" aria-current="page">References</a></nav><button class="themebtn" type="button" aria-label="Toggle colour theme">◐<span class="tl"> theme</span></button></div></header><div class="pagehead"><div class="inner"><p class="eyebrow">Reference</p><h1>References</h1><p class="sub">The literature behind the course, grouped by topic. Every entry has been checked against its primary source; arXiv identifiers are given where they exist. The papers for the Session 5 presentations are listed with summaries on the presentations page.</p></div></div><div class="wrap"><nav class="toc" aria-label="On this page"><details open><summary>On this page</summary><ol class="sec nonum"><li><a href="#bib"><em></em><span>Bibliography</span></a></li><li><a href="#textbooks"><em></em><span>Textbooks and reference works</span></a></li></ol></details></nav><main id="content"><div class="col">
+<h3 id="bib">Bibliography</h3>
+
+
+<h4>Foundations, surveys and systems</h4>
+<ul class="reading">
+  <li>V. Sze, Y.-H. Chen, T.-J. Yang, J. Emer. "Efficient Processing of Deep Neural Networks: A Tutorial and Survey." <i>Proc. IEEE</i>, 2017.<span class="v">arXiv:1703.09039</span></li>
+  <li>M. Horowitz. "1.1 Computing's Energy Problem (and what we can do about it)." <i>ISSCC</i>, 2014.<span class="v">Source of the energy-per-operation table.</span></li>
+  <li>S. Williams, A. Waterman, D. Patterson. "Roofline: An Insightful Visual Performance Model for Multicore Architectures." <i>CACM</i> 52(4), 2009.</li>
+  <li>K. Goto, R. van de Geijn. "Anatomy of High-Performance Matrix Multiplication." <i>ACM TOMS</i> 34(3), 2008.</li>
+  <li>P. Warden, D. Situnayake. <i>TinyML</i>. O'Reilly, 2019.</li>
+  <li>V. Janapa Reddi et al. <i>Machine Learning Systems</i> (open textbook), mlsysbook.ai.</li>
+  <li>S. Somvanshi et al. "From Tiny Machine Learning to Tiny Deep Learning: A Survey." 2025.<span class="v">arXiv:2506.18927</span></li>
+</ul>
+
+<h4>Signals, features and audio</h4>
+<ul class="reading">
+  <li>P. Warden. "Speech Commands: A Dataset for Limited-Vocabulary Speech Recognition." 2018.<span class="v">arXiv:1804.03209</span></li>
+  <li>Q. Kong, Y. Cao, T. Iqbal, Y. Wang, W. Wang, M. D. Plumbley. "PANNs: Large-Scale Pretrained Audio Neural Networks for Audio Pattern Recognition." 2020.<span class="v">arXiv:1912.10211</span></li>
+  <li>Y. Zhang, N. Suda, L. Lai, V. Chandra. "Hello Edge: Keyword Spotting on Microcontrollers." 2017.<span class="v">arXiv:1711.07128</span></li>
+  <li>Y. Gong, Y.-A. Chung, J. Glass. "AST: Audio Spectrogram Transformer." <i>Interspeech</i>, 2021.<span class="v">arXiv:2104.01778</span></li>
+  <li>B. Kim, S. Chang, J. Lee, D. Sung. "Broadcasted Residual Learning for Efficient Keyword Spotting." <i>Interspeech</i>, 2021.<span class="v">arXiv:2106.04140</span></li>
+  <li>D. S. Park et al. "SpecAugment: A Simple Data Augmentation Method for Automatic Speech Recognition." <i>Interspeech</i>, 2019.<span class="v">arXiv:1904.08779</span></li>
+  <li>A. Chowdhery, P. Warden, J. Shlens, A. Howard, R. Rhodes. "Visual Wake Words Dataset." 2019.<span class="v">arXiv:1906.05721</span></li>
+  <li>L. McInnes, J. Healy, J. Melville. "UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction." 2018.<span class="v">arXiv:1802.03426</span></li>
+  <li>H. Peng, F. Long, C. Ding. "Feature Selection Based on Mutual Information: Criteria of Max-Dependency, Max-Relevance, and Min-Redundancy." <i>IEEE TPAMI</i> 27(8), 2005.</li>
+</ul>
+
+<h4>Classical models</h4>
+<ul class="reading">
+  <li>A. Rahimi, B. Recht. "Random Features for Large-Scale Kernel Machines." <i>NIPS</i>, 2007.</li>
+  <li>T. Hastie, R. Tibshirani, J. Friedman. <i>The Elements of Statistical Learning</i>, 2nd ed. Springer, 2009.</li>
+  <li>T. Chen, C. Guestrin. "XGBoost: A Scalable Tree Boosting System." <i>KDD</i>, 2016.</li>
+</ul>
+
+<h4>Architectures and search</h4>
+<ul class="reading">
+  <li>F. N. Iandola, S. Han, M. W. Moskewicz, K. Ashraf, W. J. Dally, K. Keutzer. "SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and &lt;0.5MB model size." 2016.<span class="v">arXiv:1602.07360</span></li>
+  <li>A. G. Howard, M. Zhu, B. Chen, D. Kalenichenko, W. Wang, T. Weyand, M. Andreetto, H. Adam. "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications." 2017.<span class="v">arXiv:1704.04861</span></li>
+  <li>M. Sandler, A. Howard, M. Zhu, A. Zhmoginov, L.-C. Chen. "MobileNetV2: Inverted Residuals and Linear Bottlenecks." <i>CVPR</i>, 2018.<span class="v">arXiv:1801.04381</span></li>
+  <li>A. Howard, M. Sandler, G. Chu, L.-C. Chen, B. Chen, M. Tan, W. Wang, Y. Zhu, R. Pang, V. Vasudevan, Q. V. Le, H. Adam. "Searching for MobileNetV3." <i>ICCV</i>, 2019.<span class="v">arXiv:1905.02244</span></li>
+  <li>X. Zhang, X. Zhou, M. Lin, J. Sun. "ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices." <i>CVPR</i>, 2018.<span class="v">arXiv:1707.01083</span></li>
+  <li>N. Ma, X. Zhang, H.-T. Zheng, J. Sun. "ShuffleNet V2: Practical Guidelines for Efficient CNN Architecture Design." <i>ECCV</i>, 2018.<span class="v">arXiv:1807.11164</span></li>
+  <li>M. Tan, Q. V. Le. "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks." <i>ICML</i>, 2019.<span class="v">arXiv:1905.11946</span></li>
+  <li>J. Hu, L. Shen, S. Albanie, G. Sun, E. Wu. "Squeeze-and-Excitation Networks." <i>CVPR</i>, 2018.<span class="v">arXiv:1709.01507</span></li>
+  <li>S. Mehta, M. Rastegari. "MobileViT: Light-weight, General-purpose, and Mobile-friendly Vision Transformer." <i>ICLR</i>, 2022.<span class="v">arXiv:2110.02178</span></li>
+  <li>M. Maaz, A. Shaker, H. Cholakkal, S. Khan, S. W. Zamir, R. M. Anwer, F. S. Khan. "EdgeNeXt: Efficiently Amalgamated CNN-Transformer Architecture for Mobile Vision Applications." 2022.<span class="v">arXiv:2206.10589</span></li>
+  <li>T. Elsken, J. H. Metzen, F. Hutter. "Neural Architecture Search: A Survey." <i>JMLR</i> 20, 2019.<span class="v">arXiv:1808.05377</span></li>
+  <li>M. Tan, B. Chen, R. Pang, V. Vasudevan, M. Sandler, A. Howard, Q. V. Le. "MnasNet: Platform-Aware Neural Architecture Search for Mobile." <i>CVPR</i>, 2019.<span class="v">arXiv:1807.11626</span></li>
+  <li>H. Cai, L. Zhu, S. Han. "ProxylessNAS: Direct Neural Architecture Search on Target Task and Hardware." <i>ICLR</i>, 2019.<span class="v">arXiv:1812.00332</span></li>
+  <li>H. Cai, C. Gan, T. Wang, Z. Zhang, S. Han. "Once-for-All: Train One Network and Specialize it for Efficient Deployment." <i>ICLR</i>, 2020.<span class="v">arXiv:1908.09791</span></li>
+  <li>C. Banbury, C. Zhou, I. Fedorov, R. Matas Navarro, U. Thakker, D. Gope, V. Janapa Reddi, M. Mattina, P. N. Whatmough. "MicroNets: Neural Network Architectures for Deploying TinyML Applications on Commodity Microcontrollers." <i>MLSys</i>, 2021.<span class="v">arXiv:2010.11267</span></li>
+  <li>S. Bai, J. Z. Kolter, V. Koltun. "An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling." 2018.<span class="v">arXiv:1803.01271</span></li>
+  <li>A. Gu, T. Dao. "Mamba: Linear-Time Sequence Modeling with Selective State Spaces." 2023.<span class="v">arXiv:2312.00752</span></li>
+</ul>
+
+<h4>Quantization</h4>
+<ul class="reading">
+  <li>B. Jacob, S. Kligys, B. Chen, M. Zhu, M. Tang, A. Howard, H. Adam, D. Kalenichenko. "Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference." <i>CVPR</i>, 2018.<span class="v">arXiv:1712.05877</span></li>
+  <li>M. Nagel, M. Fournarakis, R. A. Amjad, Y. Bondarenko, M. van Baalen, T. Blankevoort. "A White Paper on Neural Network Quantization." 2021.<span class="v">arXiv:2106.08295</span></li>
+  <li>R. Krishnamoorthi. "Quantizing deep convolutional networks for efficient inference: A whitepaper." 2018.<span class="v">arXiv:1806.08342</span></li>
+  <li>A. Gholami, S. Kim, Z. Dong, Z. Yao, M. W. Mahoney, K. Keutzer. "A Survey of Quantization Methods for Efficient Neural Network Inference." 2021.<span class="v">arXiv:2103.13630</span></li>
+  <li>M. Nagel, M. van Baalen, T. Blankevoort, M. Welling. "Data-Free Quantization Through Weight Equalization and Bias Correction." <i>ICCV</i>, 2019.<span class="v">arXiv:1906.04721</span></li>
+  <li>M. Nagel, R. A. Amjad, M. van Baalen, C. Louizos, T. Blankevoort. "Up or Down? Adaptive Rounding for Post-Training Quantization." <i>ICML</i>, 2020.<span class="v">arXiv:2004.10568</span></li>
+  <li>S. K. Esser, J. L. McKinstry, D. Bablani, R. Appuswamy, D. S. Modha. "Learned Step Size Quantization." <i>ICLR</i>, 2020.<span class="v">arXiv:1902.08153</span></li>
+  <li>Y. Bengio, N. Léonard, A. Courville. "Estimating or Propagating Gradients Through Stochastic Neurons for Conditional Computation." 2013.<span class="v">arXiv:1308.3432 — the straight-through estimator.</span></li>
+  <li>M. Courbariaux, Y. Bengio, J.-P. David. "BinaryConnect: Training Deep Neural Networks with binary weights during propagations." <i>NIPS</i>, 2015.<span class="v">arXiv:1511.00363</span></li>
+  <li>M. Rastegari, V. Ordonez, J. Redmon, A. Farhadi. "XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks." <i>ECCV</i>, 2016.<span class="v">arXiv:1603.05279</span></li>
+  <li>Z. Dong, Z. Yao, A. Gholami, M. Mahoney, K. Keutzer. "HAWQ: Hessian AWare Quantization of Neural Networks with Mixed-Precision." <i>ICCV</i>, 2019.<span class="v">arXiv:1905.03696</span></li>
+</ul>
+
+<h4>Pruning, sparsity and distillation</h4>
+<ul class="reading">
+  <li>Y. LeCun, J. S. Denker, S. A. Solla. "Optimal Brain Damage." <i>NIPS</i>, 1990.</li>
+  <li>B. Hassibi, D. G. Stork. "Second Order Derivatives for Network Pruning: Optimal Brain Surgeon." <i>NIPS</i>, 1993.</li>
+  <li>S. Han, J. Pool, J. Tran, W. J. Dally. "Learning both Weights and Connections for Efficient Neural Networks." <i>NIPS</i>, 2015.<span class="v">arXiv:1506.02626</span></li>
+  <li>S. Han, H. Mao, W. J. Dally. "Deep Compression: Compressing Deep Neural Networks with Pruning, Trained Quantization and Huffman Coding." <i>ICLR</i>, 2016.<span class="v">arXiv:1510.00149</span></li>
+  <li>J. Frankle, M. Carbin. "The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks." <i>ICLR</i>, 2019.<span class="v">arXiv:1803.03635</span></li>
+  <li>Z. Liu, M. Sun, T. Zhou, G. Huang, T. Darrell. "Rethinking the Value of Network Pruning." <i>ICLR</i>, 2019.<span class="v">arXiv:1810.05270</span></li>
+  <li>H. Li, A. Kadav, I. Durdanovic, H. Samet, H. P. Graf. "Pruning Filters for Efficient ConvNets." <i>ICLR</i>, 2017.<span class="v">arXiv:1608.08710</span></li>
+  <li>Z. Liu, J. Li, Z. Shen, G. Huang, S. Yan, C. Zhang. "Learning Efficient Convolutional Networks through Network Slimming." <i>ICCV</i>, 2017.<span class="v">arXiv:1708.06519</span></li>
+  <li>M. Zhu, S. Gupta. "To prune, or not to prune: exploring the efficacy of pruning for model compression." 2017.<span class="v">arXiv:1710.01878</span></li>
+  <li>Y. He, J. Lin, Z. Liu, H. Wang, L.-J. Li, S. Han. "AMC: AutoML for Model Compression and Acceleration on Mobile Devices." <i>ECCV</i>, 2018.<span class="v">arXiv:1802.03494</span></li>
+  <li>T. Hoefler, D. Alistarh, T. Ben-Nun, N. Dryden, A. Peste. "Sparsity in Deep Learning." <i>JMLR</i>, 2021.<span class="v">arXiv:2102.00554</span></li>
+  <li>G. Hinton, O. Vinyals, J. Dean. "Distilling the Knowledge in a Neural Network." <i>NIPS Deep Learning Workshop</i>, 2014.<span class="v">arXiv:1503.02531</span></li>
+  <li>A. Romero, N. Ballas, S. E. Kahou, A. Chassang, C. Gatta, Y. Bengio. "FitNets: Hints for Thin Deep Nets." <i>ICLR</i>, 2015.<span class="v">arXiv:1412.6550</span></li>
+  <li>J. Gou, B. Yu, S. J. Maybank, D. Tao. "Knowledge Distillation: A Survey." <i>IJCV</i>, 2021.<span class="v">arXiv:2006.05525</span></li>
+  <li>H. Zhang, M. Cisse, Y. N. Dauphin, D. Lopez-Paz. "mixup: Beyond Empirical Risk Minimization." <i>ICLR</i>, 2018.<span class="v">arXiv:1710.09412</span></li>
+</ul>
+
+<h4>Hardware and accelerators</h4>
+<ul class="reading">
+  <li>N. P. Jouppi et al. "In-Datacenter Performance Analysis of a Tensor Processing Unit." <i>ISCA</i>, 2017.<span class="v">arXiv:1704.04760</span></li>
+  <li>Y.-H. Chen, T. Krishna, J. S. Emer, V. Sze. "Eyeriss: An Energy-Efficient Reconfigurable Accelerator for Deep Convolutional Neural Networks." <i>IEEE JSSC</i> 52(1), 2017.</li>
+  <li>S. Han, X. Liu, H. Mao, J. Pu, A. Pedram, M. A. Horowitz, W. J. Dally. "EIE: Efficient Inference Engine on Compressed Deep Neural Network." <i>ISCA</i>, 2016.<span class="v">arXiv:1602.01528</span></li>
+  <li>L. Lai, N. Suda, V. Chandra. "CMSIS-NN: Efficient Neural Network Kernels for Arm Cortex-M CPUs." 2018.<span class="v">arXiv:1801.06601</span></li>
+  <li>A. Lavin, S. Gray. "Fast Algorithms for Convolutional Neural Networks." <i>CVPR</i>, 2016.</li>
+  <li>M. Le Gallo et al. "A 64-core mixed-signal in-memory compute chip based on phase-change memory for deep neural network inference." <i>Nature Electronics</i> 6, 2023.</li>
+</ul>
+
+<h4>TinyML systems, benchmarking and deployment</h4>
+<ul class="reading">
+  <li>C. R. Banbury, V. Janapa Reddi, M. Lam, et al. "Benchmarking TinyML Systems: Challenges and Direction." 2020.<span class="v">arXiv:2003.04821</span></li>
+  <li>C. Banbury, V. Janapa Reddi, P. Torelli, J. Holleman, N. Jeffries, C. Kiraly, et al. "MLPerf Tiny Benchmark." 2021.<span class="v">arXiv:2106.07597</span></li>
+  <li>J. Lin, W.-M. Chen, Y. Lin, J. Cohn, C. Gan, S. Han. "MCUNet: Tiny Deep Learning on IoT Devices." <i>NeurIPS</i>, 2020.<span class="v">arXiv:2007.10319</span></li>
+  <li>J. Lin, W.-M. Chen, H. Cai, C. Gan, S. Han. "MCUNetV2: Memory-Efficient Patch-based Inference for Tiny Deep Learning." <i>NeurIPS</i>, 2021.<span class="v">arXiv:2110.15352</span></li>
+  <li>R. David, J. Duke, A. Jain, V. Janapa Reddi, N. Jeffries, J. Li, N. Kreeger, I. Nappier, M. Natraj, S. Regev, R. Rhodes, T. Wang, P. Warden. "TensorFlow Lite Micro: Embedded Machine Learning on TinyML Systems." <i>MLSys</i>, 2021.<span class="v">arXiv:2010.08678</span></li>
+  <li>J. Lin, L. Zhu, W.-M. Chen, W.-C. Wang, C. Gan, S. Han. "On-Device Training Under 256KB Memory." <i>NeurIPS</i>, 2022.<span class="v">arXiv:2206.15472</span></li>
+  <li>T. Chen, T. Moreau, Z. Jiang, L. Zheng, E. Yan, M. Cowan, H. Shen, L. Wang, Y. Hu, L. Ceze, C. Guestrin, A. Krishnamurthy. "TVM: An Automated End-to-End Optimizing Compiler for Deep Learning." <i>OSDI</i>, 2018.<span class="v">arXiv:1802.04799</span></li>
+  <li>H. B. McMahan, E. Moore, D. Ramage, S. Hampson, B. Agüera y Arcas. "Communication-Efficient Learning of Deep Networks from Decentralized Data." <i>AISTATS</i>, 2017.<span class="v">arXiv:1602.05629</span></li>
+  <li>E. Frantar, S. Ashkboos, T. Hoefler, D. Alistarh. "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers." <i>ICLR</i>, 2023.<span class="v">arXiv:2210.17323</span></li>
+  <li>J. Lin, J. Tang, H. Tang, S. Yang, W.-M. Chen, W.-C. Wang, G. Xiao, X. Dang, C. Gan, S. Han. "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration." <i>MLSys</i>, 2024.<span class="v">arXiv:2306.00978</span></li>
+</ul>
+
+<h4>Comparable courses consulted in designing this syllabus</h4>
+<ul class="reading">
+  <li>MIT 6.5940, <i>TinyML and Efficient Deep Learning Computing</i> (S. Han), hanlab.mit.edu.<span class="v">Source of the depth of the compression treatment in Session 3.</span></li>
+  <li>Harvard CS249r, <i>Tiny Machine Learning</i> (V. Janapa Reddi), and the associated <i>Machine Learning Systems</i> textbook.<span class="v">Source of the systems-and-benchmarking emphasis in <a class="xref" href="session-4.html">Session 4</a>.</span></li>
+  <li>ETH Zürich 227-0155-00L, <i>Machine Learning on Microcontrollers</i>.<span class="v">Source of the signal-chain depth in <a class="xref" href="session-2.html">Session 2</a>.</span></li>
+</ul>
+
+
+
+<h3 id="textbooks">Textbooks and reference works</h3>
+<ul class="reading">
+  <li>A. V. Oppenheim, R. W. Schafer. <i>Discrete-Time Signal Processing</i>, 3rd ed. Pearson, 2010.</li>
+  <li>J. L. Hennessy, D. A. Patterson. <i>Computer Architecture: A Quantitative Approach</i>, 6th ed. Morgan Kaufmann, 2017.</li>
+  <li>V. Sze, Y.-H. Chen, T.-J. Yang, J. Emer. <i>Efficient Processing of Deep Neural Networks</i>. Morgan &amp; Claypool, 2020.</li>
+  <li>I. Goodfellow, Y. Bengio, A. Courville. <i>Deep Learning</i>. MIT Press, 2016 (free online at deeplearningbook.org).<span class="v">For participants who want a full treatment of the primer material of Session 3.</span></li>
+  <li>C. M. Bishop, H. Bishop. <i>Deep Learning: Foundations and Concepts</i>. Springer, 2024.</li>
+</ul>
+</div></main></div><footer class="site"><div class="in"><span>Embedded Machine Learning · PhD course · 2026/27</span><span><a href="credits.html">Credits, licences &amp; image sources</a> · <a href="references.html">References</a></span><span>Figures are original unless credited. Text and figures may be reused for teaching with attribution.</span></div></footer><script src="assets/js/site.js" defer></script></body></html>

@@ -1,0 +1,1242 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Session 3 — Model compression · Embedded Machine Learning</title><meta name="description" content="Four families of technique that make a trained network smaller and cheaper: fewer bits per number, fewer numbers, a small model taught by a large one, and lower-rank or shared weights. Each is derived from its objective, tested against what the hardware can actually exploit, and linked to the landma"><link rel="stylesheet" href="assets/css/site.css"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script>try{var t=localStorage.getItem("eml-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script></head><body><a class="skip" href="#content">Skip to content</a><header class="topbar"><div class="in"><a class="brand" href="index.html">Embedded Machine Learning<span>PhD course</span></a><button class="menubtn" aria-expanded="false" aria-controls="topnav">Menu</button><nav class="topnav" id="topnav" aria-label="Course"><a href="index.html">Overview</a><a href="session-1.html"><em>S1</em>Embedded</a><a href="session-2.html"><em>S2</em>Data</a><a href="session-3.html" aria-current="page"><em>S3</em>Models</a><a href="session-4.html"><em>S4</em>Hardware</a><a href="presentations.html"><em>S5</em>Presentations</a><a href="glossary.html">Glossary</a><a href="references.html">References</a></nav><button class="themebtn" type="button" aria-label="Toggle colour theme">◐<span class="tl"> theme</span></button></div></header><div class="pagehead"><div class="inner"><p class="eyebrow">Session 3 · page 2 of 2</p><h1>Model compression: quantization, pruning and distillation</h1><p class="sub">Four families of technique that make a trained network smaller and cheaper: fewer bits per number, fewer numbers, a small model taught by a large one, and lower-rank or shared weights. Each is derived from its objective, tested against what the hardware can actually exploit, and linked to the landmark papers of presentation topics A and B.</p><div class="specstrip"><div><b>Session</b><span>3 (continued)</span></div><div><b>Prerequisites</b><span>page 1 of Session 3</span></div><div><b>Slides</b><span><a href="slides/session-3.pdf">PDF</a> · <a href="slides/session-3.html">HTML</a></span></div><div><b>Presentations</b><span>topics <a href="presentations.html#topic-a">A</a> and <a href="presentations.html#topic-b">B</a></span></div></div></div></div><div class="wrap"><nav class="toc" aria-label="On this page"><details open><summary>Sections</summary><ol class="sec"><li class="toc-part">An overview of compression</li><li><a href="#compression-map"><em>3.21</em><span>Four families, one question</span></a></li><li class="toc-part">Quantization</li><li><a href="#sec-3-22"><em>3.22</em><span>Number formats</span></a></li><li><a href="#sec-3-23"><em>3.23</em><span>The affine map </span></a></li><li><a href="#sec-3-24"><em>3.24</em><span>Integer-only inference, derived </span></a></li><li><a href="#sec-3-25"><em>3.25</em><span>Granularity: per-tensor, per-channel, per-group</span></a></li><li><a href="#sec-3-26"><em>3.26</em><span>Calibration: choosing the clipping range</span></a></li><li><a href="#sec-3-27"><em>3.27</em><span>Advanced post-training quantization</span></a></li><li><a href="#sec-3-28"><em>3.28</em><span>Quantization-aware training</span></a></li><li><a href="#sec-3-29"><em>3.29</em><span>Below 8 bits, and mixed precision</span></a></li><li class="toc-part">Pruning, sparsity and low rank</li><li><a href="#sec-3-30"><em>3.30</em><span>Taxonomy</span></a></li><li><a href="#sec-3-31"><em>3.31</em><span>Saliency: which weights can go </span></a></li><li><a href="#sec-3-32"><em>3.32</em><span>Schedules, and the lottery ticket</span></a></li><li><a href="#sec-3-33"><em>3.33</em><span>The systems reality: when does sparsity pay?</span></a></li><li><a href="#sec-3-34"><em>3.34</em><span>Structured pruning</span></a></li><li><a href="#sec-3-35"><em>3.35</em><span>Low-rank and tensor factorisation</span></a></li><li><a href="#sec-3-36"><em>3.36</em><span>Weight sharing and coding</span></a></li><li class="toc-part">Knowledge distillation</li><li><a href="#sec-3-37"><em>3.37</em><span>The idea</span></a></li><li><a href="#sec-3-38"><em>3.38</em><span>The objective, derived </span></a></li><li><a href="#sec-3-39"><em>3.39</em><span>Variants</span></a></li><li><a href="#sec-3-40"><em>3.40</em><span>The capacity gap, and the recipe</span></a></li><li><a href="#recipe"><em>3.41</em><span>Putting it together: a compression recipe</span></a></li></ol></details></nav><main id="content"><div class="col">
+<div class="reslinks">
+  <a class="btn" href="session-3.html"><b>Page 1</b>← Models</a>
+  <a class="btn primary" href="slides/session-3.pdf"><b>Slides</b>Session 3 · PDF</a>
+  <a class="btn" href="slides/session-3.html"><b>Slides</b>HTML version</a>
+</div>
+
+<h2 class="part"><span>Part E</span>An overview of compression</h2>
+<p class="partlead">A trained network is usually far larger and more precise than it needs to be. Compression removes that excess — but each technique removes a different kind of excess, needs a different amount of retraining, and pays off only on hardware that can exploit it.</p>
+
+<h3 id="compression-map"><span class="sn">3.21</span>Four families, one question</h3>
+
+<div class="tw"><table>
+<thead><tr><th>Family</th><th>What shrinks</th><th>Typical gain</th><th>Retraining</th><th>Pays off when</th></tr></thead>
+<tbody>
+<tr><td><b>Quantization</b></td><td>bits per weight and activation</td><td>4× memory (fp32 → int8), 2–4× speed on int8 SIMD/NPU</td><td>none (PTQ) to full (QAT)</td><td>almost always — the default first step</td></tr>
+<tr><td><b>Pruning</b></td><td>number of weights, or whole channels</td><td>2–10× weights (unstructured); 1.5–3× compute (structured)</td><td>fine-tuning, often iterative</td><td>structured: always; unstructured: only with sparse kernels or hardware</td></tr>
+<tr><td><b>Knowledge distillation</b></td><td>the model itself — a smaller student replaces the teacher</td><td>whatever the student architecture allows</td><td>train the student</td><td>you can afford a training run and have a good teacher</td></tr>
+<tr><td><b>Low-rank / weight sharing</b></td><td>rank of weight matrices; distinct weight values</td><td>2–5× on large dense layers; codebook storage</td><td>fine-tuning</td><td>large dense or attention layers; storage-limited flash</td></tr>
+</tbody>
+</table></div>
+<p class="tcap" id="tab-families">Table 3.6 — The compression families. Gains are typical orders of magnitude reported in the literature for vision and audio CNNs; they vary widely by model and task.</p>
+
+<p>The techniques compose. The classic pipeline of Deep Compression (Han, Mao and Dally, 2016) prunes, then quantizes the survivors by clustering, then entropy-codes the result; a modern embedded flow is more often "choose an efficient architecture, distil it from a large teacher, prune channels if latency is still too high, and quantize to int8 last". The order matters, because each step changes the statistics the next one relies on — a closing section returns to this.</p>
+
+<h2 class="part"><span>Part F</span>Quantization</h2>
+<div class="intu">
+<h5>In one sentence</h5>
+<p>Quantization replaces a per-value exponent with one scale shared by a whole tensor — which is why it is so cheap in silicon, and exactly why it breaks whenever the values in a tensor are not of comparable size.</p>
+</div>
+
+<h3 id="sec-3-22"><span class="sn">3.22</span>Number formats</h3>
+<div class="tw"><table>
+<thead><tr><th>Format</th><th class="num">Bits</th><th>Range / precision character</th><th>Embedded relevance</th></tr></thead>
+<tbody>
+<tr><td>float32</td><td class="num">32</td><td>Huge dynamic range, ~7 decimal digits</td><td>Training reference; rarely deployed on MCUs</td></tr>
+<tr><td>float16</td><td class="num">16</td><td>Narrow exponent; overflows and underflows easily</td><td>GPU inference; needs loss scaling in training</td></tr>
+<tr><td>bfloat16</td><td class="num">16</td><td>float32's exponent, 8-bit mantissa</td><td>Drop-in for training; little benefit on MCUs without hardware</td></tr>
+<tr><td>int8 (affine)</td><td class="num">8</td><td>256 uniformly spaced levels over a chosen range</td><td><b>The workhorse.</b> Universally supported by embedded runtimes</td></tr>
+<tr><td>int4 / int2</td><td class="num">4 / 2</td><td>Very coarse; usually weights only</td><td>Needs QAT or careful PTQ; strong on LLM weights</td></tr>
+<tr><td>Q<i>m.n</i> fixed point</td><td class="num">16 / 32</td><td>Fixed binary point, no per-tensor scale</td><td>Classic DSP style; still used in hand-written kernels</td></tr>
+<tr><td>Binary / ternary</td><td class="num">1 / ~1.6</td><td>Sign only</td><td>Excellent on FPGAs; large accuracy cost on hard tasks</td></tr>
+</tbody>
+</table></div>
+<p class="tcap" id="tab-T8-1">Table 3.7 — Formats. Note the structural difference: floating point spends bits on an exponent to get dynamic range <i>per value</i>; integer quantization spends a single shared scale to get dynamic range <i>per tensor</i>. Quantization works precisely because activations and weights within a tensor have similar magnitudes — and it fails exactly when they do not.</p>
+<figure id="fig-float_int_bits"><div class="figscroll"><svg viewBox="0 0 720 300" role="img" aria-label="Bit-level comparison of a 32-bit float, a 16-bit bfloat, and an 8-bit affine integer: the float spends bits on an exponent for per-value dynamic range, the integer shares one scale across the whole tensor">
+  <rect x="56.0" y="46.0" width="17.5" height="26.0" fill="none" stroke="currentColor" stroke-width="1" opacity="1"/>
+  
+  <rect x="73.5" y="46.0" width="140.0" height="26.0" class="accf" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+  <text x="143.5" y="63.0" class="lbl" text-anchor="middle">exponent · 8</text>
+  <rect x="213.5" y="46.0" width="402.5" height="26.0" class="tlf" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+  <text x="414.8" y="63.0" class="lbl" text-anchor="middle">mantissa · 23</text>
+  <text x="56.0" y="38.0" class="lblb">float32 — 32 bits per value: sign · exponent · mantissa</text>
+  <rect x="56.0" y="116.0" width="35.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1" opacity="1"/>
+  
+  <rect x="91.0" y="116.0" width="280.0" height="26.0" class="accf" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+  <text x="231.0" y="133.0" class="lbl" text-anchor="middle">exponent · 8</text>
+  <rect x="371.0" y="116.0" width="245.0" height="26.0" class="tlf" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+  <text x="493.5" y="133.0" class="lbl" text-anchor="middle">mantissa · 7</text>
+  <text x="56.0" y="108.0" class="lblb">bfloat16 — same exponent range, coarser steps</text>
+  <rect x="56.0" y="186.0" width="560.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1" opacity="1"/>
+  <text x="336.0" y="203.0" class="lbl" text-anchor="middle">magnitude, 8 bits — plus ONE scale s and zero-point z shared by the whole tensor · 8</text>
+  <text x="56.0" y="178.0" class="lblb">int8 affine — 8 bits per value</text>
+  <text x="56.0" y="240.0" class="lbl">float: each value carries its own exponent → wide dynamic range, per-value</text>
+  <text x="56.0" y="258.0" class="lbl">int8: one shared scale → uniform steps, and the whole scheme works only</text>
+  <text x="56.0" y="276.0" class="lbl">because values inside one tensor have similar magnitudes.</text>
+  <text x="56.0" y="296.0" class="lblb" fill="var(--copper)">When they do not — depthwise channels, transformer activation outliers — quantization fails.</text>
+</svg></div><figcaption><b>Fig 3.24</b>Two ways to spend bits. Floating point buys dynamic range <i>per value</i> with an exponent field, which is why it tolerates a tensor spanning ten orders of magnitude. Integer quantization buys it <i>per tensor</i> with a single shared scale, which is far cheaper in silicon — an int8 multiply costs roughly a twentieth of an fp32 one (<a class="xref" href="session-1.html#tab-T1-2">Table 1.3</a>) — but rests entirely on the assumption that values inside a tensor are of similar size. Every quantization failure in <a class="xref" href="#sec-3-29">§3.29</a> is that assumption breaking.</figcaption></figure>
+
+<div class="found">
+<h5>Foundations · two's complement and Q-format fixed point</h5>
+<p><b>Two's complement</b> is how every integer in this chapter is stored. An <span class="eqn">N</span>-bit word represents <span class="eqn">−2<sup>N−1</sup> … 2<sup>N−1</sup>−1</span>; negation is “invert all bits and add one”, which is what makes addition and subtraction the same circuit for signed and unsigned values. Two practical consequences appear in real kernels: the range is <b>asymmetric</b> — int8 runs from −128 to +127, so a symmetric quantizer usually restricts itself to ±127 and wastes one level — and addition <b>wraps</b> silently on overflow, which is why quantized kernels accumulate in int32 and use saturating instructions at the boundaries.</p>
+<p><b>Q-format fixed point</b> is the older sibling of affine quantization. <span class="eqn">Q<i>m</i>.<i>n</i></span> means an integer interpreted with <span class="eqn">n</span> fractional bits, i.e. a scale fixed at <span class="eqn">2<sup>−n</sup></span> — so Q1.15 covers <span class="eqn">[−1, 1)</span> in steps of <span class="eqn">2<sup>−15</sup></span>. Multiplying Q1.15 by Q1.15 gives Q2.30, which is why DSP kernels accumulate in 32 bits and shift down at the end.</p>
+<p>Affine quantization is exactly this idea with two generalisations: the scale is an arbitrary real number rather than a power of two, and a zero-point lets the representable range be off-centre. The power-of-two restriction is what let 1990s DSPs implement rescaling as a shift; <a class="xref" href="#sec-3-24">§3.24</a>'s <span class="eqn">M = 2<sup>−n</sup>M₀</span> is the modern compromise that recovers the shift while keeping an arbitrary scale.</p>
+</div>
+
+
+
+
+<h3 id="sec-3-23"><span class="sn">3.23</span>The affine map <span class="kicker">depth</span></h3>
+<div class="derive">
+<h5>Derivation</h5>
+<p>We want to represent real values <span class="eqn">x</span> in a range <span class="eqn">[α, β]</span> using <span class="eqn">b</span>-bit integers <span class="eqn">q ∈ [Q<sub>min</sub>, Q<sub>max</sub>]</span> by an affine relation</p>
+<div class="eq">x ≈ s · (q − z)        (de-quantization)
+q  = clamp( round(x/s) + z , Q_min , Q_max )   (quantization)</div>
+<p>Requiring that <span class="eqn">α</span> maps to <span class="eqn">Q<sub>min</sub></span> and <span class="eqn">β</span> to <span class="eqn">Q<sub>max</sub></span> gives</p>
+<div class="eq">s = (β − α) / (Q_max − Q_min)
+z = round( Q_min − α / s )</div>
+<p>The <em class="term">zero-point</em> <span class="eqn">z</span> is an integer, and that is not a detail: it guarantees that the real value 0 is represented <i>exactly</i>. Zero must be exact because padding introduces zeros, and an inexact zero would inject a bias at every image border and every masked position.</p>
+<p><b>Symmetric quantization</b> sets <span class="eqn">z = 0</span> and <span class="eqn">s = max|x| / (2<sup>b−1</sup> − 1)</span>. It wastes half the range for a strictly positive tensor such as a post-ReLU activation, but it removes the cross-terms in <a class="xref" href="#sec-3-24">§3.24</a> and is therefore preferred for weights. The standard combination in deployment toolchains is <b>symmetric per-channel weights, asymmetric per-tensor activations</b>.</p>
+</div>
+
+<div class="box">
+<h5>Worked example</h5>
+<p>A weight tensor spans <span class="eqn">[−0.62, 0.48]</span>; quantize to int8 asymmetric, so <span class="eqn">Q<sub>min</sub> = −128</span>, <span class="eqn">Q<sub>max</sub> = 127</span>.</p>
+<div class="eq">s = (0.48 − (−0.62)) / 255 = 1.10 / 255 = 4.3137e−3
+z = round(−128 − (−0.62)/4.3137e−3) = round(−128 + 143.73) = 16
+
+x = 0.31  →  q = round(0.31/4.3137e−3) + 16 = round(71.86) + 16 = 88
+             x̂ = 4.3137e−3 · (88 − 16) = 0.3106      error 5.9e−4
+x = −0.62 →  q = round(−143.73) + 16 = −128          (clamped exactly)
+x = 0     →  q = 16, x̂ = 0 exactly</div>
+<p>Maximum representation error is <span class="eqn">s/2 = 2.16 × 10⁻³</span>, uniform across the range. Compare with float32's <i>relative</i> error: quantization error is absolute, so small values suffer proportionally far more. This is why the distribution of a tensor, not just its extremes, determines quantization damage.</p>
+</div>
+
+<figure id="fig-affine_map"><div class="figscroll"><svg viewBox="0 0 720 250" role="img" aria-label="A real-valued number line mapped onto integer levels, showing scale as the spacing between levels, the zero point aligned to integer zero, clipping outside the range, and the resulting uniform error band">
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <text x="8" y="18" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">real axis — a weight distribution with its chosen clipping range</text>
+    <!-- distribution -->
+    <path d="M120 108 C 200 108, 230 40, 330 40 C 430 40, 460 108, 600 108" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.55"/>
+    <line x1="40" y1="108" x2="690" y2="108" stroke="currentColor" stroke-width="1.2"/>
+    <g class="acc" stroke-width="1.4" stroke-dasharray="4 3">
+      <line x1="150" y1="34" x2="150" y2="120"/><line x1="560" y1="34" x2="560" y2="120"/>
+    </g>
+    <text x="150" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">α</text>
+    <text x="560" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">β</text>
+    <text x="88" y="126" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">clipped</text>
+    <text x="628" y="126" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">clipped</text>
+    <!-- levels -->
+    <g stroke="currentColor" stroke-width="1" opacity="0.8">
+      <line x1="150" y1="150" x2="150" y2="168"/><line x1="191" y1="150" x2="191" y2="168"/>
+      <line x1="232" y1="150" x2="232" y2="168"/><line x1="273" y1="150" x2="273" y2="168"/>
+      <line x1="314" y1="150" x2="314" y2="168"/><line x1="355" y1="150" x2="355" y2="168"/>
+      <line x1="396" y1="150" x2="396" y2="168"/><line x1="437" y1="150" x2="437" y2="168"/>
+      <line x1="478" y1="150" x2="478" y2="168"/><line x1="519" y1="150" x2="519" y2="168"/>
+      <line x1="560" y1="150" x2="560" y2="168"/>
+    </g>
+    <line x1="40" y1="168" x2="690" y2="168" stroke="currentColor" stroke-width="1.2"/>
+    <line x1="273" y1="144" x2="273" y2="176" class="tl" stroke-width="2.4"/>
+    <text x="273" y="140" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="tlf">z (real 0, exactly)</text>
+    <g stroke="currentColor" stroke-width="1" marker-end="none">
+      <line x1="150" y1="190" x2="191" y2="190"/>
+      <line x1="150" y1="186" x2="150" y2="194"/><line x1="191" y1="186" x2="191" y2="194"/>
+    </g>
+    <text x="200" y="194" font-family="IBM Plex Mono, monospace" font-size="11">s — one integer step</text>
+    <text x="8" y="162" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">int8 grid</text>
+    <text x="360" y="226" text-anchor="middle" font-family="IBM Plex Sans Condensed, sans-serif" font-size="12.5" font-weight="600">Two error sources, traded against each other by the choice of α and β:</text>
+    <text x="360" y="244" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.8">wide range → small clipping error, large rounding error (s/2)  ·  narrow range → the reverse</text>
+  </g>
+</svg></div><figcaption><b>Fig 3.25</b>Affine quantization. Calibration is the choice of <span class="eqn">α</span> and <span class="eqn">β</span>, and it is a bias–variance trade in disguise: clipping a heavy tail costs a few large errors, while keeping it costs a small error on every value. Which is worse depends on the layer, which is why calibration is chosen per tensor by an explicit criterion (<a class="xref" href="#sec-3-26">§3.26</a>).</figcaption></figure>
+
+
+
+<h3 id="sec-3-24"><span class="sn">3.24</span>Integer-only inference, derived <span class="kicker">depth</span></h3>
+<div class="derive">
+<h5>The core result (after Jacob et al., CVPR 2018)</h5>
+<p>Let the two operands and the output be quantized with their own parameters: <span class="eqn">r<sub>1</sub> = s<sub>1</sub>(q<sub>1</sub> − z<sub>1</sub>)</span>, <span class="eqn">r<sub>2</sub> = s<sub>2</sub>(q<sub>2</sub> − z<sub>2</sub>)</span>, <span class="eqn">r<sub>3</sub> = s<sub>3</sub>(q<sub>3</sub> − z<sub>3</sub>)</span>. For an inner product of length <span class="eqn">N</span>:</p>
+<div class="eq">s₃ (q₃ − z₃) = Σ_j s₁(q₁ⱼ − z₁) · s₂(q₂ⱼ − z₂)
+
+q₃ = z₃ + M · Σ_j (q₁ⱼ − z₁)(q₂ⱼ − z₂),      M = s₁ s₂ / s₃</div>
+<p>Everything inside the sum is an integer operation, accumulated in int32. Expanding the product isolates the terms that can be precomputed:</p>
+<div class="eq">Σ_j (q₁ⱼ − z₁)(q₂ⱼ − z₂)
+   = Σ_j q₁ⱼ q₂ⱼ  −  z₂ Σ_j q₁ⱼ  −  z₁ Σ_j q₂ⱼ  +  N z₁ z₂</div>
+<p>The first term is the ordinary integer GEMM. The third term depends only on the weights and folds into the bias at compile time. The second is a row sum of the activations scaled by the <i>weight</i> zero-point z₂, computed once per row and shared across output channels. The fourth is a constant. With symmetric weights (z₂ = 0) the second term vanishes entirely — which is why asymmetric activations with symmetric weights cost nothing extra, and why asymmetric weights would cost one extra reduction per row.</p>
+<p><b>Requantization.</b> The only non-integer quantity is <span class="eqn">M = s₁s₂/s₃</span>, empirically always in <span class="eqn">(0,1)</span>. Write it as</p>
+<div class="eq">M = 2^(−n) · M₀ ,   M₀ ∈ [0.5, 1)</div>
+<p>and store <span class="eqn">M₀</span> as a fixed-point int32. Multiplying by <span class="eqn">M</span> is then a widening multiply followed by a rounding right shift by <span class="eqn">n</span> — pure integer arithmetic, no floating-point unit anywhere in the inference path. This is what "integer-only" means, and it is what allows deployment on cores with no FPU at all.</p>
+</div>
+
+<p><b>Where the bias goes.</b> Biases are quantized to int32 with scale <span class="eqn">s₁s₂</span> — the same scale as the accumulator — so they add directly into the accumulation with no rescaling. Quantizing a bias to int8 would be a serious error: biases have a much larger dynamic range than weights and are added once, so their storage cost is negligible while their precision cost is not.</p>
+
+
+
+<h3 id="sec-3-25"><span class="sn">3.25</span>Granularity: per-tensor, per-channel, per-group</h3>
+<p>One scale for a whole tensor assumes its values share a magnitude. For ordinary convolutions this is roughly true. For <b>depthwise</b> convolutions it is false: each channel has its own independent filter, and after batch-norm folding the per-channel weight ranges can differ by two orders of magnitude. A single per-tensor scale sized for the largest channel then quantizes the smallest channels to a handful of levels — sometimes to all zeros — and the network collapses. This is the standard explanation for the well-documented failure of naive per-tensor PTQ on MobileNet-class architectures, and per-channel weight scales (one <span class="eqn">s</span> per output channel) fix it at negligible cost, since the requantization multiplier simply becomes a vector.</p>
+
+<figure id="fig-perchannel"><div class="figscroll"><svg viewBox="0 0 720 240" role="img" aria-label="Per-channel weight ranges in a depthwise layer shown as bars of very different lengths, with a single per-tensor scale sized for the largest channel leaving small channels with almost no levels, contrasted with per-channel scales">
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <text x="8" y="18" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">per-channel weight ranges after batch-norm folding, depthwise layer</text>
+    <g>
+      <rect x="120" y="34" width="440" height="16" fill="currentColor" opacity="0.35"/>
+      <rect x="120" y="58" width="52" height="16" fill="currentColor" opacity="0.35"/>
+      <rect x="120" y="82" width="128" height="16" fill="currentColor" opacity="0.35"/>
+      <rect x="120" y="106" width="24" height="16" fill="currentColor" opacity="0.35"/>
+      <rect x="120" y="130" width="212" height="16" fill="currentColor" opacity="0.35"/>
+    </g>
+    <g text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.8">
+      <text x="112" y="47">ch 0</text><text x="112" y="71">ch 1</text><text x="112" y="95">ch 2</text>
+      <text x="112" y="119">ch 3</text><text x="112" y="143">ch 4</text>
+    </g>
+    <line x1="560" y1="28" x2="560" y2="152" class="acc" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <text x="568" y="42" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">one per-tensor scale</text>
+    <text x="568" y="58" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">sized for ch 0</text>
+    <g font-family="IBM Plex Mono, monospace" font-size="10.5" class="accf">
+      <text x="180" y="71">≈ 30 of 256 levels used</text>
+      <text x="152" y="119">≈ 14 levels — near-total collapse</text>
+    </g>
+    <line x1="20" y1="172" x2="700" y2="172" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+    <text x="8" y="196" font-family="IBM Plex Sans Condensed, sans-serif" font-size="12.5" font-weight="600">Per-channel scales: one s per output channel, so every channel uses the full integer grid.</text>
+    <text x="8" y="216" font-family="IBM Plex Mono, monospace" opacity="0.8" font-size="9.19">Cost: a vector of requantization multipliers instead of one scalar — a few hundred bytes, no extra arithmetic in the inner loop.</text>
+    <text x="8" y="234" font-family="IBM Plex Mono, monospace" opacity="0.8" font-size="8.4">Activations stay per-tensor: their scale must be known before the sum, so a per-channel activation scale would break the shared accumulator.</text>
+  </g>
+</svg></div><figcaption><b>Fig 3.26</b>Why per-tensor quantization destroys depthwise layers. Because each depthwise channel is an independent filter, folding batch normalisation multiplies each channel by its own factor and spreads the ranges enormously. The fix is granularity, not more bits.</figcaption></figure>
+
+
+
+<h3 id="sec-3-26"><span class="sn">3.26</span>Calibration: choosing the clipping range</h3>
+<div class="tw"><table>
+<thead><tr><th>Method</th><th>Chooses α, β to…</th><th>Behaviour</th></tr></thead>
+<tbody>
+<tr><td>Min–max</td><td>cover the observed extremes</td><td>Safe but a single outlier ruins the scale</td></tr>
+<tr><td>Percentile (e.g. 99.99 %)</td><td>cover a quantile of the distribution</td><td>Robust; the percentile is a hyperparameter</td></tr>
+<tr><td>MSE / L2</td><td>minimise <span class="eqn">E[(x − x̂)²]</span> over candidate ranges</td><td>Principled default; cheap grid search per tensor</td></tr>
+<tr><td>KL divergence (entropy)</td><td>minimise divergence between the float and quantized distributions</td><td>TensorRT's classic method; effective on activations</td></tr>
+<tr><td>Moving average min–max</td><td>track ranges over batches during training</td><td>The standard for QAT</td></tr>
+</tbody>
+</table></div>
+<p class="tcap" id="tab-T8-2">Table 3.8 — Calibration criteria. A few hundred representative samples suffice; what matters is that they are <i>representative</i> — calibrating a keyword spotter on silence produces activation ranges that clip every real utterance.</p>
+<figure id="fig-weight_hist_quant"><div class="figscroll"><svg viewBox="0 0 720 320" role="img" aria-label="A weight histogram with a long tail, showing how a min-max clipping range wastes most of the integer levels on empty space while a percentile range keeps resolution where the weights actually are">
+  <line x1="62.0" y1="214.0" x2="560.0" y2="214.0" class="ax"/>
+  <line x1="62.0" y1="44.0" x2="62.0" y2="214.0" class="ax"/>
+  <line x1="84.6" y1="44.0" x2="84.6" y2="214.0" class="grid"/>
+  <line x1="84.6" y1="214.0" x2="84.6" y2="218.0" class="ax"/>
+  <text x="84.6" y="231.0" class="lbl" text-anchor="middle">-1</text>
+  <line x1="197.8" y1="44.0" x2="197.8" y2="214.0" class="grid"/>
+  <line x1="197.8" y1="214.0" x2="197.8" y2="218.0" class="ax"/>
+  <text x="197.8" y="231.0" class="lbl" text-anchor="middle">-0.5</text>
+  <line x1="311.0" y1="44.0" x2="311.0" y2="214.0" class="grid"/>
+  <line x1="311.0" y1="214.0" x2="311.0" y2="218.0" class="ax"/>
+  <text x="311.0" y="231.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="424.2" y1="44.0" x2="424.2" y2="214.0" class="grid"/>
+  <line x1="424.2" y1="214.0" x2="424.2" y2="218.0" class="ax"/>
+  <text x="424.2" y="231.0" class="lbl" text-anchor="middle">0.5</text>
+  <line x1="537.4" y1="44.0" x2="537.4" y2="214.0" class="grid"/>
+  <line x1="537.4" y1="214.0" x2="537.4" y2="218.0" class="ax"/>
+  <text x="537.4" y="231.0" class="lbl" text-anchor="middle">1</text>
+  <rect x="101.1" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="122.5" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="133.1" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="147.4" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="150.9" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="158.0" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="161.6" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="165.2" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="168.7" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="172.3" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="175.8" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="179.4" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="182.9" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="186.5" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="190.1" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="193.6" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="197.2" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="200.7" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="204.3" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="207.8" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="211.4" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="215.0" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="218.5" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="222.1" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="225.6" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="229.2" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="232.7" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="236.3" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="239.9" y="210.2" width="3.6" height="3.8" fill="currentColor" opacity="0.32"/>
+  <rect x="243.4" y="208.8" width="3.6" height="5.2" fill="currentColor" opacity="0.32"/>
+  <rect x="247.0" y="205.4" width="3.6" height="8.6" fill="currentColor" opacity="0.32"/>
+  <rect x="250.5" y="204.5" width="3.6" height="9.5" fill="currentColor" opacity="0.32"/>
+  <rect x="254.1" y="205.4" width="3.6" height="8.6" fill="currentColor" opacity="0.32"/>
+  <rect x="257.6" y="203.0" width="3.6" height="11.0" fill="currentColor" opacity="0.32"/>
+  <rect x="261.2" y="196.4" width="3.6" height="17.6" fill="currentColor" opacity="0.32"/>
+  <rect x="264.8" y="192.6" width="3.6" height="21.4" fill="currentColor" opacity="0.32"/>
+  <rect x="268.3" y="179.7" width="3.6" height="34.3" fill="currentColor" opacity="0.32"/>
+  <rect x="271.9" y="175.9" width="3.6" height="38.1" fill="currentColor" opacity="0.32"/>
+  <rect x="275.4" y="148.3" width="3.6" height="65.7" fill="currentColor" opacity="0.32"/>
+  <rect x="279.0" y="151.1" width="3.6" height="62.9" fill="currentColor" opacity="0.32"/>
+  <rect x="282.5" y="138.8" width="3.6" height="75.2" fill="currentColor" opacity="0.32"/>
+  <rect x="286.1" y="120.2" width="3.6" height="93.8" fill="currentColor" opacity="0.32"/>
+  <rect x="289.7" y="124.0" width="3.6" height="90.0" fill="currentColor" opacity="0.32"/>
+  <rect x="293.2" y="103.5" width="3.6" height="110.5" fill="currentColor" opacity="0.32"/>
+  <rect x="296.8" y="92.6" width="3.6" height="121.4" fill="currentColor" opacity="0.32"/>
+  <rect x="300.3" y="67.8" width="3.6" height="146.2" fill="currentColor" opacity="0.32"/>
+  <rect x="303.9" y="66.9" width="3.6" height="147.1" fill="currentColor" opacity="0.32"/>
+  <rect x="307.4" y="52.1" width="3.6" height="161.9" fill="currentColor" opacity="0.32"/>
+  <rect x="311.0" y="68.8" width="3.6" height="145.2" fill="currentColor" opacity="0.32"/>
+  <rect x="314.6" y="54.5" width="3.6" height="159.5" fill="currentColor" opacity="0.32"/>
+  <rect x="318.1" y="54.0" width="3.6" height="160.0" fill="currentColor" opacity="0.32"/>
+  <rect x="321.7" y="84.0" width="3.6" height="130.0" fill="currentColor" opacity="0.32"/>
+  <rect x="325.2" y="93.5" width="3.6" height="120.5" fill="currentColor" opacity="0.32"/>
+  <rect x="328.8" y="111.1" width="3.6" height="102.9" fill="currentColor" opacity="0.32"/>
+  <rect x="332.3" y="122.6" width="3.6" height="91.4" fill="currentColor" opacity="0.32"/>
+  <rect x="335.9" y="136.4" width="3.6" height="77.6" fill="currentColor" opacity="0.32"/>
+  <rect x="339.5" y="140.2" width="3.6" height="73.8" fill="currentColor" opacity="0.32"/>
+  <rect x="343.0" y="165.0" width="3.6" height="49.0" fill="currentColor" opacity="0.32"/>
+  <rect x="346.6" y="171.1" width="3.6" height="42.9" fill="currentColor" opacity="0.32"/>
+  <rect x="350.1" y="184.5" width="3.6" height="29.5" fill="currentColor" opacity="0.32"/>
+  <rect x="353.7" y="191.1" width="3.6" height="22.9" fill="currentColor" opacity="0.32"/>
+  <rect x="357.2" y="202.1" width="3.6" height="11.9" fill="currentColor" opacity="0.32"/>
+  <rect x="360.8" y="201.6" width="3.6" height="12.4" fill="currentColor" opacity="0.32"/>
+  <rect x="364.4" y="202.1" width="3.6" height="11.9" fill="currentColor" opacity="0.32"/>
+  <rect x="367.9" y="207.8" width="3.6" height="6.2" fill="currentColor" opacity="0.32"/>
+  <rect x="371.5" y="208.3" width="3.6" height="5.7" fill="currentColor" opacity="0.32"/>
+  <rect x="375.0" y="205.9" width="3.6" height="8.1" fill="currentColor" opacity="0.32"/>
+  <rect x="378.6" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="382.1" y="210.7" width="3.6" height="3.3" fill="currentColor" opacity="0.32"/>
+  <rect x="385.7" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="392.8" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="396.4" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="399.9" y="210.7" width="3.6" height="3.3" fill="currentColor" opacity="0.32"/>
+  <rect x="403.5" y="211.1" width="3.6" height="2.9" fill="currentColor" opacity="0.32"/>
+  <rect x="407.0" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="410.6" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="414.2" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="417.7" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="421.3" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="424.8" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="428.4" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="431.9" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="435.5" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="439.1" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="442.6" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="446.2" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="456.8" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="460.4" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="464.0" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="474.6" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="488.9" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="492.4" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="503.1" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="506.6" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="510.2" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="513.8" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="517.3" y="210.2" width="3.6" height="3.8" fill="currentColor" opacity="0.32"/>
+  <rect x="520.9" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="528.0" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="531.5" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="535.1" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="538.7" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="545.8" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <line x1="84.6" y1="44.0" x2="84.6" y2="214.0" class="acc" stroke-width="1.8" stroke-dasharray="5 3"/>
+  <line x1="537.4" y1="44.0" x2="537.4" y2="214.0" class="acc" stroke-width="1.8" stroke-dasharray="5 3"/>
+  <line x1="115.1" y1="44.0" x2="115.1" y2="214.0" class="tl" stroke-width="1.8"/>
+  <line x1="556.7" y1="44.0" x2="556.7" y2="214.0" class="tl" stroke-width="1.8"/>
+  <text x="89.6" y="38.0" class="lblb" fill="var(--copper)">min–max range</text>
+  <text x="551.7" y="38.0" class="lblb" text-anchor="end" fill="var(--teal)">99.99th percentile</text>
+  <line x1="84.6" y1="222.0" x2="84.6" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="112.9" y1="222.0" x2="112.9" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="141.2" y1="222.0" x2="141.2" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="169.5" y1="222.0" x2="169.5" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="197.8" y1="222.0" x2="197.8" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="226.1" y1="222.0" x2="226.1" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="254.4" y1="222.0" x2="254.4" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="282.7" y1="222.0" x2="282.7" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="311.0" y1="222.0" x2="311.0" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="339.3" y1="222.0" x2="339.3" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="367.6" y1="222.0" x2="367.6" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="395.9" y1="222.0" x2="395.9" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="424.2" y1="222.0" x2="424.2" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="452.5" y1="222.0" x2="452.5" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="480.8" y1="222.0" x2="480.8" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="509.1" y1="222.0" x2="509.1" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="537.4" y1="222.0" x2="537.4" y2="232.0" class="acc" opacity="0.8"/>
+  <text x="566.0" y="226.0" class="lbl" fill="var(--copper)">16 of 256 levels</text>
+  <text x="566.0" y="242.0" class="lbl" fill="var(--copper)">shown, min–max</text>
+  <text x="62.0" y="260.0" class="lbl">25 outlier weights near 0.9 stretch the min–max range by 3×,</text>
+  <text x="62.0" y="278.0" class="lbl">so the 5 000 weights near zero get a third of the resolution they could have had.</text>
+  <text x="62.0" y="302.0" class="lblb" fill="var(--copper)">Clipping those 25 costs 25 large errors. Not clipping them costs a small error on all 5 425.</text>
+</svg></div><figcaption><b>Fig 3.27</b>Calibration is a bias–variance trade in disguise, and this histogram is why it has no universal answer. Choosing the range is choosing between a few large clipping errors and a small rounding error on everything. Which is worse depends on the layer — hence per-tensor criteria such as MSE or KL divergence rather than a single global rule.</figcaption></figure>
+
+<div class="widget">
+ <header><b>Interactive</b><span>Quantization playground — a real heavy-tailed weight tensor</span></header>
+ <div class="wbody">
+  <div class="ctrls">
+   <div class="ctrl"><label for="q-bits">bit width <b id="q-bits-v">8 bits</b></label><input type="range" id="q-bits" min="2" max="12" step="1" value="8"></div>
+   <div class="ctrl"><label for="q-mode">calibration</label>
+     <select id="q-mode"><option value="pct">percentile clipping</option><option value="mm">min–max</option></select></div>
+   <div class="ctrl"><label for="q-clip">kept mass <b id="q-clip-v">99.9 %</b></label><input type="range" id="q-clip" min="900" max="1000" step="1" value="999"></div>
+  </div>
+  <div id="q-plot"></div>
+  <div class="readout">
+   <div><b>step size s</b><span id="q-step">–</span></div>
+   <div><b>SQNR</b><span id="q-sqnr" class="hi">–</span></div>
+   <div><b>weights clipped</b><span id="q-clipped">–</span></div>
+   <div><b>storage</b><span id="q-size">–</span></div>
+  </div>
+  <div class="verdict" id="q-verdict">…</div>
+  <p class="wnote">Compare min–max with a 99.9&nbsp;% clip at 3–4 bits, then at 8 bits: clipping wins when levels are scarce and loses when they are plentiful, because the clipped outliers carry real signal. That trade is the whole argument for choosing the range per tensor by an explicit criterion — and it costs nothing at inference.</p>
+ </div>
+</div>
+<figure id="fig-sqnr_calib"><div class="figscroll"><svg viewBox="0 0 720 316" role="img" aria-label="Signal to quantization noise ratio against bit width for one heavy-tailed weight tensor under three range-selection rules: min-max, a fixed 99.95th-percentile clip, and an MSE-optimal clipping search">
+  <line x1="70.0" y1="236.0" x2="470.0" y2="236.0" class="ax"/>
+  <line x1="70.0" y1="40.0" x2="70.0" y2="236.0" class="ax"/>
+  <line x1="70.0" y1="40.0" x2="70.0" y2="236.0" class="grid"/>
+  <line x1="70.0" y1="236.0" x2="70.0" y2="240.0" class="ax"/>
+  <text x="70.0" y="252.0" class="lbl" text-anchor="middle">2</text>
+  <line x1="150.0" y1="40.0" x2="150.0" y2="236.0" class="grid"/>
+  <line x1="150.0" y1="236.0" x2="150.0" y2="240.0" class="ax"/>
+  <text x="150.0" y="252.0" class="lbl" text-anchor="middle">4</text>
+  <line x1="230.0" y1="40.0" x2="230.0" y2="236.0" class="grid"/>
+  <line x1="230.0" y1="236.0" x2="230.0" y2="240.0" class="ax"/>
+  <text x="230.0" y="252.0" class="lbl" text-anchor="middle">6</text>
+  <line x1="310.0" y1="40.0" x2="310.0" y2="236.0" class="grid"/>
+  <line x1="310.0" y1="236.0" x2="310.0" y2="240.0" class="ax"/>
+  <text x="310.0" y="252.0" class="lbl" text-anchor="middle">8</text>
+  <line x1="390.0" y1="40.0" x2="390.0" y2="236.0" class="grid"/>
+  <line x1="390.0" y1="236.0" x2="390.0" y2="240.0" class="ax"/>
+  <text x="390.0" y="252.0" class="lbl" text-anchor="middle">10</text>
+  <line x1="470.0" y1="40.0" x2="470.0" y2="236.0" class="grid"/>
+  <line x1="470.0" y1="236.0" x2="470.0" y2="240.0" class="ax"/>
+  <text x="470.0" y="252.0" class="lbl" text-anchor="middle">12</text>
+  <line x1="70.0" y1="220.5" x2="470.0" y2="220.5" class="grid"/>
+  <line x1="66.0" y1="220.5" x2="70.0" y2="220.5" class="ax"/>
+  <text x="63.0" y="224.1" class="lbl" text-anchor="end">0</text>
+  <line x1="70.0" y1="168.9" x2="470.0" y2="168.9" class="grid"/>
+  <line x1="66.0" y1="168.9" x2="70.0" y2="168.9" class="ax"/>
+  <text x="63.0" y="172.5" class="lbl" text-anchor="end">20</text>
+  <line x1="70.0" y1="117.4" x2="470.0" y2="117.4" class="grid"/>
+  <line x1="66.0" y1="117.4" x2="70.0" y2="117.4" class="ax"/>
+  <text x="63.0" y="121.0" class="lbl" text-anchor="end">40</text>
+  <line x1="70.0" y1="65.8" x2="470.0" y2="65.8" class="grid"/>
+  <line x1="66.0" y1="65.8" x2="70.0" y2="65.8" class="ax"/>
+  <text x="63.0" y="69.4" class="lbl" text-anchor="end">60</text>
+  <text x="270.0" y="269.0" class="lbl" text-anchor="middle">bit width</text>
+  <text x="26.0" y="138.0" class="lbl" text-anchor="middle" transform="rotate(-90 26.0 138.0)">SQNR (dB)</text>
+  <path d="M70.0 230.0 L110.0 206.8 L150.0 190.8 L190.0 174.3 L230.0 158.6 L270.0 142.7 L310.0 127.4 L350.0 111.5 L390.0 96.0 L430.0 80.4 L470.0 65.0" class="ser" stroke-width="2"/>
+  <path d="M70.0 226.9 L110.0 204.8 L150.0 188.3 L190.0 172.0 L230.0 156.8 L270.0 142.7 L310.0 132.1 L350.0 126.6 L390.0 124.8 L430.0 124.2 L470.0 124.1" class="tl" stroke-width="2" stroke-dasharray="5 3"/>
+  <path d="M70.0 207.1 L110.0 197.0 L150.0 184.4 L190.0 170.6 L230.0 156.6 L270.0 142.1 L310.0 127.2 L350.0 111.4 L390.0 96.0 L430.0 80.4 L470.0 65.0" class="acc" stroke-width="2.4"/>
+  <circle cx="70.0" cy="230.0" r="2.6" fill="currentColor"/>
+  <circle cx="110.0" cy="206.8" r="2.6" fill="currentColor"/>
+  <circle cx="150.0" cy="190.8" r="2.6" fill="currentColor"/>
+  <circle cx="190.0" cy="174.3" r="2.6" fill="currentColor"/>
+  <circle cx="230.0" cy="158.6" r="2.6" fill="currentColor"/>
+  <circle cx="270.0" cy="142.7" r="2.6" fill="currentColor"/>
+  <circle cx="310.0" cy="127.4" r="2.6" fill="currentColor"/>
+  <circle cx="350.0" cy="111.5" r="2.6" fill="currentColor"/>
+  <circle cx="390.0" cy="96.0" r="2.6" fill="currentColor"/>
+  <circle cx="430.0" cy="80.4" r="2.6" fill="currentColor"/>
+  <circle cx="470.0" cy="65.0" r="2.6" fill="currentColor"/>
+  <circle cx="70.0" cy="226.9" r="2.6" class="tlf"/>
+  <circle cx="110.0" cy="204.8" r="2.6" class="tlf"/>
+  <circle cx="150.0" cy="188.3" r="2.6" class="tlf"/>
+  <circle cx="190.0" cy="172.0" r="2.6" class="tlf"/>
+  <circle cx="230.0" cy="156.8" r="2.6" class="tlf"/>
+  <circle cx="270.0" cy="142.7" r="2.6" class="tlf"/>
+  <circle cx="310.0" cy="132.1" r="2.6" class="tlf"/>
+  <circle cx="350.0" cy="126.6" r="2.6" class="tlf"/>
+  <circle cx="390.0" cy="124.8" r="2.6" class="tlf"/>
+  <circle cx="430.0" cy="124.2" r="2.6" class="tlf"/>
+  <circle cx="470.0" cy="124.1" r="2.6" class="tlf"/>
+  <circle cx="70.0" cy="207.1" r="2.6" class="accf"/>
+  <circle cx="110.0" cy="197.0" r="2.6" class="accf"/>
+  <circle cx="150.0" cy="184.4" r="2.6" class="accf"/>
+  <circle cx="190.0" cy="170.6" r="2.6" class="accf"/>
+  <circle cx="230.0" cy="156.6" r="2.6" class="accf"/>
+  <circle cx="270.0" cy="142.1" r="2.6" class="accf"/>
+  <circle cx="310.0" cy="127.2" r="2.6" class="accf"/>
+  <circle cx="350.0" cy="111.4" r="2.6" class="accf"/>
+  <circle cx="390.0" cy="96.0" r="2.6" class="accf"/>
+  <circle cx="430.0" cy="80.4" r="2.6" class="accf"/>
+  <circle cx="470.0" cy="65.0" r="2.6" class="accf"/>
+  <text x="478.0" y="61.0" class="lblb accf">MSE-optimal</text>
+  <text x="478.0" y="79.0" class="lblb">min–max</text>
+  <text x="478.0" y="128.1" class="lblb tlf">percentile 99.95</text>
+  <line x1="70.0" y1="230.0" x2="70.0" y2="207.1" class="acc" stroke-width="1.2"/>
+  <text x="80.0" y="197.1" class="lbl accf">+8.9 dB at 2 bits</text>
+  <text x="70.0" y="24.0" class="lbl">one heavy-tailed weight tensor (5 425 values), three ways to choose the range</text>
+  <text x="70.0" y="290.0" class="lblb">Clipping pays when levels are scarce (+8.9 dB at 2 bits, +2.5 at 4) and costs when they are</text>
+  <text x="70.0" y="306.0" class="lbl">plentiful: a fixed percentile clip saturates, because its clipping error never shrinks.</text>
+</svg></div><figcaption><b>Fig 3.28</b>Why calibration is a choice, not a detail. The same heavy-tailed tensor quantized with three range-selection rules. When levels are scarce, clipping the tail pays: an MSE-optimal range search gains 8.9 dB over min–max at 2 bits and 2.5 dB at 4. When levels are plentiful, the clipped outliers carry real signal: a fixed 99.95th-percentile clip saturates near 37 dB while min–max keeps improving by 6 dB per bit. No fixed rule is best everywhere — which is why toolchains choose the range per tensor by an explicit criterion such as MSE. Per-layer SQNR is also the cheapest diagnostic you have: find the layer where it collapses and you have localised the quantization problem.</figcaption></figure>
+
+
+
+
+<h3 id="sec-3-27"><span class="sn">3.27</span>Advanced post-training quantization</h3>
+<p><b>Cross-layer equalisation.</b> A positively-homogeneous activation such as ReLU satisfies <span class="eqn">f(αx) = αf(x)</span> for <span class="eqn">α &gt; 0</span>. So for two consecutive layers you may scale the output channels of the first by a diagonal <span class="eqn">S</span> and the corresponding input channels of the second by <span class="eqn">S<sup>−1</sup></span> without changing the function at all. Choosing <span class="eqn">S</span> to equalise the per-channel ranges makes the network far more amenable to per-tensor quantization — a data-free transformation that recovers most of the gap on MobileNet-class models (Nagel et al., ICCV 2019).</p>
+<p><b>Bias correction.</b> Quantization error has a non-zero mean per channel, <span class="eqn">E[ΔW·x] = ΔW·E[x] ≠ 0</span>, which shifts every output. Subtracting this expected shift from the bias — using either real data or the batch-norm statistics already stored in the model — removes a systematic error for free.</p>
+<div class="derive">
+<h5>AdaRound: rounding is a decision, not a function</h5>
+<p>Rounding to nearest minimises the error <i>of each weight independently</i>. But we do not care about weight error; we care about the error in the layer's <i>output</i>. A second-order expansion of the task loss around the trained weights shows that the relevant quantity couples weights through the Hessian, so the per-weight-optimal rounding is not the jointly-optimal one. AdaRound (Nagel et al., ICML 2020) therefore learns, per weight, whether to round up or down, by optimising a layer-wise reconstruction objective</p>
+<div class="eq">min over V   ‖ W x − Ŵ(V) x ‖²  +  λ · f_reg(V)
+Ŵ(V) = s · clamp( ⌊W/s⌋ + h(V) , Q_min , Q_max )</div>
+<p>where <span class="eqn">h(V) ∈ [0,1]</span> is a differentiable relaxation of the rounding decision and the regulariser pushes it toward 0 or 1 by the end of optimisation. It needs no labels and only a small calibration set — a striking amount of accuracy recovered for a few minutes of per-layer optimisation, and the reason "PTQ" now means something much stronger than min–max rounding.</p>
+</div>
+
+
+
+<h3 id="sec-3-28"><span class="sn">3.28</span>Quantization-aware training</h3>
+<p>When PTQ is not enough — sub-8-bit weights, activation-sensitive architectures, tight accuracy requirements — simulate quantization during training.</p>
+<p><b>Fake quantization.</b> Insert <span class="eqn">x̂ = s·(clamp(round(x/s)+z) − z)</span> into the forward pass while keeping a float32 master copy of the weights. The forward pass now sees the quantization error, so the optimiser can route around it.</p>
+<div class="derive">
+<h5>The straight-through estimator</h5>
+<p><span class="eqn">round(·)</span> has zero derivative almost everywhere, so the gradient would vanish. The straight-through estimator (Bengio et al., 2013) simply defines the backward pass of the rounding node to be the identity inside the clipping range and zero outside:</p>
+<div class="eq">∂x̂/∂x  :=  1   if  Q_min ≤ x/s + z ≤ Q_max
+           0   otherwise</div>
+<p>This is a biased estimator of a gradient that does not exist — and it works, reliably, which is one of the more interesting unexplained facts in the area. Note the clipping behaviour: weights pushed outside the range receive no gradient and can never come back, so range selection interacts with trainability.</p>
+<p><b>Learned step size quantization (LSQ).</b> Esser et al. (ICLR 2020) treat the step size <span class="eqn">s</span> as a trained parameter, differentiating through the quantizer with respect to <span class="eqn">s</span>:</p>
+<div class="eq">∂x̂/∂s = −x/s + round(x/s)   inside the range
+       = Q_min  or  Q_max      outside</div>
+<p>with a gradient scale of <span class="eqn">1/√(N·Q<sub>max</sub>)</span> to balance the step-size gradient against the weight gradients. LSQ reaches state-of-the-art accuracy at 2–4 bits and made low-bit QAT routine rather than heroic.</p>
+</div>
+<p><b>Practicalities.</b> Batch norm must be folded during QAT, not after, or training and inference graphs differ. Freeze the batch-norm statistics part-way through. Start from a trained float model — QAT from scratch is slower and no better. Budget 10–20&nbsp;% of the original training epochs.</p>
+
+
+
+<h3 id="sec-3-29"><span class="sn">3.29</span>Below 8 bits, and mixed precision</h3>
+<p>Weights tolerate low precision better than activations, because activations must accommodate input-dependent outliers while weights are fixed after training. Hence the standard asymmetry: 4-bit weights with 8-bit activations (W4A8) is often nearly free with a good method, while 4-bit activations usually requires QAT. Binary and ternary networks (BinaryConnect, XNOR-Net) reduce the multiply to a sign flip and are compelling on FPGAs, at an accuracy cost that is small on easy tasks and large on hard ones.</p>
+<p><b>Mixed precision</b> assigns different bit widths to different layers according to sensitivity. Sensitivity can be measured directly (quantize one layer at a time and record the accuracy drop) or estimated from second-order information — layers with large Hessian eigenvalues are more sensitive, the basis of the HAWQ family of methods. The practical recipe: measure per-layer sensitivity, keep the first and last layers at higher precision (they usually are the most sensitive, and they are usually small), and spend the remaining budget where the sensitivity curve is flattest.</p>
+
+<div class="box">
+<h5>Quantization bugs, in order of how often they occur</h5>
+<ol>
+  <li>Calibration data unrepresentative of deployment — the single most common cause of "quantization broke my model".</li>
+  <li>Per-tensor scales on a depthwise-separable architecture (<a class="xref" href="#sec-3-25">§3.25</a>).</li>
+  <li>Batch norm not folded, or folded after calibration rather than before.</li>
+  <li>Biases quantized to 8 bits instead of 32.</li>
+  <li>Concatenation of tensors with different scales without re-scaling — a silent accuracy loss with no error message.</li>
+  <li>Accuracy measured on the float model but latency on the quantized one, or vice versa.</li>
+  <li>Residual additions where the two branches carry different scales.</li>
+</ol>
+<p>Diagnose by computing per-layer signal-to-quantization-noise ratio, <span class="eqn">10 log₁₀(‖y‖²/‖y − ŷ‖²)</span>, on a calibration batch and finding the first layer where it collapses. Debugging quantization is a localisation problem, and this is the localiser.</p>
+</div>
+
+
+
+
+<h2 class="part"><span>Part G</span>Pruning, sparsity and low rank</h2>
+<div class="intu">
+<h5>In one sentence</h5>
+<p>Removing weights is easy and removing them <i>usefully</i> is hard: the sparsity pattern that costs the least accuracy is exactly the pattern that no ordinary processor can exploit.</p>
+</div>
+
+<h3 id="sec-3-30"><span class="sn">3.30</span>Taxonomy</h3>
+
+<figure id="fig-sparsity_tax"><div class="figscroll"><svg viewBox="0 0 720 250" role="img" aria-label="Three weight matrices showing unstructured sparsity as scattered removed entries, N to M sparsity as two of every four entries removed within each group, and structured sparsity as whole columns removed, with the resulting hardware benefit annotated under each">
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <!-- unstructured -->
+    <text x="102" y="20" text-anchor="middle" font-weight="600">Unstructured</text>
+    <g stroke="currentColor" stroke-width="0.7" opacity="0.55" fill="none">
+      <rect x="30" y="32" width="144" height="144"/>
+      <line x1="30" y1="68" x2="174" y2="68"/><line x1="30" y1="104" x2="174" y2="104"/><line x1="30" y1="140" x2="174" y2="140"/>
+      <line x1="66" y1="32" x2="66" y2="176"/><line x1="102" y1="32" x2="102" y2="176"/><line x1="138" y1="32" x2="138" y2="176"/>
+    </g>
+    <g fill="currentColor" opacity="0.35">
+      <rect x="30" y="32" width="36" height="36"/><rect x="102" y="32" width="36" height="36"/>
+      <rect x="66" y="68" width="36" height="36"/><rect x="138" y="68" width="36" height="36"/>
+      <rect x="30" y="104" width="36" height="36"/><rect x="102" y="104" width="36" height="36"/>
+      <rect x="66" y="140" width="36" height="36"/><rect x="102" y="140" width="36" height="36"/>
+    </g>
+    <text x="102" y="198" text-anchor="middle" font-family="IBM Plex Mono, monospace" opacity="0.8" font-size="9.46">highest accuracy per weight removed</text>
+    <text x="102" y="214" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" class="accf">needs indices; rarely faster</text>
+
+    <!-- N:M -->
+    <text x="332" y="20" text-anchor="middle" font-weight="600">2:4 semi-structured</text>
+    <g stroke="currentColor" stroke-width="0.7" opacity="0.55" fill="none">
+      <rect x="260" y="32" width="144" height="144"/>
+      <line x1="260" y1="68" x2="404" y2="68"/><line x1="260" y1="104" x2="404" y2="104"/><line x1="260" y1="140" x2="404" y2="140"/>
+      <line x1="296" y1="32" x2="296" y2="176"/><line x1="332" y1="32" x2="332" y2="176"/><line x1="368" y1="32" x2="368" y2="176"/>
+    </g>
+    <g fill="currentColor" opacity="0.35">
+      <rect x="260" y="32" width="36" height="36"/><rect x="332" y="32" width="36" height="36"/>
+      <rect x="296" y="68" width="36" height="36"/><rect x="368" y="68" width="36" height="36"/>
+      <rect x="260" y="104" width="36" height="36"/><rect x="368" y="104" width="36" height="36"/>
+      <rect x="296" y="140" width="36" height="36"/><rect x="332" y="140" width="36" height="36"/>
+    </g>
+    <g class="acc" stroke-width="1.6" fill="none">
+      <rect x="260" y="32" width="144" height="36"/>
+    </g>
+    <text x="416" y="54" font-family="IBM Plex Mono, monospace" font-size="10.5" class="accf">exactly 2 of every 4</text>
+    <text x="332" y="198" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.8">fixed pattern, small metadata</text>
+    <text x="332" y="214" text-anchor="middle" font-family="IBM Plex Mono, monospace" class="tlf" font-size="9.7">real speedup where hardware supports it</text>
+
+    <!-- structured -->
+    <text x="562" y="20" text-anchor="middle" font-weight="600">Structured (channels)</text>
+    <g stroke="currentColor" stroke-width="0.7" opacity="0.55" fill="none">
+      <rect x="490" y="32" width="144" height="144"/>
+      <line x1="490" y1="68" x2="634" y2="68"/><line x1="490" y1="104" x2="634" y2="104"/><line x1="490" y1="140" x2="634" y2="140"/>
+      <line x1="526" y1="32" x2="526" y2="176"/><line x1="562" y1="32" x2="562" y2="176"/><line x1="598" y1="32" x2="598" y2="176"/>
+    </g>
+    <g fill="currentColor" opacity="0.35">
+      <rect x="526" y="32" width="36" height="144"/><rect x="598" y="32" width="36" height="144"/>
+    </g>
+    <text x="562" y="198" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.8">result is a smaller <tspan font-weight="600">dense</tspan> network</text>
+    <text x="562" y="214" text-anchor="middle" font-family="IBM Plex Mono, monospace" class="tlf" font-size="9.7">speedup everywhere, no special support</text>
+
+    <text x="360" y="242" text-anchor="middle" font-family="IBM Plex Sans Condensed, sans-serif" font-size="12.5" font-weight="600">Accuracy per removed weight falls left to right. Realised speedup rises left to right. Choose by which you are short of.</text>
+  </g>
+</svg></div><figcaption><b>Fig 3.29</b>The three sparsity regimes. Shaded cells are pruned. Unstructured pruning removes the most parameters for a given accuracy but produces a matrix no ordinary kernel can exploit; structured pruning removes whole channels and yields a smaller dense model that every runtime already handles; N:M is the engineered compromise that some hardware decodes directly.</figcaption></figure>
+<figure id="fig-sparsity_accuracy"><div class="figscroll"><svg viewBox="0 0 720 300" role="img" aria-label="Schematic accuracy against sparsity for unstructured and structured pruning, with the region below fifty percent sparsity shaded where an int8 sparse format with 8-bit indices is larger than the dense tensor">
+  <rect x="66.0" y="40.0" width="137.7" height="182.0" class="accf" opacity="0.12"/>
+  <line x1="203.7" y1="40.0" x2="203.7" y2="222.0" class="acc" stroke-dasharray="5 3" stroke-width="1.5"/>
+  <line x1="66.0" y1="222.0" x2="470.0" y2="222.0" class="ax"/>
+  <line x1="66.0" y1="40.0" x2="66.0" y2="222.0" class="ax"/>
+  <line x1="66.0" y1="40.0" x2="66.0" y2="222.0" class="grid"/>
+  <text x="66.0" y="238.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="129.6" y1="40.0" x2="129.6" y2="222.0" class="grid"/>
+  <text x="129.6" y="238.0" class="lbl" text-anchor="middle">25</text>
+  <line x1="203.7" y1="40.0" x2="203.7" y2="222.0" class="grid"/>
+  <text x="203.7" y="238.0" class="lbl" text-anchor="middle">50</text>
+  <line x1="297.8" y1="40.0" x2="297.8" y2="222.0" class="grid"/>
+  <text x="297.8" y="238.0" class="lbl" text-anchor="middle">75</text>
+  <line x1="378.1" y1="40.0" x2="378.1" y2="222.0" class="grid"/>
+  <text x="378.1" y="238.0" class="lbl" text-anchor="middle">90</text>
+  <line x1="466.0" y1="40.0" x2="466.0" y2="222.0" class="grid"/>
+  <text x="466.0" y="238.0" class="lbl" text-anchor="middle">99</text>
+  <line x1="66.0" y1="198.1" x2="470.0" y2="198.1" class="grid"/>
+  <text x="60.0" y="202.1" class="lbl" text-anchor="end">45</text>
+  <line x1="66.0" y1="150.2" x2="470.0" y2="150.2" class="grid"/>
+  <text x="60.0" y="154.2" class="lbl" text-anchor="end">55</text>
+  <line x1="66.0" y1="102.3" x2="470.0" y2="102.3" class="grid"/>
+  <text x="60.0" y="106.3" class="lbl" text-anchor="end">65</text>
+  <line x1="66.0" y1="54.4" x2="470.0" y2="54.4" class="grid"/>
+  <text x="60.0" y="58.4" class="lbl" text-anchor="end">75</text>
+  <path d="M66.0 49.6 L67.2 49.6 L68.4 49.6 L69.6 49.6 L70.8 49.6 L72.0 49.6 L73.2 49.6 L74.4 49.6 L75.6 49.6 L76.8 49.6 L78.0 49.6 L79.2 49.6 L80.5 49.6 L81.7 49.6 L82.9 49.6 L84.1 49.6 L85.4 49.6 L86.6 49.6 L87.9 49.6 L89.1 49.6 L90.3 49.6 L91.6 49.6 L92.8 49.6 L94.1 49.6 L95.3 49.6 L96.6 49.6 L97.9 49.6 L99.1 49.6 L100.4 49.6 L101.7 49.6 L103.0 49.6 L104.2 49.6 L105.5 49.6 L106.8 49.6 L108.1 49.6 L109.4 49.6 L110.7 49.6 L112.0 49.6 L113.3 49.6 L114.6 49.6 L115.9 49.6 L117.2 49.6 L118.6 49.6 L119.9 49.6 L121.2 49.6 L122.5 49.6 L123.9 49.6 L125.2 49.6 L126.5 49.6 L127.9 49.6 L129.2 49.6 L130.6 49.6 L132.0 49.6 L133.3 49.6 L134.7 49.6 L136.1 49.6 L137.4 49.6 L138.8 49.6 L140.2 49.6 L141.6 49.6 L143.0 49.6 L144.4 49.6 L145.8 49.6 L147.2 49.6 L148.6 49.6 L150.0 49.6 L151.4 49.6 L152.9 49.6 L154.3 49.6 L155.7 49.6 L157.2 49.6 L158.6 49.6 L160.0 49.6 L161.5 49.6 L163.0 49.6 L164.4 49.6 L165.9 49.6 L167.4 49.6 L168.8 49.6 L170.3 49.6 L171.8 49.6 L173.3 49.6 L174.8 49.6 L176.3 49.6 L177.8 49.6 L179.4 49.6 L180.9 49.6 L182.4 49.6 L184.0 49.6 L185.5 49.6 L187.1 49.6 L188.6 49.6 L190.2 49.6 L191.7 49.6 L193.3 49.6 L194.9 49.6 L196.5 49.6 L198.1 49.6 L199.7 49.6 L201.3 49.6 L202.9 49.6 L204.5 49.6 L206.2 49.6 L207.8 49.6 L209.5 49.6 L211.1 49.6 L212.8 49.6 L214.4 49.6 L216.1 49.6 L217.8 49.6 L219.5 49.6 L221.2 49.6 L222.9 49.6 L224.6 49.6 L226.4 49.6 L228.1 49.6 L229.8 49.6 L231.6 49.6 L233.4 49.6 L235.1 49.6 L236.9 49.6 L238.7 49.6 L240.5 49.6 L242.3 49.6 L244.2 49.6 L246.0 49.6 L247.8 49.6 L249.7 49.6 L251.6 49.6 L253.5 49.6 L255.3 49.6 L257.3 49.6 L259.2 49.6 L261.1 49.6 L263.0 49.6 L265.0 49.6 L267.0 49.6 L269.0 49.6 L270.9 49.6 L273.0 49.6 L275.0 49.6 L277.0 49.6 L279.1 49.6 L281.2 49.7 L283.2 49.9 L285.3 50.1 L287.5 50.5 L289.6 50.9 L291.8 51.4 L293.9 51.9 L296.1 52.6 L298.3 53.4 L300.6 54.2 L302.8 55.2 L305.1 56.3 L307.4 57.4 L309.7 58.7 L312.1 60.0 L314.4 61.5 L316.8 63.0 L319.2 64.7 L321.7 66.5 L324.2 68.4 L326.7 70.4 L329.2 72.5 L331.8 74.7 L334.3 77.0 L337.0 79.5 L339.6 82.1 L342.3 84.7 L345.1 87.5 L347.9 90.4 L350.7 93.5 L353.5 96.6 L356.4 99.9 L359.4 103.2 L362.4 106.7 L365.5 110.4 L368.6 114.1 L371.8 118.0 L375.0 122.0 L378.4 126.1 L381.8 130.3 L385.2 134.7 L388.8 139.2 L392.5 143.8 L396.2 148.5 L400.1 153.4 L404.1 158.4 L408.3 163.5 L412.6 168.8 L417.1 174.2 L421.7 179.7 L426.7 185.4 L431.9 191.1 L437.5 197.0 L443.5 203.1 L450.1 209.3 L457.4 215.6 L466.0 222.0" class="ser" stroke-width="2.2"/>
+  <path d="M66.0 49.6 L67.2 49.6 L68.4 49.6 L69.6 49.6 L70.8 49.6 L72.0 49.6 L73.2 49.6 L74.4 49.6 L75.6 49.6 L76.8 49.6 L78.0 49.6 L79.2 49.6 L80.5 49.6 L81.7 49.6 L82.9 49.6 L84.1 49.6 L85.4 49.6 L86.6 49.6 L87.9 49.6 L89.1 49.6 L90.3 49.6 L91.6 49.6 L92.8 49.6 L94.1 49.6 L95.3 49.6 L96.6 49.6 L97.9 49.6 L99.1 49.6 L100.4 49.6 L101.7 49.6 L103.0 49.6 L104.2 49.6 L105.5 49.6 L106.8 49.6 L108.1 49.6 L109.4 49.6 L110.7 49.6 L112.0 49.6 L113.3 49.6 L114.6 49.6 L115.9 49.6 L117.2 49.6 L118.6 49.6 L119.9 49.6 L121.2 49.6 L122.5 49.6 L123.9 49.6 L125.2 49.6 L126.5 49.6 L127.9 49.6 L129.2 49.6 L130.6 49.6 L132.0 49.6 L133.3 49.6 L134.7 49.6 L136.1 49.6 L137.4 49.6 L138.8 49.6 L140.2 49.6 L141.6 49.6 L143.0 49.6 L144.4 49.6 L145.8 49.7 L147.2 49.9 L148.6 50.1 L150.0 50.4 L151.4 50.8 L152.9 51.2 L154.3 51.6 L155.7 52.1 L157.2 52.7 L158.6 53.3 L160.0 53.9 L161.5 54.6 L163.0 55.3 L164.4 56.1 L165.9 56.9 L167.4 57.8 L168.8 58.7 L170.3 59.7 L171.8 60.7 L173.3 61.7 L174.8 62.8 L176.3 63.9 L177.8 65.0 L179.4 66.2 L180.9 67.5 L182.4 68.8 L184.0 70.1 L185.5 71.4 L187.1 72.8 L188.6 74.2 L190.2 75.7 L191.7 77.2 L193.3 78.7 L194.9 80.3 L196.5 81.9 L198.1 83.6 L199.7 85.3 L201.3 87.0 L202.9 88.7 L204.5 90.5 L206.2 92.4 L207.8 94.2 L209.5 96.1 L211.1 98.1 L212.8 100.0 L214.4 102.0 L216.1 104.1 L217.8 106.1 L219.5 108.2 L221.2 110.4 L222.9 112.6 L224.6 114.8 L226.4 117.0 L228.1 119.3 L229.8 121.6 L231.6 124.0 L233.4 126.3 L235.1 128.7 L236.9 131.2 L238.7 133.7 L240.5 136.2 L242.3 138.7 L244.2 141.3 L246.0 143.9 L247.8 146.5 L249.7 149.2 L251.6 151.9 L253.5 154.7 L255.3 157.4 L257.3 160.2 L259.2 163.1 L261.1 165.9 L263.0 168.8 L265.0 171.7 L267.0 174.7 L269.0 177.7 L270.9 180.7 L273.0 183.8 L275.0 186.9 L277.0 190.0 L279.1 193.1 L281.2 196.3 L283.2 199.5 L285.3 202.8 L287.5 206.0 L289.6 209.3 L291.8 212.7 L293.9 216.0 L296.1 219.4 L298.3 222.0 L300.6 222.0 L302.8 222.0 L305.1 222.0 L307.4 222.0 L309.7 222.0 L312.1 222.0 L314.4 222.0 L316.8 222.0 L319.2 222.0 L321.7 222.0 L324.2 222.0 L326.7 222.0 L329.2 222.0 L331.8 222.0 L334.3 222.0 L337.0 222.0 L339.6 222.0 L342.3 222.0 L345.1 222.0 L347.9 222.0 L350.7 222.0 L353.5 222.0 L356.4 222.0 L359.4 222.0 L362.4 222.0 L365.5 222.0 L368.6 222.0 L371.8 222.0 L375.0 222.0 L378.4 222.0 L381.8 222.0 L385.2 222.0 L388.8 222.0 L392.5 222.0 L396.2 222.0 L400.1 222.0 L404.1 222.0 L408.3 222.0 L412.6 222.0 L417.1 222.0 L421.7 222.0 L426.7 222.0 L431.9 222.0 L437.5 222.0 L443.5 222.0 L450.1 222.0 L457.4 222.0 L466.0 222.0" class="tl" stroke-width="2.2"/>
+  <text x="321.2" y="41.6" class="lblb" text-anchor="end">unstructured</text>
+  <text x="230.9" y="164.5" class="lblb tlf">structured (channels)</text>
+  <text x="129.6" y="188.5" class="lblb accf" text-anchor="middle">int8 + 8-bit index:</text>
+  <text x="129.6" y="203.5" class="lblb accf" text-anchor="middle">sparse format is BIGGER</text>
+  <text x="268.0" y="255.0" class="lbl" text-anchor="middle">sparsity — % of weights removed</text>
+  <text x="24" y="131" class="lbl" text-anchor="middle" transform="rotate(-90 24 131)">accuracy (%)</text>
+  <text x="66.0" y="26.0" class="lbl">schematic shapes — the crossover position is what matters, not the exact values</text>
+  <text x="490.0" y="80.0" class="lbl">Unstructured keeps</text>
+  <text x="490.0" y="95.0" class="lbl">accuracy longer;</text>
+  <text x="490.0" y="118.0" class="lbl">structured is what</text>
+  <text x="490.0" y="133.0" class="lbl">makes the device</text>
+  <text x="490.0" y="148.0" class="lbl">faster.</text>
+  <text x="66.0" y="284.0" class="lblb">Below 50 % sparsity in int8, unstructured pruning makes the model bigger and no faster.</text>
+</svg></div><figcaption><b>Fig 3.30</b>The two curves that must be read together with the two <i>costs</i>. Unstructured pruning dominates on accuracy per removed weight, and delivers nothing on a commodity core until very high sparsity; structured pruning gives up accuracy sooner and produces a smaller dense network that every runtime already executes faster. The shaded band is the arithmetic of <a class="xref" href="#sec-3-33">§3.33</a>: with int8 values and 8-bit indices you must remove more than half the weights before the sparse representation is even smaller. Curve shapes are schematic; the crossover reasoning is not.</figcaption></figure>
+
+
+
+
+<h3 id="sec-3-31"><span class="sn">3.31</span>Saliency: which weights can go <span class="kicker">depth</span></h3>
+<p><b>Magnitude.</b> Remove the smallest <span class="eqn">|w|</span>. Justified if all weights have comparable influence, which after batch-norm folding they roughly do within a layer. It is embarrassingly effective and remains the baseline everything is compared against.</p>
+<div class="derive">
+<h5>Optimal Brain Damage, derived</h5>
+<p>Expand the loss around a trained (hence near-stationary) parameter vector:</p>
+<div class="eq">δL = Σ_i g_i δw_i + ½ Σ_i h_ii δw_i² + ½ Σ_{i≠j} h_ij δw_i δw_j + O(δw³)</div>
+<p>At a minimum the gradient <span class="eqn">g</span> vanishes, so the first term drops. LeCun et al. (1990) additionally assume the Hessian is diagonal and neglect higher orders. Deleting weight <span class="eqn">i</span> means <span class="eqn">δw<sub>i</sub> = −w<sub>i</sub></span>, so the predicted loss increase — the <em class="term">saliency</em> — is</p>
+<div class="eq">s_i = ½ h_ii w_i²</div>
+<p>This says something magnitude pruning misses: a large weight in a flat direction is safe to remove, and a small weight in a sharply curved direction is not.</p>
+<p><b>Optimal Brain Surgeon</b> (Hassibi &amp; Stork, 1993) drops the diagonal assumption and additionally allows the remaining weights to be <i>updated</i> to compensate. Solving the constrained problem gives the saliency and the compensating update</p>
+<div class="eq">s_q = w_q² / (2 [H⁻¹]_qq)
+δw = − (w_q / [H⁻¹]_qq) · H⁻¹ e_q</div>
+<p>which is more accurate but requires the inverse Hessian — infeasible for large models, though modern approximations of exactly this idea (layer-wise, with efficient Hessian estimates) underpin current one-shot pruning and quantization methods for large models.</p>
+<p><b>First-order criteria.</b> When the model is not at a stationary point — during training, or after fine-tuning on new data — the gradient term does not vanish and <span class="eqn">|g<sub>i</sub>w<sub>i</sub>|</span> is an effective and cheap saliency, widely used for structured channel pruning.</p>
+</div>
+
+
+
+<h3 id="sec-3-32"><span class="sn">3.32</span>Schedules, and the lottery ticket</h3>
+<p><b>One-shot</b> pruning removes the target fraction at once and fine-tunes. <b>Iterative magnitude pruning</b> alternates prune-and-retrain in small steps and consistently reaches higher sparsity at the same accuracy, because the network is given the chance to redistribute function into the surviving weights.</p>
+<p>The standard automated schedule (Zhu &amp; Gupta, 2017) increases sparsity from <span class="eqn">s<sub>i</sub></span> to <span class="eqn">s<sub>f</sub></span> with a cubic profile — fast at first, when there is slack, then slow:</p>
+<div class="eq">s_t = s_f + (s_i − s_f) · ( 1 − (t − t₀) / (n·Δt) )³ ,   t ∈ [t₀, t₀ + nΔt]</div>
+<p><b>The lottery ticket hypothesis</b> (Frankle &amp; Carbin, ICLR 2019) states that a randomly initialised dense network contains a sparse subnetwork which, trained in isolation <i>from the same initialisation</i>, matches the full network's accuracy in comparable time. The procedure is: train, prune by magnitude, reset the survivors to their original initial values, retrain, repeat. On MNIST and CIFAR-10 the winning tickets found were typically 10–20&nbsp;% of the original size.</p>
+<p>The claim matters because it separates two things usually conflated: whether a sparse <i>architecture</i> is sufficient, and whether a particular <i>initialisation</i> of it is trainable. Read the critiques alongside it: results are sensitive to learning-rate schedule and require <i>rewinding</i> to an early-training checkpoint rather than to initialisation on larger models; and Liu et al. ("Rethinking the Value of Network Pruning," ICLR 2019) argue that for structured pruning, retraining the discovered architecture from scratch often matches the inherited weights — which would make pruning a form of architecture search rather than a form of weight selection. This tension is one of the central debates of the pruning literature, and a good subject for a presentation in topic B.</p>
+
+
+
+<h3 id="sec-3-33"><span class="sn">3.33</span>The systems reality: when does sparsity pay?</h3>
+<div class="derive">
+<h5>Break-even sparsity for storage</h5>
+<p>Store a sparse matrix in compressed-sparse-row form: for each non-zero, one value and one column index; plus one row pointer per row. With <span class="eqn">b<sub>v</sub></span> bits per value and <span class="eqn">b<sub>i</sub></span> bits per index, and a fraction <span class="eqn">σ</span> of weights <i>surviving</i>, the sparse representation is smaller than the dense one when</p>
+<div class="eq">σ · (b_v + b_i)  &lt;  b_v      ⇒     σ  &lt;  b_v / (b_v + b_i)</div>
+<p>For float32 values with 16-bit indices: <span class="eqn">σ &lt; 32/48 = 0.67</span>, i.e. any sparsity above 33&nbsp;% saves storage. For <b>int8 values with 8-bit relative indices</b> — the embedded case — <span class="eqn">σ &lt; 8/16 = 0.5</span>: you need to remove <b>more than half</b> the weights before the sparse format is even smaller, let alone faster. Combining quantization with unstructured sparsity is therefore much less attractive than combining it with structured sparsity, and this arithmetic is the reason most microcontroller deployments use structured pruning only.</p>
+</div>
+<p><b>And speed is harder than size.</b> Skipping a multiply saves ≈0.2&nbsp;pJ (<a class="xref" href="session-1.html#tab-T1-2">Table 1.3</a>); the index decode, the irregular load, and the lost vectorisation typically cost more. General-purpose cores need very high sparsity — commonly cited thresholds are around 80–90&nbsp;% — before a sparse kernel beats a dense one. This is exactly why <b>N:M semi-structured sparsity</b> was introduced: constraining exactly <span class="eqn">N</span> of every <span class="eqn">M</span> consecutive weights to be non-zero gives a fixed, tiny metadata format that hardware can decode at full rate, delivering a real speedup at a modest 50&nbsp;% sparsity. It is a design in which the statistics were bent to fit the hardware, and it is worth recognising as such.</p>
+<div class="widget">
+ <header><b>Interactive</b><span>Does sparsity actually save anything?</span></header>
+ <div class="wbody">
+  <div class="ctrls">
+   <div class="ctrl"><label for="p-vb">value precision <b id="p-vb-v">8-bit values</b></label><input type="range" id="p-vb" min="2" max="32" step="2" value="8"></div>
+   <div class="ctrl"><label for="p-ib">index width <b id="p-ib-v">8-bit indices</b></label><input type="range" id="p-ib" min="2" max="16" step="1" value="8"></div>
+   <div class="ctrl"><label for="p-sp">sparsity <b id="p-sp-v">50 % removed</b></label><input type="range" id="p-sp" min="0" max="99" step="1" value="50"></div>
+  </div>
+  <div id="p-plot"></div>
+  <div class="readout">
+   <div><b>dense</b><span id="p-dense">–</span></div>
+   <div><b>sparse (CSR)</b><span id="p-sparse">–</span></div>
+   <div><b>compression</b><span id="p-ratio">–</span></div>
+   <div><b>break-even sparsity</b><span id="p-be" class="hi">–</span></div>
+  </div>
+  <div class="verdict" id="p-verdict">…</div>
+  <p class="wnote">Set the values to 32-bit and the break-even drops to 20 % (33 % with 16-bit indices). Quantize to 8-bit and it rises to 50&nbsp;%. Compressing one way makes the other way harder — a general pattern worth remembering.</p>
+ </div>
+</div>
+
+
+
+<h3 id="sec-3-34"><span class="sn">3.34</span>Structured pruning</h3>
+<p>Removing whole output channels, filters, attention heads or layers changes the shape of the tensors, so the result is an ordinary smaller network that any runtime executes faster. Criteria in use:</p>
+<ul>
+  <li><b>Filter norm</b> — remove filters with the smallest <span class="eqn">L1</span> norm (Li et al., ICLR 2017).</li>
+  <li><b>Batch-norm scale</b> — add an <span class="eqn">L1</span> penalty on the BN <span class="eqn">γ</span> parameters during training; channels whose <span class="eqn">γ</span> goes to zero contribute nothing and are removed (network slimming). Elegant, because the pruning criterion is trained rather than imposed.</li>
+  <li><b>Taylor / gradient-based</b> — estimate each channel's contribution to the loss directly.</li>
+  <li><b>Learned or searched ratios</b> — AMC (He et al., ECCV 2018) uses reinforcement learning to choose a per-layer sparsity ratio against a hardware latency constraint, which is really a form of architecture search and a natural bridge to neural architecture search (<a class="xref" href="session-3.html#sec-3-20">§3.20</a>).</li>
+</ul>
+<p>A practical caution: uniform per-layer ratios are almost always wrong. Early layers have few parameters but dominate the MAC count; late layers have most of the parameters and little compute. Pruning uniformly optimises neither budget.</p>
+
+
+
+<h3 id="sec-3-35"><span class="sn">3.35</span>Low-rank and tensor factorisation</h3>
+<div class="derive">
+<h5>When does a low-rank factorisation help?</h5>
+<p>Replace a dense layer <span class="eqn">W ∈ ℝ<sup>D<sub>out</sub>×D<sub>in</sub></sup></span> by <span class="eqn">W ≈ UV</span> with <span class="eqn">U ∈ ℝ<sup>D<sub>out</sub>×r</sup></span>, <span class="eqn">V ∈ ℝ<sup>r×D<sub>in</sub></sup></span>. Cost falls from <span class="eqn">D<sub>in</sub>D<sub>out</sub></span> to <span class="eqn">r(D<sub>in</sub> + D<sub>out</sub>)</span>, so the factorisation is worthwhile only when</p>
+<div class="eq">r  &lt;  D_in · D_out / (D_in + D_out)</div>
+<p>For a 1024×1024 layer that means <span class="eqn">r &lt; 512</span>: you must discard at least half the spectrum before you gain anything. Truncated SVD gives the optimal rank-<span class="eqn">r</span> approximation of <span class="eqn">W</span> in Frobenius norm — but the optimal approximation <i>of the weights</i> is not the optimal approximation <i>of the function</i>, so fine-tuning after factorisation is not optional.</p>
+<p>For convolution kernels, which are 4-D tensors, the analogous tools are Tucker and CP decompositions; a Tucker-2 decomposition of a <span class="eqn">k×k×C<sub>in</sub>×C<sub>out</sub></span> kernel yields a 1×1 convolution, a smaller <span class="eqn">k×k</span> convolution and another 1×1 convolution — structurally the same idea as the bottleneck blocks that efficient architectures use by design (<a class="xref" href="session-3.html#sec-3-17">§3.17</a>). Note the connection: <b>a well-designed efficient architecture is a factorisation you did not have to discover after the fact.</b></p>
+</div>
+<figure id="fig-svd_spectrum"><div class="figscroll"><svg viewBox="0 0 720 312" role="img" aria-label="The singular value spectrum of a matrix that is approximately rank eight, beside the relative reconstruction error against retained rank, with the cost break-even rank marked">
+  <line x1="62.0" y1="214.0" x2="330.0" y2="214.0" class="ax"/>
+  <line x1="62.0" y1="40.0" x2="62.0" y2="214.0" class="ax"/>
+  <line x1="62.0" y1="40.0" x2="62.0" y2="214.0" class="grid"/>
+  <line x1="62.0" y1="214.0" x2="62.0" y2="218.0" class="ax"/>
+  <text x="62.0" y="231.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="129.0" y1="40.0" x2="129.0" y2="214.0" class="grid"/>
+  <line x1="129.0" y1="214.0" x2="129.0" y2="218.0" class="ax"/>
+  <text x="129.0" y="231.0" class="lbl" text-anchor="middle">10</text>
+  <line x1="196.0" y1="40.0" x2="196.0" y2="214.0" class="grid"/>
+  <line x1="196.0" y1="214.0" x2="196.0" y2="218.0" class="ax"/>
+  <text x="196.0" y="231.0" class="lbl" text-anchor="middle">20</text>
+  <line x1="263.0" y1="40.0" x2="263.0" y2="214.0" class="grid"/>
+  <line x1="263.0" y1="214.0" x2="263.0" y2="218.0" class="ax"/>
+  <text x="263.0" y="231.0" class="lbl" text-anchor="middle">30</text>
+  <line x1="330.0" y1="40.0" x2="330.0" y2="214.0" class="grid"/>
+  <line x1="330.0" y1="214.0" x2="330.0" y2="218.0" class="ax"/>
+  <text x="330.0" y="231.0" class="lbl" text-anchor="middle">40</text>
+  <line x1="62.0" y1="214.0" x2="330.0" y2="214.0" class="grid"/>
+  <line x1="58.0" y1="214.0" x2="62.0" y2="214.0" class="ax"/>
+  <text x="54.0" y="217.6" class="lbl" text-anchor="end">0</text>
+  <line x1="62.0" y1="208.5" x2="330.0" y2="208.5" class="grid"/>
+  <line x1="58.0" y1="208.5" x2="62.0" y2="208.5" class="ax"/>
+  <text x="54.0" y="212.1" class="lbl" text-anchor="end"></text>
+  <line x1="62.0" y1="203.0" x2="330.0" y2="203.0" class="grid"/>
+  <line x1="58.0" y1="203.0" x2="62.0" y2="203.0" class="ax"/>
+  <text x="54.0" y="206.6" class="lbl" text-anchor="end"></text>
+  <rect x="62.3" y="48.3" width="6.0" height="165.7" class="accf" opacity="0.8"/>
+  <rect x="69.0" y="59.2" width="6.0" height="154.8" class="accf" opacity="0.8"/>
+  <rect x="75.8" y="80.7" width="6.0" height="133.3" class="accf" opacity="0.8"/>
+  <rect x="82.5" y="94.6" width="6.0" height="119.4" class="accf" opacity="0.8"/>
+  <rect x="89.2" y="118.9" width="6.0" height="95.1" class="accf" opacity="0.8"/>
+  <rect x="95.8" y="147.6" width="6.0" height="66.4" class="accf" opacity="0.8"/>
+  <rect x="102.6" y="172.6" width="6.0" height="41.4" class="accf" opacity="0.8"/>
+  <rect x="109.2" y="191.7" width="6.0" height="22.3" class="accf" opacity="0.8"/>
+  <rect x="115.9" y="212.4" width="6.0" height="1.6" fill="currentColor" opacity="0.35"/>
+  <rect x="122.7" y="212.5" width="6.0" height="1.5" fill="currentColor" opacity="0.35"/>
+  <rect x="129.4" y="212.5" width="6.0" height="1.5" fill="currentColor" opacity="0.35"/>
+  <rect x="136.1" y="212.5" width="6.0" height="1.5" fill="currentColor" opacity="0.35"/>
+  <rect x="142.8" y="212.5" width="6.0" height="1.5" fill="currentColor" opacity="0.35"/>
+  <rect x="149.4" y="212.6" width="6.0" height="1.4" fill="currentColor" opacity="0.35"/>
+  <rect x="156.1" y="212.6" width="6.0" height="1.4" fill="currentColor" opacity="0.35"/>
+  <rect x="162.9" y="212.6" width="6.0" height="1.4" fill="currentColor" opacity="0.35"/>
+  <rect x="169.6" y="212.6" width="6.0" height="1.4" fill="currentColor" opacity="0.35"/>
+  <rect x="176.2" y="212.6" width="6.0" height="1.4" fill="currentColor" opacity="0.35"/>
+  <rect x="182.9" y="212.6" width="6.0" height="1.4" fill="currentColor" opacity="0.35"/>
+  <rect x="189.7" y="212.6" width="6.0" height="1.4" fill="currentColor" opacity="0.35"/>
+  <rect x="196.3" y="212.6" width="6.0" height="1.4" fill="currentColor" opacity="0.35"/>
+  <rect x="203.0" y="212.7" width="6.0" height="1.3" fill="currentColor" opacity="0.35"/>
+  <rect x="209.8" y="212.7" width="6.0" height="1.3" fill="currentColor" opacity="0.35"/>
+  <rect x="216.5" y="212.7" width="6.0" height="1.3" fill="currentColor" opacity="0.35"/>
+  <rect x="223.2" y="212.7" width="6.0" height="1.3" fill="currentColor" opacity="0.35"/>
+  <rect x="229.8" y="212.7" width="6.0" height="1.3" fill="currentColor" opacity="0.35"/>
+  <rect x="236.5" y="212.7" width="6.0" height="1.3" fill="currentColor" opacity="0.35"/>
+  <rect x="243.2" y="212.7" width="6.0" height="1.3" fill="currentColor" opacity="0.35"/>
+  <rect x="250.0" y="212.7" width="6.0" height="1.3" fill="currentColor" opacity="0.35"/>
+  <rect x="256.6" y="212.8" width="6.0" height="1.2" fill="currentColor" opacity="0.35"/>
+  <rect x="263.4" y="212.8" width="6.0" height="1.2" fill="currentColor" opacity="0.35"/>
+  <rect x="270.0" y="212.8" width="6.0" height="1.2" fill="currentColor" opacity="0.35"/>
+  <rect x="276.8" y="212.8" width="6.0" height="1.2" fill="currentColor" opacity="0.35"/>
+  <rect x="283.5" y="212.8" width="6.0" height="1.2" fill="currentColor" opacity="0.35"/>
+  <rect x="290.1" y="212.8" width="6.0" height="1.2" fill="currentColor" opacity="0.35"/>
+  <rect x="296.9" y="212.8" width="6.0" height="1.2" fill="currentColor" opacity="0.35"/>
+  <rect x="303.5" y="212.8" width="6.0" height="1.2" fill="currentColor" opacity="0.35"/>
+  <rect x="310.2" y="212.8" width="6.0" height="1.2" fill="currentColor" opacity="0.35"/>
+  <rect x="316.9" y="212.9" width="6.0" height="1.1" fill="currentColor" opacity="0.35"/>
+  <rect x="323.7" y="212.9" width="6.0" height="1.1" fill="currentColor" opacity="0.35"/>
+  <text x="62.0" y="28.0" class="lblb">singular values</text>
+  <text x="122.3" y="94.7" class="lblb" fill="var(--copper)">8 large values</text>
+  <text x="122.3" y="78.7" class="lbl">→ the real rank</text>
+  <text x="182.6" y="164.3" class="lbl">the rest is noise</text>
+  <text x="196.0" y="248.0" class="lbl" text-anchor="middle">index</text>
+  <line x1="430.0" y1="214.0" x2="660.0" y2="214.0" class="ax"/>
+  <line x1="430.0" y1="40.0" x2="430.0" y2="214.0" class="ax"/>
+  <line x1="430.0" y1="40.0" x2="430.0" y2="214.0" class="grid"/>
+  <line x1="430.0" y1="214.0" x2="430.0" y2="218.0" class="ax"/>
+  <text x="430.0" y="231.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="487.5" y1="40.0" x2="487.5" y2="214.0" class="grid"/>
+  <line x1="487.5" y1="214.0" x2="487.5" y2="218.0" class="ax"/>
+  <text x="487.5" y="231.0" class="lbl" text-anchor="middle">10</text>
+  <line x1="545.0" y1="40.0" x2="545.0" y2="214.0" class="grid"/>
+  <line x1="545.0" y1="214.0" x2="545.0" y2="218.0" class="ax"/>
+  <text x="545.0" y="231.0" class="lbl" text-anchor="middle">20</text>
+  <line x1="602.5" y1="40.0" x2="602.5" y2="214.0" class="grid"/>
+  <line x1="602.5" y1="214.0" x2="602.5" y2="218.0" class="ax"/>
+  <text x="602.5" y="231.0" class="lbl" text-anchor="middle">30</text>
+  <line x1="660.0" y1="40.0" x2="660.0" y2="214.0" class="grid"/>
+  <line x1="660.0" y1="214.0" x2="660.0" y2="218.0" class="ax"/>
+  <text x="660.0" y="231.0" class="lbl" text-anchor="middle">40</text>
+  <line x1="430.0" y1="214.0" x2="660.0" y2="214.0" class="grid"/>
+  <line x1="426.0" y1="214.0" x2="430.0" y2="214.0" class="ax"/>
+  <text x="422.0" y="217.6" class="lbl" text-anchor="end">0 %</text>
+  <line x1="430.0" y1="127.0" x2="660.0" y2="127.0" class="grid"/>
+  <line x1="426.0" y1="127.0" x2="430.0" y2="127.0" class="ax"/>
+  <text x="422.0" y="130.6" class="lbl" text-anchor="end">50 %</text>
+  <line x1="430.0" y1="40.0" x2="660.0" y2="40.0" class="grid"/>
+  <line x1="426.0" y1="40.0" x2="430.0" y2="40.0" class="ax"/>
+  <text x="422.0" y="43.6" class="lbl" text-anchor="end">100 %</text>
+  <path d="M430.0 40.0 L435.8 66.0 L441.5 93.2 L447.2 118.3 L453.0 144.6 L458.8 168.7 L464.5 187.4 L470.2 200.4 L476.0 208.3 L481.8 208.3 L487.5 208.4 L493.2 208.5 L499.0 208.5 L504.8 208.6 L510.5 208.6 L516.2 208.7 L522.0 208.8 L527.8 208.8 L533.5 208.9 L539.2 208.9 L545.0 209.0 L550.8 209.1 L556.5 209.1 L562.2 209.2 L568.0 209.2 L573.8 209.3 L579.5 209.3 L585.2 209.4 L591.0 209.4 L596.8 209.5 L602.5 209.5 L608.2 209.6 L614.0 209.6 L619.8 209.7 L625.5 209.7 L631.2 209.8 L637.0 209.8 L642.8 209.9 L648.5 209.9 L654.2 210.0 L660.0 210.0" class="ser" stroke-width="2.4"/>
+  <text x="656.0" y="56.0" class="lblb" text-anchor="end" fill="var(--copper)">cost break-even at r = 89</text>
+  <text x="656.0" y="72.0" class="lbl" text-anchor="end">— far to the right of this axis</text>
+  <circle cx="476.0" cy="208.3" r="5.0" class="tlf"/>
+  <text x="484.0" y="200.3" class="lblb" fill="var(--teal)">r = 8 → 3 % error</text>
+  <text x="430.0" y="28.0" class="lblb">relative reconstruction error</text>
+  <text x="545.0" y="248.0" class="lbl" text-anchor="middle">retained rank r</text>
+  <text x="62.0" y="262.0" class="lbl">Truncated SVD gives the best rank-r approximation of the WEIGHTS. It does not give the best</text>
+  <text x="62.0" y="280.0" class="lbl">approximation of the FUNCTION — which is why fine-tuning after factorisation is not optional.</text>
+  <text x="62.0" y="304.0" class="lblb" fill="var(--copper)">Break-even: r &lt; D_in·D_out / (D_in + D_out). For 200×160 that is r &lt; 89.</text>
+</svg></div><figcaption><b>Fig 3.31</b>Low-rank factorisation, computed. The matrix here really is close to rank 8, so truncating there costs about a fifth of the Frobenius norm and reduces the layer from 32&nbsp;000 parameters to 2&nbsp;880. Real trained weight matrices are usually far less obliging: their spectra decay slowly, so the rank you need is above the break-even rank and the factorisation costs more than it saves. Always plot the spectrum before assuming the layer is compressible.</figcaption></figure>
+
+
+
+
+<h3 id="sec-3-36"><span class="sn">3.36</span>Weight sharing and coding</h3>
+<p>Cluster the weights of a layer with k-means into <span class="eqn">2<sup>b</sup></span> centroids, store a <span class="eqn">b</span>-bit index per weight plus a small codebook, and fine-tune the centroids by summing the gradients of all weights assigned to each. This is <em class="term">weight sharing</em>, and with entropy coding of the indices it forms the second and third stages of Deep Compression (Han et al., ICLR 2016), which reported 35–49× model-size reduction on AlexNet and VGG-16 without accuracy loss.</p>
+<figure id="fig-kmeans_codebook"><div class="figscroll"><svg viewBox="0 0 720 280" role="img" aria-label="Sixteen weight values mapped onto four shared cluster centroids, with a codebook of four floats and two-bit indices replacing sixteen full-precision numbers">
+  <line x1="56.0" y1="94.1" x2="660.0" y2="94.1" class="ax"/>
+  <circle cx="108.2" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="108.2" y1="94.1" x2="138.4" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="143.9" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="143.9" y1="94.1" x2="138.4" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="160.3" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="160.3" y1="94.1" x2="138.4" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="272.9" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="272.9" y1="94.1" x2="283.9" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="281.1" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="281.1" y1="94.1" x2="283.9" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="297.6" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="297.6" y1="94.1" x2="283.9" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="371.7" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="371.7" y1="94.1" x2="385.5" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="382.7" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="382.7" y1="94.1" x2="385.5" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="388.2" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="388.2" y1="94.1" x2="385.5" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="396.4" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="396.4" y1="94.1" x2="385.5" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="500.8" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="500.8" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="509.0" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="509.0" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="525.5" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="525.5" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="599.6" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="599.6" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="613.3" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="613.3" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="624.3" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="624.3" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="138.4" cy="62.3" r="7.0" class="accf"/>
+  <text x="138.4" y="48.3" class="lblb" text-anchor="middle" fill="var(--copper)">c0 = -0.80</text>
+  <circle cx="283.9" cy="62.3" r="7.0" class="tlf"/>
+  <text x="283.9" y="48.3" class="lblb" text-anchor="middle" fill="var(--teal)">c1 = -0.27</text>
+  <circle cx="385.5" cy="62.3" r="7.0" class="accf"/>
+  <text x="385.5" y="48.3" class="lblb" text-anchor="middle" fill="var(--copper)">c2 = +0.10</text>
+  <circle cx="561.2" cy="62.3" r="7.0" class="tlf"/>
+  <text x="561.2" y="48.3" class="lblb" text-anchor="middle" fill="var(--teal)">c3 = +0.74</text>
+  <text x="56.0" y="34.0" class="lbl">4 centroids  (the codebook)</text>
+  <text x="56.0" y="136.0" class="lbl">16 original float32 weights</text>
+  <text x="56.0" y="176.0" class="lblb">before:  16 × 32 bits = 512 bits</text>
+  <text x="56.0" y="198.0" class="lblb" fill="var(--copper)">after:   16 × 2 bits + 4 × 32 bits = 160 bits</text>
+  <text x="56.0" y="220.0" class="lbl">→ 3.2× smaller in flash</text>
+  <text x="392.0" y="176.0" class="lbl">But at inference the indices must be</text>
+  <text x="392.0" y="194.0" class="lbl">decoded back to values before the</text>
+  <text x="392.0" y="212.0" class="lbl">multiply. Storage compression is not</text>
+  <text x="392.0" y="230.0" class="lblb" fill="var(--copper)">runtime compression.</text>
+  <text x="56.0" y="262.0" class="lbl">Gradients of all weights sharing a centroid are summed to update that centroid during fine-tuning.</text>
+</svg></div><figcaption><b>Fig 3.32</b>Weight sharing, the second stage of Deep Compression. Cluster the weights, store a small codebook plus a short index per weight, and fine-tune the centroids by summing the gradients of every weight assigned to them. The compression is real and large. The distinction the figure insists on is the one papers blur: this shrinks the firmware image and the over-the-air update, and does nothing for latency, because the values have to be reconstituted before any arithmetic happens.</figcaption></figure>
+
+<div class="box">
+<h5>The distinction that Deep Compression makes it easy to blur</h5>
+<p>Huffman coding and weight sharing compress the <i>stored</i> model. They do not make inference faster, because the weights must be decoded before use — and on a microcontroller the decode buffer may not fit. Distinguish carefully:</p>
+<ul>
+  <li><b>Storage compression</b> — smaller firmware image, cheaper over-the-air update. Huffman, weight sharing, codebooks.</li>
+  <li><b>Runtime compression</b> — fewer bytes moved and fewer operations executed at inference. Quantization, structured pruning, factorisation.</li>
+</ul>
+<p>Papers that report only the first and readers who assume the second are a recurring source of confusion in this field.</p>
+</div>
+
+
+
+
+<h2 class="part"><span>Part H</span>Knowledge distillation</h2>
+<div class="intu">
+<h5>In one sentence</h5>
+<p>A label tells the student one bit; a teacher&rsquo;s softened output tells it how the whole class space is arranged &mdash; and that extra structure costs nothing at inference, because the teacher is thrown away after training.</p>
+</div>
+
+<h3 id="sec-3-37"><span class="sn">3.37</span>The idea</h3>
+<p>A one-hot label says "this is a keyword". A trained teacher's output distribution says "this is 'stop', it is somewhat like 'up', and nothing at all like 'off'". That relative structure over the wrong classes — Hinton's <em class="term">dark knowledge</em> — encodes the teacher's learned similarity metric, and it is a far denser training signal than a single bit per class. The consequence is that a small student trained on teacher outputs can generalise better than the same student trained on the labels alone, sometimes markedly so, and it costs exactly nothing at inference because the teacher is discarded after training.</p>
+
+<figure id="fig-kd_diagram"><div class="figscroll"><svg viewBox="0 0 720 290" role="img" aria-label="Diagram of knowledge distillation: an input passes to both a frozen teacher and a student, the teacher's logits are softened by temperature to form soft targets, and the student is trained on a weighted sum of soft-target loss and hard-label loss">
+  <defs>
+    <marker id="ar10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <rect x="8" y="112" width="66" height="40" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <text x="41" y="137" text-anchor="middle" font-weight="600">input x</text>
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar10)">
+      <line x1="74" y1="124" x2="112" y2="70"/><line x1="74" y1="140" x2="112" y2="192"/>
+    </g>
+    <rect x="116" y="44" width="112" height="48" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5 3"/>
+    <text x="172" y="66" text-anchor="middle" font-weight="600">teacher (frozen)</text>
+    <text x="172" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">large, accurate</text>
+    <rect x="116" y="170" width="112" height="48" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <text x="172" y="192" text-anchor="middle" font-weight="600">student</text>
+    <text x="172" y="208" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">small, deployable</text>
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar10)">
+      <line x1="228" y1="68" x2="266" y2="68"/><line x1="228" y1="194" x2="266" y2="194"/>
+    </g>
+    <rect x="270" y="46" width="96" height="44" fill="none" stroke="currentColor" stroke-width="1.1"/>
+    <text x="318" y="64" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11">logits v</text>
+    <text x="318" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">[8.1, 2.0, 1.7, −3]</text>
+    <rect x="270" y="172" width="96" height="44" fill="none" stroke="currentColor" stroke-width="1.1"/>
+    <text x="318" y="190" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11">logits z</text>
+    <g class="acc" stroke-width="1.4" marker-end="url(#ar10)">
+      <line x1="366" y1="68" x2="404" y2="68"/><line x1="366" y1="194" x2="404" y2="194"/>
+    </g>
+    <rect x="408" y="46" width="112" height="44" fill="none" class="acc" stroke-width="1.4"/>
+    <text x="464" y="64" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">softmax(v / T)</text>
+    <text x="464" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" class="accf">[.71, .13, .11, .05]</text>
+    <rect x="408" y="172" width="112" height="44" fill="none" class="acc" stroke-width="1.4"/>
+    <text x="464" y="196" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">softmax(z / T)</text>
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar10)">
+      <line x1="520" y1="68" x2="560" y2="112"/><line x1="520" y1="194" x2="560" y2="150"/>
+    </g>
+    <rect x="564" y="106" width="140" height="50" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <text x="634" y="126" text-anchor="middle" font-weight="600">L = αT²·KL(soft)</text>
+    <text x="634" y="144" text-anchor="middle" font-weight="600">+ (1−α)·CE(hard)</text>
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar10)" stroke-dasharray="4 3">
+      <path d="M634 156 L634 246 L172 246 L172 222" fill="none"/>
+    </g>
+    <text x="404" y="264" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.8">gradients update the student only — the teacher is discarded after training</text>
+    <text x="240" y="22" text-anchor="middle" font-family="IBM Plex Mono, monospace" opacity="0.8" font-size="10.81">T &gt; 1 flattens the distribution, revealing the ranking over wrong classes</text>
+  </g>
+</svg></div><figcaption><b>Fig 3.33</b>Distillation. The temperature is what makes the wrong-class structure visible: at <span class="eqn">T = 1</span> the softmax of a confident teacher is nearly one-hot and carries almost no information beyond the label. The <span class="eqn">T²</span> factor on the soft-target loss is not cosmetic — <a class="xref" href="#sec-3-38">§3.38</a> shows why it is required.</figcaption></figure>
+
+
+
+<h3 id="sec-3-38"><span class="sn">3.38</span>The objective, derived <span class="kicker">depth</span></h3>
+<div class="derive">
+<h5>Temperature and the <span class="eqn">T²</span> factor</h5>
+<p>With teacher logits <span class="eqn">v</span> and student logits <span class="eqn">z</span>, define softened distributions <span class="eqn">p<sub>i</sub> = softmax(v/T)<sub>i</sub></span> and <span class="eqn">q<sub>i</sub> = softmax(z/T)<sub>i</sub></span>. The distillation loss is</p>
+<div class="eq">L = α · T² · KL(p ‖ q)  +  (1 − α) · CE(y, softmax(z))</div>
+<p>Differentiating the cross-entropy of the softened student against the softened teacher gives</p>
+<div class="eq">∂L_soft / ∂z_i = (1/T) · ( q_i − p_i )</div>
+<p>so the soft-target gradient shrinks as <span class="eqn">1/T</span> — and after the softening also compresses the logit differences, the effective magnitude falls as <span class="eqn">1/T²</span>. Multiplying the soft term by <span class="eqn">T²</span> restores it to the same scale as the hard-label term, so that <span class="eqn">α</span> means what you think it means and you do not have to retune the learning rate every time you change <span class="eqn">T</span>.</p>
+<p><b>The high-temperature limit.</b> For large <span class="eqn">T</span>, expand <span class="eqn">exp(z<sub>i</sub>/T) ≈ 1 + z<sub>i</sub>/T</span>. Assuming logits are zero-meaned per sample, the gradient becomes</p>
+<div class="eq">∂L_soft / ∂z_i  ≈  (1 / (N T²)) · ( z_i − v_i )</div>
+<p>i.e. distillation degenerates to <b>least-squares matching of the logits themselves</b>. At low temperature, by contrast, the loss concentrates on the classes the teacher considers plausible and ignores the very negative logits — which is often preferable, since those logits are noisy. The temperature is therefore a knob selecting how much of the teacher's low-confidence structure the student is asked to reproduce.</p>
+</div>
+<figure id="fig-softmax_T"><div class="figscroll"><svg viewBox="0 0 720 300" role="img" aria-label="The same teacher logits passed through a softmax at four temperatures: at temperature one the distribution is nearly one-hot, and as temperature rises the ranking over the wrong classes becomes visible">
+  <line x1="34.0" y1="190.0" x2="174.0" y2="190.0" class="ax"/>
+  <rect x="36.7" y="56.2" width="18.0" height="133.8" class="accf" opacity="0.85"/>
+  <text x="45.7" y="51.2" class="lbl" text-anchor="middle">0.98</text>
+  <rect x="60.0" y="188.8" width="18.0" height="1.2" class="tlf" opacity="0.6"/>
+  <rect x="83.3" y="189.2" width="18.0" height="0.8" class="tlf" opacity="0.6"/>
+  <rect x="106.7" y="189.9" width="18.0" height="0.1" class="tlf" opacity="0.6"/>
+  <rect x="130.0" y="190.0" width="18.0" height="0.0" class="tlf" opacity="0.6"/>
+  <rect x="153.3" y="190.0" width="18.0" height="0.0" class="tlf" opacity="0.6"/>
+  <text x="34.0" y="42.0" class="lblb" fill="var(--copper)">T = 1</text>
+  <text x="174.0" y="42.0" class="lbl" text-anchor="end">H = 0.10</text>
+  <text x="45.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">stop</text>
+  <text x="69.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">up</text>
+  <text x="92.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">off</text>
+  <text x="115.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">go</text>
+  <text x="139.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">yes</text>
+  <text x="162.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">dog</text>
+  <line x1="206.0" y1="190.0" x2="346.0" y2="190.0" class="ax"/>
+  <rect x="208.7" y="79.0" width="18.0" height="111.0" class="accf" opacity="0.85"/>
+  <text x="217.7" y="74.0" class="lbl" text-anchor="middle">0.82</text>
+  <rect x="232.0" y="179.4" width="18.0" height="10.6" class="tlf" opacity="0.6"/>
+  <text x="241.0" y="174.4" class="lbl" text-anchor="middle" font-size="9.62">0.08</text>
+  <rect x="255.3" y="181.3" width="18.0" height="8.7" class="tlf" opacity="0.6"/>
+  <text x="264.3" y="176.3" class="lbl" text-anchor="middle" font-size="9.62">0.06</text>
+  <rect x="278.7" y="186.5" width="18.0" height="3.5" class="tlf" opacity="0.6"/>
+  <rect x="302.0" y="188.4" width="18.0" height="1.6" class="tlf" opacity="0.6"/>
+  <rect x="325.3" y="189.3" width="18.0" height="0.7" class="tlf" opacity="0.6"/>
+  <text x="206.0" y="42.0" class="lblb" fill="var(--copper)">T = 2</text>
+  <text x="346.0" y="42.0" class="lbl" text-anchor="end">H = 0.71</text>
+  <text x="217.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">stop</text>
+  <text x="241.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">up</text>
+  <text x="264.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">off</text>
+  <text x="287.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">go</text>
+  <text x="311.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">yes</text>
+  <text x="334.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">dog</text>
+  <line x1="378.0" y1="190.0" x2="518.0" y2="190.0" class="ax"/>
+  <rect x="380.7" y="120.8" width="18.0" height="69.2" class="accf" opacity="0.85"/>
+  <text x="389.7" y="115.8" class="lbl" text-anchor="middle">0.51</text>
+  <rect x="404.0" y="168.6" width="18.0" height="21.4" class="tlf" opacity="0.6"/>
+  <text x="413.0" y="163.6" class="lbl" text-anchor="middle" font-size="9.64">0.16</text>
+  <rect x="427.3" y="170.6" width="18.0" height="19.4" class="tlf" opacity="0.6"/>
+  <text x="436.3" y="165.6" class="lbl" text-anchor="middle" font-size="9.64">0.14</text>
+  <rect x="450.7" y="177.7" width="18.0" height="12.3" class="tlf" opacity="0.6"/>
+  <text x="459.7" y="172.7" class="lbl" text-anchor="middle" font-size="9.62">0.09</text>
+  <rect x="474.0" y="181.7" width="18.0" height="8.3" class="tlf" opacity="0.6"/>
+  <text x="483.0" y="176.7" class="lbl" text-anchor="middle" font-size="9.62">0.06</text>
+  <rect x="497.3" y="184.6" width="18.0" height="5.4" class="tlf" opacity="0.6"/>
+  <text x="378.0" y="42.0" class="lblb" fill="var(--copper)">T = 4</text>
+  <text x="518.0" y="42.0" class="lbl" text-anchor="end">H = 1.43</text>
+  <text x="389.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">stop</text>
+  <text x="413.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">up</text>
+  <text x="436.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">off</text>
+  <text x="459.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">go</text>
+  <text x="483.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">yes</text>
+  <text x="506.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">dog</text>
+  <line x1="550.0" y1="190.0" x2="690.0" y2="190.0" class="ax"/>
+  <rect x="552.7" y="146.6" width="18.0" height="43.4" class="accf" opacity="0.85"/>
+  <text x="561.7" y="141.6" class="lbl" text-anchor="middle">0.32</text>
+  <rect x="576.0" y="165.9" width="18.0" height="24.1" class="tlf" opacity="0.6"/>
+  <text x="585.0" y="160.9" class="lbl" text-anchor="middle" font-size="9.62">0.18</text>
+  <rect x="599.3" y="167.0" width="18.0" height="23.0" class="tlf" opacity="0.6"/>
+  <text x="608.3" y="162.0" class="lbl" text-anchor="middle" font-size="9.62">0.17</text>
+  <rect x="622.7" y="171.7" width="18.0" height="18.3" class="tlf" opacity="0.6"/>
+  <text x="631.7" y="166.7" class="lbl" text-anchor="middle">0.13</text>
+  <rect x="646.0" y="175.0" width="18.0" height="15.0" class="tlf" opacity="0.6"/>
+  <text x="655.0" y="170.0" class="lbl" text-anchor="middle">0.11</text>
+  <rect x="669.3" y="177.9" width="18.0" height="12.1" class="tlf" opacity="0.6"/>
+  <text x="678.3" y="172.9" class="lbl" text-anchor="middle">0.09</text>
+  <text x="550.0" y="42.0" class="lblb" fill="var(--copper)">T = 8</text>
+  <text x="690.0" y="42.0" class="lbl" text-anchor="end">H = 1.70</text>
+  <text x="561.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">stop</text>
+  <text x="585.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">up</text>
+  <text x="608.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">off</text>
+  <text x="631.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">go</text>
+  <text x="655.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">yes</text>
+  <text x="678.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">dog</text>
+  <text x="34.0" y="30.0" class="lblb">teacher logits  [8.1, 3.4, 3.0, 1.2, −0.4, −2.1]</text>
+  <text x="34.0" y="232.0" class="lbl">At T = 1 the teacher says only "stop". At T = 4 it says "stop, and it is much more like up and off</text>
+  <text x="34.0" y="250.0" class="lbl">than like dog" — a similarity metric the one-hot label never contained.</text>
+  <text x="34.0" y="276.0" class="lblb">That extra structure is the dark knowledge. It is also why the loss needs the T² correction:</text>
+  <text x="34.0" y="294.0" class="lblb">softening shrinks the gradient by about 1/T², and the factor puts it back.</text>
+</svg></div><figcaption><b>Fig 3.34</b>Temperature, computed on one set of logits. The entropy <span class="eqn">H</span> printed above each panel quantifies how much the teacher is telling the student: at <span class="eqn">T=1</span> almost nothing beyond the label, at <span class="eqn">T=8</span> a nearly uniform distribution that has started to wash the useful ranking away too. The usable range is in between, which is why <span class="eqn">T ∈ [2,6]</span> is the standard starting point and why tuning <span class="eqn">T</span> matters more than tuning <span class="eqn">α</span>.</figcaption></figure>
+
+<div class="widget">
+ <header><b>Interactive</b><span>Distillation temperature — where dark knowledge lives</span></header>
+ <div class="wbody">
+  <div class="ctrls">
+   <div class="ctrl"><label for="t-T">temperature <b id="t-T-v">T = 1.0</b></label><input type="range" id="t-T" min="5" max="120" step="1" value="10"></div>
+  </div>
+  <div id="t-plot"></div>
+  <div class="readout">
+   <div><b>entropy</b><span id="t-H">–</span></div>
+   <div><b>top class</b><span id="t-top">–</span></div>
+   <div><b>runner-up</b><span id="t-second" class="hi">–</span></div>
+  </div>
+  <div class="verdict" id="t-verdict">…</div>
+ </div>
+</div>
+
+
+
+<h3 id="sec-3-39"><span class="sn">3.39</span>Variants</h3>
+<div class="tw"><table>
+<thead><tr><th>Family</th><th>What is matched</th><th>Use when</th></tr></thead>
+<tbody>
+<tr><td>Response-based (classical KD)</td><td>Output distribution</td><td>Default; architecture-agnostic</td></tr>
+<tr><td>Feature-based (FitNets and successors)</td><td>Intermediate activations, via a learned projection</td><td>Student much deeper/narrower; needs layer pairing</td></tr>
+<tr><td>Attention transfer</td><td>Spatial attention maps derived from activations</td><td>Vision; cheap and robust to width mismatch</td></tr>
+<tr><td>Relational KD</td><td>Pairwise distances/angles between samples in embedding space</td><td>Metric learning, retrieval, speaker ID</td></tr>
+<tr><td>Self-distillation / born-again</td><td>Same architecture, previous generation as teacher</td><td>No larger model available; still often helps</td></tr>
+<tr><td>Online / mutual learning</td><td>Two students teach each other during training</td><td>No pre-trained teacher; one training run</td></tr>
+<tr><td>Data-free KD</td><td>Synthesised inputs matching the teacher's BN statistics</td><td>Training data cannot be shared — a real constraint in medical and industrial work</td></tr>
+</tbody>
+</table></div>
+<p class="tcap" id="tab-T10-1">Table 3.9 — Distillation variants. Feature-based methods are more powerful and much fussier: they require choosing which layers to pair and a projection to reconcile dimensions, and a bad pairing actively hurts.</p>
+
+
+
+<h3 id="sec-3-40"><span class="sn">3.40</span>The capacity gap, and the recipe</h3>
+<p>A stronger teacher is not always a better teacher. Beyond some gap in capacity the student cannot represent the teacher's function, and forcing it to try produces worse results than distilling from a moderate teacher. The standard remedies are a <em class="term">teacher assistant</em> — distil large → medium → small — or simply selecting the teacher by validated student accuracy rather than by teacher accuracy. Report the pairing, not just the student.</p>
+<figure id="fig-capacity_gap"><div class="figscroll"><svg viewBox="0 0 720 300" role="img" aria-label="Student accuracy plotted against teacher capacity, rising to a maximum and then falling, showing that beyond some gap a stronger teacher makes a worse student">
+  <line x1="70.0" y1="210.0" x2="490.0" y2="210.0" class="ax"/>
+  <line x1="70.0" y1="38.0" x2="70.0" y2="210.0" class="ax"/>
+  <line x1="112.0" y1="38.0" x2="112.0" y2="210.0" class="grid"/>
+  <line x1="112.0" y1="210.0" x2="112.0" y2="214.0" class="ax"/>
+  <text x="112.0" y="227.0" class="lbl" text-anchor="middle">1×</text>
+  <line x1="196.0" y1="38.0" x2="196.0" y2="210.0" class="grid"/>
+  <line x1="196.0" y1="210.0" x2="196.0" y2="214.0" class="ax"/>
+  <text x="196.0" y="227.0" class="lbl" text-anchor="middle">3×</text>
+  <line x1="280.0" y1="38.0" x2="280.0" y2="210.0" class="grid"/>
+  <line x1="280.0" y1="210.0" x2="280.0" y2="214.0" class="ax"/>
+  <text x="280.0" y="227.0" class="lbl" text-anchor="middle">5×</text>
+  <line x1="364.0" y1="38.0" x2="364.0" y2="210.0" class="grid"/>
+  <line x1="364.0" y1="210.0" x2="364.0" y2="214.0" class="ax"/>
+  <text x="364.0" y="227.0" class="lbl" text-anchor="middle">7×</text>
+  <line x1="448.0" y1="38.0" x2="448.0" y2="210.0" class="grid"/>
+  <line x1="448.0" y1="210.0" x2="448.0" y2="214.0" class="ax"/>
+  <text x="448.0" y="227.0" class="lbl" text-anchor="middle">9×</text>
+  <line x1="70.0" y1="175.6" x2="490.0" y2="175.6" class="grid"/>
+  <line x1="66.0" y1="175.6" x2="70.0" y2="175.6" class="ax"/>
+  <text x="62.0" y="179.2" class="lbl" text-anchor="end">68</text>
+  <line x1="70.0" y1="141.2" x2="490.0" y2="141.2" class="grid"/>
+  <line x1="66.0" y1="141.2" x2="70.0" y2="141.2" class="ax"/>
+  <text x="62.0" y="144.8" class="lbl" text-anchor="end">70</text>
+  <line x1="70.0" y1="106.8" x2="490.0" y2="106.8" class="grid"/>
+  <line x1="66.0" y1="106.8" x2="70.0" y2="106.8" class="ax"/>
+  <text x="62.0" y="110.4" class="lbl" text-anchor="end">72</text>
+  <line x1="70.0" y1="72.4" x2="490.0" y2="72.4" class="grid"/>
+  <line x1="66.0" y1="72.4" x2="70.0" y2="72.4" class="ax"/>
+  <text x="62.0" y="76.0" class="lbl" text-anchor="end">74</text>
+  <line x1="70.0" y1="38.0" x2="490.0" y2="38.0" class="grid"/>
+  <line x1="66.0" y1="38.0" x2="70.0" y2="38.0" class="ax"/>
+  <text x="62.0" y="41.6" class="lbl" text-anchor="end">76</text>
+  <path d="M95.2 116.8 L101.9 111.3 L108.6 106.3 L115.3 101.5 L122.0 97.1 L128.7 93.0 L135.3 89.2 L142.0 85.7 L148.7 82.4 L155.4 79.3 L162.1 76.5 L168.8 73.8 L175.5 71.3 L182.2 69.0 L188.9 66.9 L195.6 64.9 L202.3 63.0 L209.0 61.3 L215.6 59.7 L222.3 58.2 L229.0 56.8 L235.7 55.5 L242.4 54.3 L249.1 53.1 L255.8 52.1 L262.5 51.1 L269.2 50.2 L275.9 49.4 L282.6 48.6 L289.3 47.9 L295.9 47.2 L302.6 46.5 L309.3 45.9 L316.0 45.4 L322.7 44.9 L329.4 44.4 L336.1 44.0 L342.8 43.6 L349.5 43.2 L356.2 42.8 L362.9 42.5 L369.6 42.2 L376.2 41.9 L382.9 41.6 L389.6 41.4 L396.3 41.1 L403.0 40.9 L409.7 40.7 L416.4 40.5 L423.1 40.3 L429.8 40.2 L436.5 40.0 L443.2 39.9 L449.9 39.8 L456.5 39.6 L463.2 39.5 L469.9 39.4 L476.6 39.3 L483.3 39.2 L490.0 39.1" class="grid" stroke-width="2" stroke-dasharray="5 3"/>
+  <path d="M95.2 133.3 L101.9 126.9 L108.6 121.4 L115.3 116.8 L122.0 112.9 L128.7 109.7 L135.3 107.0 L142.0 104.9 L148.7 103.2 L155.4 101.8 L162.1 100.9 L168.8 100.2 L175.5 99.8 L182.2 99.7 L188.9 99.8 L195.6 100.1 L202.3 100.6 L209.0 101.2 L215.6 102.0 L222.3 103.0 L229.0 104.1 L235.7 105.3 L242.4 106.6 L249.1 108.0 L255.8 109.6 L262.5 111.2 L269.2 112.9 L275.9 114.8 L282.6 116.7 L289.3 118.7 L295.9 120.7 L302.6 122.9 L309.3 125.1 L316.0 127.4 L322.7 129.8 L329.4 132.3 L336.1 134.8 L342.8 137.4 L349.5 140.1 L356.2 142.8 L362.9 145.6 L369.6 148.5 L376.2 151.4 L382.9 154.4 L389.6 157.5 L396.3 160.7 L403.0 163.9 L409.7 167.2 L416.4 170.5 L423.1 173.9 L429.8 177.4 L436.5 181.0 L443.2 184.6 L449.9 188.3 L456.5 192.0 L463.2 195.8 L469.9 199.7 L476.6 203.6 L483.3 207.7 L490.0 210.0" class="ser" stroke-width="2.6"/>
+  <circle cx="182.2" cy="99.7" r="6.0" class="accf"/>
+  <line x1="182.2" y1="99.7" x2="182.2" y2="210.0" class="grid" stroke-dasharray="3 3"/>
+  <text x="182.2" y="192.8" class="lblb" text-anchor="middle" fill="var(--copper)">best teacher for THIS student</text>
+  <text x="498.0" y="62.1" class="lbl">teacher accuracy</text>
+  <text x="498.0" y="113.7" class="lblb">student accuracy</text>
+  <text x="498.0" y="129.7" class="lbl">after distillation</text>
+  <text x="280.0" y="246.0" class="lbl" text-anchor="middle">teacher capacity, relative to the student</text>
+  <text x="30.0" y="124.0" class="lbl" text-anchor="middle" transform="rotate(-90 30.0 124.0)">top-1 accuracy (%)</text>
+  <text x="70.0" y="26.0" class="lbl">schematic — the shape is robust, the exact peak is task-specific</text>
+  <text x="70.0" y="268.0" class="lblb">A teacher the student cannot imitate is a worse teacher, however accurate it is.</text>
+  <text x="70.0" y="288.0" class="lbl">Remedies: a teacher assistant (large → medium → small), or pick the teacher by student score.</text>
+</svg></div><figcaption><b>Fig 3.35</b>The capacity gap. Student accuracy is not monotone in teacher accuracy: past some point the student lacks the capacity to represent the teacher's function, and forcing it to try is worse than distilling from a weaker teacher. The practical rule that follows is easy to state and widely ignored — <b>report the pairing, and choose the teacher by validated student accuracy, never by teacher accuracy.</b></figcaption></figure>
+
+<div class="box">
+<h5>Practical recipe</h5>
+<ol>
+  <li>Train or obtain the teacher. For audio, a pre-trained large model (e.g. a PANNs-class network) is usually better than one you train yourself.</li>
+  <li>Start with <span class="eqn">T ∈ [2,6]</span> and <span class="eqn">α ∈ [0.5, 0.9]</span>. Tune <span class="eqn">T</span> first; it matters more.</li>
+  <li>Use the <i>same</i> augmentation for teacher and student inputs, so the targets correspond to what the student sees.</li>
+  <li>Exploit unlabelled data — it is free supervision under the teacher.</li>
+  <li>Validate the student, not the agreement with the teacher. High teacher-agreement with low accuracy means you have distilled the teacher's errors.</li>
+</ol>
+</div>
+<p><b>Order of operations when combining.</b> The reliable pipeline is: train the teacher → distil into the small architecture → structurally prune with fine-tuning under the distillation loss → quantize (PTQ, or QAT with the teacher still supervising). Distillation is particularly effective as the loss <i>during</i> QAT, because the float teacher provides a stable target while the student's forward pass is being perturbed by fake quantization. Doing it in the other order — quantize then distil — throws away the quantized model's calibration and usually has to be redone.</p>
+
+
+
+<h3 id="recipe"><span class="sn">3.41</span>Putting it together: a compression recipe</h3>
+
+<p>Faced with a model that does not meet its budget, the following order of operations is a sound default. It is not the only one, and several presentation papers argue for different orders; treat it as the baseline your own method should beat.</p>
+<ol>
+  <li><b>Fix the budget and the measurement.</b> Flash, peak SRAM, latency and energy on the target device, measured with the deployment toolchain (Session 4). Compression decisions made on proxy counts — parameters, FLOPs — are routinely wrong.</li>
+  <li><b>Choose the architecture first.</b> An efficient family scaled to the budget (Part D) usually beats compressing an inefficient one. If the budget is far away, change the architecture, not the compression ratio.</li>
+  <li><b>Distil while you shrink.</b> Train (or fine-tune) the small model with the original float model as teacher. Distillation works best between floating-point models, before any quantization noise is introduced.</li>
+  <li><b>Remove structure, not scattered weights.</b> If latency or SRAM still binds, prune channels (structured pruning) and fine-tune, keeping the distillation loss; unstructured sparsity only if the target has sparse kernels or hardware support.</li>
+  <li><b>Quantize to int8 last.</b> Post-training quantization with per-channel weights and a calibration set drawn from field-like data. If the accuracy drop exceeds the tolerance, switch to quantization-aware training initialised from the pruned float model — the teacher can stay in the loss.</li>
+  <li><b>Go below 8 bits only with evidence.</b> Mixed precision or 4-bit weights if flash binds and the hardware or kernel library supports them; measure, because sub-byte unpacking can cost more time than it saves.</li>
+  <li><b>Re-measure on the device</b> after every step, and keep the Pareto front of (accuracy, flash, SRAM, latency, energy) rather than a single "best" model.</li>
+</ol>
+
+<figure id="fig-lineage"><div class="figscroll"><svg viewBox="0 0 720 300" role="img" aria-label="Lineage diagram of the compression literature from 1990 to the present, showing how optimal brain damage, magnitude pruning, deep compression, integer-arithmetic-only quantization, adaptive rounding, learned step size, lottery tickets and MCUNet build on one another">
+  <defs>
+    <marker id="ar11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="11.5" fill="currentColor">
+    <line x1="20" y1="272" x2="700" y2="272" stroke="currentColor" stroke-width="1.1"/>
+    <g font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75" text-anchor="middle">
+      <text x="60" y="290">1990</text><text x="200" y="290">2015</text><text x="330" y="290">2016</text>
+      <text x="440" y="290">2018</text><text x="550" y="290">2019–20</text><text x="666" y="290">2021→</text>
+    </g>
+    <g stroke="currentColor" stroke-width="0.6" opacity="0.3">
+      <line x1="60" y1="30" x2="60" y2="272"/><line x1="200" y1="30" x2="200" y2="272"/>
+      <line x1="330" y1="30" x2="330" y2="272"/><line x1="440" y1="30" x2="440" y2="272"/>
+      <line x1="550" y1="30" x2="550" y2="272"/><line x1="666" y1="30" x2="666" y2="272"/>
+    </g>
+    <!-- pruning lane -->
+    <text x="8" y="52" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">pruning</text>
+    <g stroke="currentColor" stroke-width="1.2" fill="none">
+      <rect x="18" y="62" width="86" height="34"/><rect x="160" y="62" width="86" height="34"/>
+      <rect x="500" y="62" width="102" height="34"/>
+    </g>
+    <g text-anchor="middle"><text x="61" y="76">Optimal Brain</text><text x="61" y="89">Damage</text>
+      <text x="203" y="76">Learning W</text><text x="203" y="89">and connections</text>
+      <text x="551" y="76">Lottery ticket</text><text x="551" y="89">hypothesis</text></g>
+    <g stroke="currentColor" stroke-width="1.1" marker-end="url(#ar11)">
+      <line x1="104" y1="79" x2="156" y2="79"/><line x1="246" y1="79" x2="496" y2="79"/>
+    </g>
+    <!-- pipeline lane -->
+    <text x="8" y="132" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">pipelines</text>
+    <g class="acc" stroke-width="1.4" fill="none"><rect x="286" y="142" width="90" height="34"/></g>
+    <text x="331" y="156" text-anchor="middle" font-weight="600">Deep</text><text x="331" y="169" text-anchor="middle" font-weight="600">Compression</text>
+    <g stroke="currentColor" stroke-width="1.1" marker-end="url(#ar11)">
+      <line x1="203" y1="96" x2="310" y2="138"/>
+      <line x1="376" y1="159" x2="600" y2="122"/>
+    </g>
+    <g stroke="currentColor" stroke-width="1.2" fill="none"><rect x="604" y="104" width="100" height="34"/></g>
+    <text x="654" y="118" text-anchor="middle">MCUNet /</text><text x="654" y="131" text-anchor="middle">MCUNetV2</text>
+    <!-- quantization lane -->
+    <text x="8" y="206" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">quantization</text>
+    <g stroke="currentColor" stroke-width="1.2" fill="none">
+      <rect x="392" y="216" width="96" height="34"/><rect x="504" y="216" width="94" height="34"/>
+      <rect x="612" y="216" width="92" height="34"/>
+    </g>
+    <g text-anchor="middle">
+      <text x="440" y="230">Integer-only</text><text x="440" y="243">inference</text>
+      <text x="551" y="230">AdaRound,</text><text x="551" y="243">LSQ, CLE</text>
+      <text x="658" y="230">W4A8, LLM</text><text x="658" y="243">quantization</text>
+    </g>
+    <g stroke="currentColor" stroke-width="1.1" marker-end="url(#ar11)">
+      <line x1="331" y1="176" x2="400" y2="212"/>
+      <line x1="488" y1="233" x2="500" y2="233"/><line x1="598" y1="233" x2="608" y2="233"/>
+      <line x1="598" y1="220" x2="640" y2="142"/>
+    </g>
+    <text x="360" y="24" text-anchor="middle" font-family="IBM Plex Sans Condensed, sans-serif" font-size="12.5" font-weight="600">Three lanes, one converging pipeline — and one method that tried to do everything at once</text>
+  </g>
+</svg></div><figcaption><b>Fig 3.36</b>The compression literature as a lineage, from optimal brain damage to the methods used for large language models today. The presentation topics of Session 5 sample this tree: topic A follows the quantization branch, topic B the pruning and distillation branches.</figcaption></figure>
+
+<div class="takeaway">
+<h5>If you remember one thing from Session 3</h5>
+<p>Pick the model by the data and the budget; count its parameters, activations and operations; then compress in an order the hardware can cash in: int8 first, structured removal second, distillation to recover, and every claim checked on the device. A compression ratio the target cannot exploit is a number in a paper, not a saving.</p>
+</div>
+
+<h5>Before Session 4</h5>
+<ul class="reading">
+  <li>B. Jacob et al., "Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference," CVPR 2018. <a href="https://arxiv.org/abs/1712.05877">arXiv:1712.05877</a>.<span class="v">The paper behind every int8 deployment toolchain; read §2–3 for the arithmetic derived above.</span></li>
+  <li>S. Williams, A. Waterman, D. Patterson, "Roofline: An Insightful Visual Performance Model for Multicore Architectures," <i>Communications of the ACM</i> 52(4), 2009.<span class="v">Short, and the single most useful mental model for Session 4.</span></li>
+</ul>
+
+<h5>Discussion questions</h5>
+<ol class="qs">
+  <li>Quantization replaces a per-value exponent with a per-tensor scale. Give a layer type for which this is benign and one for which it is harmful, and explain why in terms of the value distributions.</li>
+  <li>Is pruning a form of weight selection or of architecture search? State the evidence on each side.</li>
+  <li>Why does a teacher's "dark knowledge" help a student more on some tasks than on others? Construct a task where it cannot help at all.</li>
+  <li>A paper reports 10× compression with no accuracy loss. List the five questions you ask before believing it is 10× cheaper to run.</li>
+</ol>
+
+<h5>Exercises</h5>
+<ol class="qs">
+  <li>A tensor has values in [−0.8, 2.4]. Compute scale and zero-point for asymmetric uint8 quantization and for symmetric int8. Quantize and dequantize the value 1.0 in each case and report the error.</li>
+  <li>Derive the requantization multiplier for an int8 convolution with input scale 0.02, weight scale 0.005 and output scale 0.05, and express it as a 32-bit fixed-point multiplier and shift.</li>
+  <li>A dense layer of 1024×1024 weights is pruned to 90 % unstructured sparsity and stored in CSR format with 16-bit indices. Compare the storage with the dense int8 version. At what sparsity do the two break even?</li>
+  <li>A 512×512 weight matrix is replaced by a rank-64 factorisation. Compute the reduction in parameters and MACs, and state when the factorised version could be slower.</li>
+</ol>
+
+<h5>Further reading</h5>
+<ul class="reading">
+  <li>M. Nagel et al., "A White Paper on Neural Network Quantization," 2021. <a href="https://arxiv.org/abs/2106.08295">arXiv:2106.08295</a>.<span class="v">The best single reference on Part F; read in full at some point.</span></li>
+  <li>R. Krishnamoorthi, "Quantizing deep convolutional networks for efficient inference: A whitepaper," 2018. <a href="https://arxiv.org/abs/1806.08342">arXiv:1806.08342</a>.<span class="v">The practitioner's companion, with measured accuracy tables.</span></li>
+  <li>D. Blalock et al., "What is the State of Neural Network Pruning?," MLSys 2020. <a href="https://arxiv.org/abs/2003.03033">arXiv:2003.03033</a>.<span class="v">A meta-analysis that every pruning paper should be read against.</span></li>
+  <li>G. Hinton, O. Vinyals, J. Dean, "Distilling the Knowledge in a Neural Network," 2015. <a href="https://arxiv.org/abs/1503.02531">arXiv:1503.02531</a>.<span class="v">Nine pages; the origin of the temperature-scaled objective.</span></li>
+</ul>
+</div><nav class="prevnext" aria-label="Previous and next"><a class="prev" href="session-3.html"><b>← Previous</b><span>Session 3 — Models</span></a><a class="next" href="session-4.html"><b>Next →</b><span>Session 4 — Hardware &amp; deployment</span></a></nav></main></div><footer class="site"><div class="in"><span>Embedded Machine Learning · PhD course · 2026/27</span><span><a href="credits.html">Credits, licences &amp; image sources</a> · <a href="references.html">References</a></span><span>Figures are original unless credited. Text and figures may be reused for teaching with attribution.</span></div></footer><script src="assets/js/site.js" defer></script></body></html>

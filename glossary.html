@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Glossary · Embedded Machine Learning</title><meta name="description" content="Every term the course uses as if it were obvious, defined once, with a link to where it is developed — followed by the formulas and orders of magnitude that most arguments in the course start from."><link rel="stylesheet" href="assets/css/site.css"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script>try{var t=localStorage.getItem("eml-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script></head><body><a class="skip" href="#content">Skip to content</a><header class="topbar"><div class="in"><a class="brand" href="index.html">Embedded Machine Learning<span>PhD course</span></a><button class="menubtn" aria-expanded="false" aria-controls="topnav">Menu</button><nav class="topnav" id="topnav" aria-label="Course"><a href="index.html">Overview</a><a href="session-1.html"><em>S1</em>Embedded</a><a href="session-2.html"><em>S2</em>Data</a><a href="session-3.html"><em>S3</em>Models</a><a href="session-4.html"><em>S4</em>Hardware</a><a href="presentations.html"><em>S5</em>Presentations</a><a href="glossary.html" aria-current="page">Glossary</a><a href="references.html">References</a></nav><button class="themebtn" type="button" aria-label="Toggle colour theme">◐<span class="tl"> theme</span></button></div></header><div class="pagehead"><div class="inner"><p class="eyebrow">Reference</p><h1>Glossary and numbers worth knowing</h1><p class="sub">Every term the course uses as if it were obvious, defined once, with a link to where it is developed — followed by the formulas and orders of magnitude that most arguments in the course start from.</p></div></div><div class="wrap"><nav class="toc" aria-label="On this page"><details open><summary>On this page</summary><ol class="sec nonum"><li><a href="#basics"><em></em><span>Embedded and machine-learning basics</span></a></li><li><a href="#terms"><em></em><span>Course terms</span></a></li><li><a href="#numbers"><em></em><span>Numbers and formulas worth knowing</span></a></li></ol></details></nav><main id="content"><div class="col">
+<h3 id="basics">Embedded and machine-learning basics</h3>
+<p>Terms introduced in the primer sections, for participants new to one side of the field.</p>
+<h4>Embedded systems</h4>
+<dl class="gloss">
+<dt>Embedded system</dt><dd>A computer built into a larger product to perform a dedicated function, usually under real-time, memory and energy constraints. <a class="xref" href="session-1.html#embedded">§1.1</a></dd>
+<dt>Microcontroller (MCU)</dt><dd>A single chip containing a processor core, flash, SRAM and peripherals; the typical target of TinyML. <a class="xref" href="session-1.html#fig-mcu_anatomy">Fig 1.1</a></dd>
+<dt>Flash / MRAM</dt><dd>Non-volatile memory that keeps its contents without power; holds the program and the model weights.</dd>
+<dt>SRAM</dt><dd>Fast volatile working memory; holds activations, buffers and the stack. Usually the scarcest resource.</dd>
+<dt>Bare-metal / RTOS</dt><dd>Firmware running directly on the hardware, or under a small real-time operating system that schedules tasks with guaranteed timing.</dd>
+<dt>DMA</dt><dd>Direct memory access: a hardware engine that moves data (e.g. sensor samples) into memory without the CPU, so the core can sleep.</dd>
+<dt>SIMD</dt><dd>Single instruction, multiple data: one instruction operating on several packed values, e.g. two 16-bit multiply–accumulates at once on a Cortex-M4.</dd>
+<dt>MEMS</dt><dd>Micro-electro-mechanical system: a microscopic mechanical sensor structure on silicon, as in most microphones and IMUs. <a class="xref" href="session-2.html#sensors">§2.2</a></dd>
+<dt>IMU</dt><dd>Inertial measurement unit: accelerometer and gyroscope (sometimes magnetometer) in one package.</dd>
+<dt>TinyML</dt><dd>Machine learning on microcontroller-class devices, typically at milliwatt power and below.</dd>
+</dl>
+<h4>Machine learning</h4>
+<dl class="gloss">
+<dt>Model, parameters</dt><dd>A function <span class="eqn">f(x; θ)</span> of fixed form whose parameters θ are learned from data. <a class="xref" href="session-1.html#ml-primer">§1.3</a></dd>
+<dt>Training / inference</dt><dd>Fitting the parameters to examples (expensive, usually off-device) / evaluating the fitted model on a new input (cheap, on-device).</dd>
+<dt>Loss function</dt><dd>A measure of how wrong a prediction is; training minimises its average over the training set. <a class="xref" href="session-3.html#learning">§3.1</a></dd>
+<dt>Cross-entropy, softmax</dt><dd>The standard classification loss, −log of the probability assigned to the true class; the softmax turns scores into probabilities.</dd>
+<dt>Gradient descent, learning rate</dt><dd>Iteratively moving the parameters against the gradient of the loss; the step size is the learning rate. <a class="xref" href="session-3.html#optimisation">§3.3</a></dd>
+<dt>SGD, mini-batch, epoch</dt><dd>Gradient descent with the gradient estimated on a small random batch; one epoch is one pass over the training set.</dd>
+<dt>Overfitting / underfitting</dt><dd>Fitting the noise of the training data and failing on new data / being too simple to capture the real pattern. <a class="xref" href="session-3.html#generalisation">§3.2</a></dd>
+<dt>Train / validation / test split</dt><dd>Data for fitting / for every design choice / for the final, once-only estimate. <a class="xref" href="session-3.html#fig-data_splits">Fig 3.3</a></dd>
+<dt>Hyper-parameter</dt><dd>A setting chosen by the engineer, not learned: learning rate, model size, regularisation strength, window length.</dd>
+<dt>Precision, recall</dt><dd>Of the alarms, the fraction that are right / of the real events, the fraction caught. <a class="xref" href="session-3.html#metrics">§3.4</a></dd>
+<dt>Neuron, dense layer</dt><dd>A weighted sum plus bias followed by a non-linearity; a layer is many neurons sharing the same inputs, i.e. a matrix–vector product. <a class="xref" href="session-3.html#neurons">§3.10</a></dd>
+<dt>Activation (function)</dt><dd>The non-linearity φ applied element-wise (ReLU, sigmoid…). "Activations" also means the intermediate tensors a network produces — the quantity that sizes SRAM.</dd>
+<dt>Backpropagation</dt><dd>Computing all parameter gradients by the chain rule, layer by layer from output to input; requires the stored activations of every layer.</dd>
+<dt>Convolutional layer</dt><dd>A layer that slides small shared kernels over the input; few parameters, translation-equivariant. <a class="xref" href="session-3.html#cnn">§3.11</a></dd>
+</dl>
+
+<h3 id="terms">Course terms</h3>
+
+
+<h4>Cost and performance</h4>
+<dl class="gloss">
+<dt>MAC / MAdd</dt><dd>One multiply–accumulate: <span class="eqn">a += b·c</span>. Depending on the paper, counted as one or two FLOPs — always check which. <a class="xref" href="session-3.html#sec-3-12">§3.12</a></dd>
+<dt>Arithmetic intensity</dt><dd>MACs performed per byte of memory traffic. Determines whether a kernel can reach peak compute. <a class="xref" href="session-4.html#sec-4-3">§4.3</a></dd>
+<dt>Roofline</dt><dd>The bound <span class="eqn">P ≤ min(π, β·I)</span>: performance is limited by peak compute or by bandwidth × intensity, whichever is smaller. <a class="xref" href="session-4.html#sec-4-2">§4.2</a></dd>
+<dt>Ridge point</dt><dd><span class="eqn">I* = π/β</span>, the arithmetic intensity above which a kernel can be compute-bound. <a class="xref" href="session-4.html#sec-4-2">§4.2</a></dd>
+<dt>Compute-bound</dt><dd>Time is dominated by arithmetic; reducing operations reduces latency. <a class="xref" href="session-4.html#sec-4-2">§4.2</a></dd>
+<dt>Memory-bound</dt><dd>Time is dominated by waiting for operands; reducing operations changes nothing. <a class="xref" href="session-4.html#sec-4-3">§4.3</a></dd>
+<dt>Peak activation memory</dt><dd>The maximum bytes of intermediate tensors that must be live simultaneously. The budget that decides whether a CNN fits on an MCU. <a class="xref" href="session-1.html#sec-1-6">§1.6</a></dd>
+<dt>Arena</dt><dd>The single statically-sized buffer in which an MCU runtime places every intermediate tensor, planned offline as a packing problem. <a class="xref" href="session-4.html#sec-4-15">§4.15</a></dd>
+<dt>Duty cycle</dt><dd>The fraction of time a system is awake. Converts an energy-per-inference figure into an average power. <a class="xref" href="session-1.html#sec-1-6">§1.6</a></dd>
+<dt>Cascade</dt><dd>A chain of increasingly expensive models, each gating the next, so the expensive ones run rarely. <a class="xref" href="session-1.html#sec-1-8">§1.8</a></dd>
+<dt>Dennard scaling</dt><dd>The pre-2004 regime in which shrinking transistors also allowed lower voltage, giving more speed at constant power. Its end is why this field exists. <a class="xref" href="session-1.html#sec-1-2">§1.2</a></dd>
+</dl>
+
+<h4>Signals and features</h4>
+<dl class="gloss">
+<dt>Nyquist rate</dt><dd>Twice the highest frequency present. Sampling below it folds high frequencies onto low ones irreversibly. <a class="xref" href="session-2.html#sec-2-4">§2.4</a></dd>
+<dt>Aliasing</dt><dd>The additive overlap of spectral replicas caused by undersampling. Cannot be undone digitally. <a class="xref" href="session-2.html#sec-2-4">§2.4</a></dd>
+<dt>ENOB</dt><dd>Effective number of bits, <span class="eqn">(SINAD − 1.76)/6.02</span>. What a converter actually delivers, as opposed to its nominal word length. <a class="xref" href="session-2.html#sec-2-5">§2.5</a></dd>
+<dt>SQNR</dt><dd>Signal-to-quantization-noise ratio, <span class="eqn">≈ 6.02N + 1.76</span> dB for a full-scale sine. Also the per-layer diagnostic for quantization bugs. <a class="xref" href="session-2.html#sec-2-5">§2.5</a>, <a class="xref" href="session-3-compression.html#sec-3-29">§3.29</a></dd>
+<dt>Dither</dt><dd>Small noise added before quantization to decorrelate the error, converting structured distortion into benign hiss. <a class="xref" href="session-2.html#sec-2-5">§2.5</a></dd>
+<dt>STFT</dt><dd>Short-time Fourier transform: windowed transforms of overlapping segments, giving a time–frequency picture. <a class="xref" href="session-2.html#sec-2-12">§2.12</a></dd>
+<dt>Spectral leakage</dt><dd>Energy from one frequency appearing in neighbouring bins because the window truncates the signal. Controlled by the window shape. <a class="xref" href="session-2.html#sec-2-12">§2.12</a></dd>
+<dt>Mel scale</dt><dd><span class="eqn">m = 2595 log₁₀(1 + f/700)</span>, an approximation of human auditory frequency resolution. <a class="xref" href="session-2.html#sec-2-13">§2.13</a></dd>
+<dt>MFCC</dt><dd>Mel-frequency cepstral coefficients: DCT of log mel-band energies. The DCT exists to decorrelate for diagonal-covariance GMMs and should usually be dropped for CNNs. <a class="xref" href="session-2.html#sec-2-13">§2.13</a></dd>
+<dt>Mutual information</dt><dd><span class="eqn">I(X;Y) = H(Y) − H(Y|X)</span>: how many nats knowing <span class="eqn">X</span> saves you about <span class="eqn">Y</span>. Detects non-linear dependence that correlation misses. <a class="xref" href="session-2.html#sec-2-15">§2.15</a></dd>
+<dt>Polyphase / CIC</dt><dd>Decimation structures that compute only the samples that survive (polyphase) or need no multipliers at all (CIC). <a class="xref" href="session-2.html#sec-2-7">§2.7</a></dd>
+</dl>
+
+<h4>Models</h4>
+<dl class="gloss">
+<dt>Support vector</dt><dd>A training point with non-zero dual coefficient. Kernel-SVM inference cost is proportional to how many there are. <a class="xref" href="session-3.html#sec-3-8">§3.8</a></dd>
+<dt>Kernel trick</dt><dd>Replacing inner products with a kernel function to fit a linear model in a feature space never constructed. <a class="xref" href="session-3.html#sec-3-8">§3.8</a></dd>
+<dt>Random features</dt><dd>An explicit finite map whose inner products approximate a kernel, removing the dependence on the number of support vectors. <a class="xref" href="session-3.html#sec-3-8">§3.8</a></dd>
+<dt>Calibration</dt><dd>The property that a score of 0.3 means a 30&nbsp;% chance. Required for any transferable threshold. <a class="xref" href="session-3.html#sec-3-5">§3.5</a></dd>
+<dt>Depthwise separable convolution</dt><dd>A spatial depthwise stage plus a 1×1 channel-mixing stage; reduces arithmetic by <span class="eqn">1/C<sub>out</sub> + 1/k²</span>. <a class="xref" href="session-3.html#sec-3-13">§3.13</a></dd>
+<dt>Inverted residual</dt><dd>Expand → depthwise → project, with the skip connecting the <i>narrow</i> ends so that only a small tensor stays live. <a class="xref" href="session-3.html#sec-3-18">§3.18</a></dd>
+<dt>Linear bottleneck</dt><dd>Omitting the non-linearity after the narrow projection, because a ReLU in a low-dimensional space destroys information irrecoverably. <a class="xref" href="session-3.html#sec-3-18">§3.18</a></dd>
+<dt>Squeeze-and-excitation</dt><dd>Channel-wise attention from a global average. Cheap in MACs, awkward in deployment because of the global reduction. <a class="xref" href="session-3.html#sec-3-18">§3.18</a></dd>
+<dt>Receptive field</dt><dd>The span of input that influences one output. Must exceed the duration of the event being detected. <a class="xref" href="session-3.html#sec-3-15">§3.15</a></dd>
+<dt>Streaming inference</dt><dd>Keeping per-layer ring buffers so overlapping windows recompute only the new columns. <a class="xref" href="session-3.html#sec-3-15">§3.15</a></dd>
+</dl>
+
+<h4>Compression</h4>
+<dl class="gloss">
+<dt>Affine quantization</dt><dd><span class="eqn">x ≈ s(q − z)</span> with an integer zero-point so that real zero is exactly representable. <a class="xref" href="session-3-compression.html#sec-3-23">§3.23</a></dd>
+<dt>Zero-point</dt><dd>The integer that maps to real 0. Its exactness matters because padding introduces zeros everywhere. <a class="xref" href="session-3-compression.html#sec-3-23">§3.23</a></dd>
+<dt>Requantization</dt><dd>Rescaling the int32 accumulator to the output scale by <span class="eqn">M = s₁s₂/s₃</span>, implemented as a fixed-point multiply and shift. <a class="xref" href="session-3-compression.html#sec-3-24">§3.24</a></dd>
+<dt>Per-channel quantization</dt><dd>One weight scale per output channel. The standard fix for depthwise layers, whose per-channel ranges differ by orders of magnitude. <a class="xref" href="session-3-compression.html#sec-3-25">§3.25</a></dd>
+<dt>PTQ / QAT</dt><dd>Post-training quantization (calibration only, no labels) versus quantization-aware training (fake quantization in the forward pass). <a class="xref" href="session-3-compression.html#sec-3-27">§3.27</a>, <a class="xref" href="session-3-compression.html#sec-3-28">§3.28</a></dd>
+<dt>Straight-through estimator</dt><dd>Defining the backward pass of a rounding node to be the identity, so gradients survive a non-differentiable forward. <a class="xref" href="session-3-compression.html#sec-3-28">§3.28</a></dd>
+<dt>Cross-layer equalisation</dt><dd>Rescaling consecutive layers by <span class="eqn">S</span> and <span class="eqn">S<sup>−1</sup></span> — exact for ReLU — to equalise channel ranges before quantizing. <a class="xref" href="session-3-compression.html#sec-3-27">§3.27</a></dd>
+<dt>AdaRound</dt><dd>Learning per-weight rounding directions against a layer-wise reconstruction objective instead of rounding to nearest. <a class="xref" href="session-3-compression.html#sec-3-27">§3.27</a></dd>
+<dt>Unstructured / structured / N:M sparsity</dt><dd>Scattered zeros (best accuracy, no speedup), whole channels removed (smaller dense model), or exactly N of every M zero (fixed pattern hardware can decode). <a class="xref" href="session-3-compression.html#sec-3-30">§3.30</a></dd>
+<dt>Saliency</dt><dd>The predicted loss increase from deleting a parameter: <span class="eqn">½h<sub>ii</sub>w<sub>i</sub>²</span> under OBD&rsquo;s diagonal-Hessian assumption. <a class="xref" href="session-3-compression.html#sec-3-31">§3.31</a></dd>
+<dt>Lottery ticket</dt><dd>A sparse subnetwork that, trained from its original initialisation, matches the dense network. <a class="xref" href="session-3-compression.html#sec-3-32">§3.32</a></dd>
+<dt>Break-even sparsity</dt><dd><span class="eqn">σ &lt; b<sub>value</sub>/(b<sub>value</sub>+b<sub>index</sub>)</span> — below it, a sparse format is larger than the dense one. <a class="xref" href="session-3-compression.html#sec-3-33">§3.33</a></dd>
+<dt>Knowledge distillation</dt><dd>Training a student on a teacher&rsquo;s softened output distribution rather than on labels alone. <a class="xref" href="session-3-compression.html#sec-3-38">§3.38</a></dd>
+<dt>Dark knowledge</dt><dd>The teacher&rsquo;s relative ranking over the <i>wrong</i> classes — the similarity structure a one-hot label cannot express. <a class="xref" href="session-3-compression.html#sec-3-37">§3.37</a></dd>
+<dt>Capacity gap</dt><dd>The point beyond which a stronger teacher yields a worse student, because the student cannot represent its function. <a class="xref" href="session-3-compression.html#sec-3-40">§3.40</a></dd>
+</dl>
+
+<h4>Hardware and systems</h4>
+<dl class="gloss">
+<dt>SIMD / SIMT</dt><dd>One instruction over several data lanes (CPU vector units) or over a lock-step group of threads (GPU warps). <a class="xref" href="session-4.html#sec-4-1">§4.1</a>, <a class="xref" href="session-4.html#sec-4-9">§4.9</a></dd>
+<dt>Warp divergence</dt><dd>Both sides of a branch executing in sequence with inactive lanes masked. Why data-dependent control flow is expensive on GPUs. <a class="xref" href="session-4.html#sec-4-9">§4.9</a></dd>
+<dt>Systolic array</dt><dd>A grid of processing elements passing operands to neighbours, so <span class="eqn">N²</span> MACs per cycle need only <span class="eqn">2N</span> external fetches. <a class="xref" href="session-4.html#sec-4-10">§4.10</a></dd>
+<dt>Dataflow</dt><dd>Which quantity an accelerator pins in its processing elements — weights, outputs, or a row of each — and therefore which reuse it captures. <a class="xref" href="session-4.html#sec-4-10">§4.10</a></dd>
+<dt>TCM</dt><dd>Tightly-coupled memory: small single-cycle SRAM addressed directly, with no cache logic. Placement is yours to decide. <a class="xref" href="session-4.html#sec-4-1">§4.1</a></dd>
+<dt>DMA</dt><dd>A peripheral that moves data without the core, enabling double-buffered acquisition during inference. <a class="xref" href="session-4.html#sec-4-6">§4.6</a></dd>
+<dt>im2col</dt><dd>Reshaping convolution into a matrix multiply by materialising overlapping patches — at a <span class="eqn">k²</span> memory blow-up that a partial version avoids. <a class="xref" href="session-4.html#sec-4-5">§4.5</a></dd>
+<dt>Winograd</dt><dd>Trading multiplications for additions and transforms; 2.25× fewer multiplies for F(2×2, 3×3), at some numerical cost. <a class="xref" href="session-4.html#sec-4-5">§4.5</a></dd>
+<dt>Operator fusion</dt><dd>Computing several graph operations in one pass so intermediates never reach memory. Saves traffic, not arithmetic. <a class="xref" href="session-4.html#sec-4-15">§4.15</a></dd>
+<dt>Analog in-memory computing</dt><dd>Storing weights as conductances so Ohm&rsquo;s and Kirchhoff&rsquo;s laws perform the matrix–vector product in place. <a class="xref" href="session-4.html#sec-4-12">§4.12</a></dd>
+<dt>MLPerf Tiny</dt><dd>The community benchmark for tiny systems: keyword spotting, visual wake words, image classification, anomaly detection — with measured energy, plus a streaming task from v1.3. <a href="presentations.html#topic-d">Topic D</a></dd>
+<dt>Covariate / concept / label shift</dt><dd>The inputs move, the input–label relationship moves, or only the class priors move. Different symptoms, different fixes. <a class="xref" href="session-4.html#sec-4-19">§4.19</a></dd>
+<dt>Federated learning</dt><dd>Training by averaging locally-computed updates so raw data never leaves the device. <a class="xref" href="session-4.html#sec-4-20">§4.20</a></dd>
+</dl>
+
+
+<h3 id="numbers">Numbers and formulas worth knowing</h3>
+
+
+<h5>Cost formulas</h5>
+<div class="eq">Conv2D MACs        = H · W · k² · C_in · C_out
+Depthwise MACs     = H · W · k² · C_in
+Pointwise MACs     = H · W · C_in · C_out
+Separable / dense ratio = 1/C_out + 1/k²      (≈ 1/9 for k = 3)
+Dense MACs         = D_in · D_out
+LSTM parameters    = 4 · [ n(m + n) + n ]
+Peak SRAM          = max over layers of ( |in| + |out| + live skips )
+Receptive field    R_i = R_{i−1} + (k_i − 1) · d_i · Π_{j&lt;i} s_j</div>
+
+<h5>Performance</h5>
+<div class="eq">Arithmetic intensity  I = MACs / bytes moved
+Roofline              P ≤ min( π , β · I )
+Ridge point           I* = π / β
+Cache tile size       b ≤ √( S / (3 · element_bytes) )
+Reuse in a b×b tile   = b / 2</div>
+
+<h5>Signals</h5>
+<div class="eq">Nyquist               f_s > 2 · f_max
+Quantization noise    σ² = q² / 12
+Converter SQNR        ≈ 6.02 N + 1.76 dB
+ENOB                  = (SINAD − 1.76) / 6.02
+Averaging M samples   SNR gain = 10 log₁₀ M  (≈ 3 dB per doubling)
+Mel scale             m = 2595 · log₁₀(1 + f/700)
+STFT resolution       Δf ≈ f_s/L ,  Δt = L/f_s ,  Δt·Δf ≈ 1</div>
+
+<h5>Quantization</h5>
+<div class="eq">s = (β − α)/(Q_max − Q_min) ,  z = round(Q_min − α/s)
+q₃ = z₃ + M · Σ (q₁ − z₁)(q₂ − z₂) ,   M = s₁s₂/s₃ = 2^(−n) M₀
+Max representation error = s/2</div>
+
+<h5>Sparsity and factorisation</h5>
+<div class="eq">Storage break-even   σ &lt; b_value / (b_value + b_index)
+   → int8 + 8-bit index: need > 50 % of weights removed
+Low-rank worthwhile  r &lt; D_in·D_out / (D_in + D_out)
+OBD saliency         s_i = ½ h_ii w_i²
+OBS saliency         s_q = w_q² / (2 [H⁻¹]_qq)</div>
+
+<h5>Energy, after Horowitz (45 nm)</h5>
+<div class="tw"><table>
+<thead><tr><th>Operation</th><th class="num">Energy</th><th>Operation</th><th class="num">Energy</th></tr></thead>
+<tbody>
+<tr><td>int8 add</td><td class="num">0.03 pJ</td><td>32 kB cache read</td><td class="num">20 pJ</td></tr>
+<tr><td>int32 add</td><td class="num">0.1 pJ</td><td>1 MB cache read</td><td class="num">100 pJ</td></tr>
+<tr><td>int8 multiply</td><td class="num">0.2 pJ</td><td>DRAM access</td><td class="num">1.3–2.6 nJ</td></tr>
+<tr><td>fp32 multiply</td><td class="num">4 pJ</td><td>8 kB cache read</td><td class="num">10 pJ</td></tr>
+</tbody>
+</table></div>
+
+<h5>System-level anchors</h5>
+<ul>
+  <li>CR2032 coin cell ≈ 2.4 kJ; one year of service ⇒ ≈ 77 µW average power ceiling (before derating).</li>
+  <li>A cascade's expected energy: <span class="eqn">E₁ + p₁E₂ + p₁p₂E₃ + …</span></li>
+  <li>DS-CNN keyword spotting, small configuration: ≈ 38.6 kB, ≈ 5.4 MOps per inference, ≈ 94.4 % on Google Speech Commands (Zhang et al., 2017).</li>
+  <li>MLPerf Tiny tasks: keyword spotting, visual wake words, small-image classification, anomaly detection — plus a streaming wake-word benchmark from v1.3.</li>
+</ul>
+
+</div></main></div><footer class="site"><div class="in"><span>Embedded Machine Learning · PhD course · 2026/27</span><span><a href="credits.html">Credits, licences &amp; image sources</a> · <a href="references.html">References</a></span><span>Figures are original unless credited. Text and figures may be reused for teaching with attribution.</span></div></footer><script src="assets/js/site.js" defer></script></body></html>

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Session 5 — Paper presentations · Embedded Machine Learning</title><meta name="description" content="Three or four participants each present one landmark paper from a different topic area. This page lists the topics and the papers to choose from, explains how to read a systems paper, and sets out the format, the roles and the assessment."><link rel="stylesheet" href="assets/css/site.css"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script>try{var t=localStorage.getItem("eml-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script></head><body><a class="skip" href="#content">Skip to content</a><header class="topbar"><div class="in"><a class="brand" href="index.html">Embedded Machine Learning<span>PhD course</span></a><button class="menubtn" aria-expanded="false" aria-controls="topnav">Menu</button><nav class="topnav" id="topnav" aria-label="Course"><a href="index.html">Overview</a><a href="session-1.html"><em>S1</em>Embedded</a><a href="session-2.html"><em>S2</em>Data</a><a href="session-3.html"><em>S3</em>Models</a><a href="session-4.html"><em>S4</em>Hardware</a><a href="presentations.html" aria-current="page"><em>S5</em>Presentations</a><a href="glossary.html">Glossary</a><a href="references.html">References</a></nav><button class="themebtn" type="button" aria-label="Toggle colour theme">◐<span class="tl"> theme</span></button></div></header><div class="pagehead"><div class="inner"><p class="eyebrow">Session 5 · 90 minutes · student presentations</p><h1>Paper presentations</h1><p class="sub">Three or four participants each present one landmark paper from a different topic area. This page lists the topics and the papers to choose from, explains how to read a systems paper, and sets out the format, the roles and the assessment.</p><div class="specstrip"><div><b>Format</b><span>15 min talk + 5 min discussion (4 presenters)</span></div><div><b>Choose by</b><span>the end of Session 2</span></div><div><b>Slides due</b><span>the evening before Session 5</span></div><div><b>Assessment</b><span>rubric below</span></div></div></div></div><div class="wrap"><nav class="toc" aria-label="On this page"><details open><summary>On this page</summary><ol class="sec nonum"><li><a href="#rules"><em></em><span>How to choose</span></a></li><li><a href="#topic-a"><em></em><span>Topic A — Quantization</span></a></li><li><a href="#topic-b"><em></em><span>Topic B — Pruning, sparsity and distillation</span></a></li><li><a href="#topic-c"><em></em><span>Topic C — Efficient architectures and neural architecture search</span></a></li><li><a href="#topic-d"><em></em><span>Topic D — TinyML systems and hardware</span></a></li><li><a href="#howtoread"><em></em><span>How to read a systems paper</span></a></li><li><a href="#sec-7"><em></em><span>How to read a systems paper in four passes </span></a></li><li><a href="#sec-8"><em></em><span>The checklist for compression papers specifically</span></a></li><li><a href="#sec-9"><em></em><span>Eight ways an efficiency claim goes wrong</span></a></li><li><a href="#talk"><em></em><span>What the talk should contain</span></a></li><li><a href="#assessment"><em></em><span>Assessment</span></a></li><li><a href="#timeline"><em></em><span>Timeline</span></a></li></ol></details></nav><main id="content"><div class="col">
+
+<div class="intu">
+<h5>What the session is for</h5>
+<p>Reading primary literature critically is the core skill of a PhD. The aim is not to re-teach a paper, but to state precisely what it claims, show the one piece of evidence that carries the claim, explain the mechanism in the cost vocabulary of this course — memory, operations, data movement, energy — and say where its limits lie and what it means for embedded deployment.</p>
+</div>
+
+<h3 id="rules">How to choose</h3>
+<ul>
+  <li><b>One paper per presenter, one topic area per presenter.</b> With four presenters the session covers all four areas A–D; with three, one area is left out.</li>
+  <li><b>First come, first served.</b> Send your first and second choice (e.g. "B3, then D3") to the lecturer by the end of Session 2. Choices are confirmed within a few days.</li>
+  <li><b>Difficulty.</b> Papers are tagged <span class="tag ok">foundational</span> — self-contained, a good choice if machine learning is new to you — or <span class="tag hard">advanced</span> — assumes the background of Session 3 and some comfort with optimisation or hardware. Both are assessed on the same rubric; nobody is penalised for choosing a foundational paper.</li>
+  <li><b>Your own paper?</b> A different landmark paper in the same area may be proposed, if it is peer-reviewed, widely cited, and agreed with the lecturer by the same deadline.</li>
+  <li><b>Discussants.</b> Each presenter is also the discussant for one other talk: read that paper too, and open the discussion with one prepared question.</li>
+</ul>
+
+<figure id="fig-presentation_timeline"><div class="figscroll"><svg viewBox="0 0 720 200" role="img" aria-label="Timeline of the ninety-minute presentation session: five minutes of introduction, four slots of fifteen minutes of talk and five minutes of discussion, and five minutes of wrap-up">
+  <rect x="21.0" y="50.0" width="35.8" height="40.0" class="fillsoft"/>
+  <text x="38.9" y="75.0" class="lbl" text-anchor="middle" font-size="9.5">intro</text>
+  <rect x="58.8" y="50.0" width="111.3" height="40.0" class="tlf" opacity="0.85"/>
+  <text x="114.4" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">talk A</text>
+  <rect x="172.1" y="50.0" width="35.8" height="40.0" class="accf" opacity="0.85"/>
+  <text x="190.0" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">Q&amp;A</text>
+  <rect x="209.9" y="50.0" width="111.3" height="40.0" class="tlf" opacity="0.85"/>
+  <text x="265.6" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">talk B</text>
+  <rect x="323.2" y="50.0" width="35.8" height="40.0" class="accf" opacity="0.85"/>
+  <text x="341.1" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">Q&amp;A</text>
+  <rect x="361.0" y="50.0" width="111.3" height="40.0" class="tlf" opacity="0.85"/>
+  <text x="416.7" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">talk C</text>
+  <rect x="474.3" y="50.0" width="35.8" height="40.0" class="accf" opacity="0.85"/>
+  <text x="492.2" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">Q&amp;A</text>
+  <rect x="512.1" y="50.0" width="111.3" height="40.0" class="tlf" opacity="0.85"/>
+  <text x="567.8" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">talk D</text>
+  <rect x="625.4" y="50.0" width="35.8" height="40.0" class="accf" opacity="0.85"/>
+  <text x="643.3" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">Q&amp;A</text>
+  <rect x="663.2" y="50.0" width="35.8" height="40.0" class="fillsoft"/>
+  <text x="681.1" y="75.0" class="lbl" text-anchor="middle" font-size="9.5">wrap</text>
+  <line x1="20.0" y1="90.0" x2="20.0" y2="96.0" class="ax"/>
+  <text x="20.0" y="110.0" class="lbl" text-anchor="middle">0′</text>
+  <line x1="133.3" y1="90.0" x2="133.3" y2="96.0" class="ax"/>
+  <text x="133.3" y="110.0" class="lbl" text-anchor="middle">15′</text>
+  <line x1="246.7" y1="90.0" x2="246.7" y2="96.0" class="ax"/>
+  <text x="246.7" y="110.0" class="lbl" text-anchor="middle">30′</text>
+  <line x1="360.0" y1="90.0" x2="360.0" y2="96.0" class="ax"/>
+  <text x="360.0" y="110.0" class="lbl" text-anchor="middle">45′</text>
+  <line x1="473.3" y1="90.0" x2="473.3" y2="96.0" class="ax"/>
+  <text x="473.3" y="110.0" class="lbl" text-anchor="middle">60′</text>
+  <line x1="586.7" y1="90.0" x2="586.7" y2="96.0" class="ax"/>
+  <text x="586.7" y="110.0" class="lbl" text-anchor="middle">75′</text>
+  <line x1="700.0" y1="90.0" x2="700.0" y2="96.0" class="ax"/>
+  <text x="700.0" y="110.0" class="lbl" text-anchor="middle">90′</text>
+  <text x="20.0" y="30.0" class="lblb">Session 5 · 90 minutes · four presenters</text>
+  <text x="20.0" y="140.0" class="lbl">Each slot: 15 min talk (strict) + 5 min questions led by the assigned discussant.</text>
+  <text x="20.0" y="158.0" class="lbl">Three presenters: 20 min talk + 8 min questions each; the spare time goes to a closing panel.</text>
+  <text x="20.0" y="176.0" class="lbl">Slides are uploaded the evening before so that the changeover takes seconds, not minutes.</text>
+</svg></div><figcaption><b>Fig 1</b>The fifth session at a glance. Timing is strict so that every presenter gets the same airtime and the discussion is not squeezed out by the talks.</figcaption></figure>
+
+<h3 id="topic-a">Topic A — Quantization</h3>
+<div class="topic">
+<header><p class="k">Topic A · background: Session 3, Part F</p><h4 class="ttl">Fewer bits per number</h4>
+<p>From the integer-only arithmetic that every embedded toolchain uses today, through binary networks and learned quantizers, to the post-training methods that made 4-bit large language models practical.</p></header>
+<div class="tb"><ol class="papers">
+<li><div><div class="ptitle">Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference</div>
+<div class="pmeta">B. Jacob, S. Kligys, B. Chen et al. · CVPR 2018 · <a href="https://arxiv.org/abs/1712.05877">arXiv:1712.05877</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Defines the affine (scale and zero-point) quantization scheme, integer-only inference with 32-bit accumulators and fixed-point requantization, and a training procedure that simulates quantization — the scheme behind TensorFlow Lite and most microcontroller runtimes.</p>
+<p class="pq"><b>Focus</b>Derive the requantization step on one slide. What do the measured latency–accuracy curves on phone CPUs show that a MAC count would not?</p></div></li>
+<li><div><div class="ptitle">XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks</div>
+<div class="pmeta">M. Rastegari, V. Ordonez, J. Redmon, A. Farhadi · ECCV 2016 · <a href="https://arxiv.org/abs/1603.05279">arXiv:1603.05279</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Binarises weights, and then also activations, with real-valued scaling factors, so that convolutions become XNOR and bit-count operations. The extreme end of quantization; read alongside BinaryConnect (Courbariaux, Bengio and David, NIPS 2015, <a href="https://arxiv.org/abs/1511.00363">arXiv:1511.00363</a>).</p>
+<p class="pq"><b>Focus</b>Where does the accuracy loss on ImageNet come from, and how much of the claimed speed-up would survive on a real microcontroller or NPU?</p></div></li>
+<li><div><div class="ptitle">Learned Step Size Quantization</div>
+<div class="pmeta">S. K. Esser, J. L. McKinstry, D. Bablani et al. · ICLR 2020 · <a href="https://arxiv.org/abs/1902.08153">arXiv:1902.08153</a> <span class="tag hard">advanced</span></div>
+<p class="pwhy">Makes the quantizer's step size a trainable parameter, with a carefully derived gradient through the rounding operation and a gradient-scaling rule; reports 2-, 3- and 4-bit ImageNet networks close to, and at 3 bits matching, full-precision accuracy.</p>
+<p class="pq"><b>Focus</b>Explain the straight-through estimator and the step-size gradient. Why is the gradient scale factor needed, and what happens without it?</p></div></li>
+<li><div><div class="ptitle">Up or Down? Adaptive Rounding for Post-Training Quantization (AdaRound)</div>
+<div class="pmeta">M. Nagel, R. A. Amjad, M. van Baalen et al. · ICML 2020 · <a href="https://arxiv.org/abs/2004.10568">arXiv:2004.10568</a> <span class="tag hard">advanced</span></div>
+<p class="pwhy">Shows that rounding each weight to the nearest grid point is not optimal for the network's loss, derives a layer-wise objective from a second-order Taylor expansion, and learns the rounding direction from a small unlabelled calibration set — 4-bit weights without fine-tuning.</p>
+<p class="pq"><b>Focus</b>Walk through the argument from the Taylor expansion to the layer-wise reconstruction loss. Which assumptions does each step make?</p></div></li>
+<li><div><div class="ptitle">LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale</div>
+<div class="pmeta">T. Dettmers, M. Lewis, Y. Belkada, L. Zettlemoyer · NeurIPS 2022 · <a href="https://arxiv.org/abs/2208.07339">arXiv:2208.07339</a> <span class="tag hard">advanced</span></div>
+<p class="pwhy">Identifies systematic outlier features that emerge in large transformers and break per-tensor int8 quantization, and handles them with vector-wise scales plus a mixed-precision decomposition that keeps the few outlier dimensions in 16-bit.</p>
+<p class="pq"><b>Focus</b>Connect the outlier phenomenon to the per-channel versus per-tensor argument of Session 3. What does the decomposition cost in latency?</p></div></li>
+<li><div><div class="ptitle">GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers</div>
+<div class="pmeta">E. Frantar, S. Ashkboos, T. Hoefler, D. Alistarh · ICLR 2023 · <a href="https://arxiv.org/abs/2210.17323">arXiv:2210.17323</a> <span class="tag hard">advanced</span></div>
+<p class="pwhy">One-shot weight quantization to 3–4 bits using approximate second-order (Hessian) information, made fast enough to quantize models with over a hundred billion parameters in a few GPU-hours.</p>
+<p class="pq"><b>Focus</b>What is the per-layer objective, and how does the algorithm compensate later weights for the error of earlier ones? Compare with AdaRound.</p></div></li>
+<li><div><div class="ptitle">AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration</div>
+<div class="pmeta">J. Lin, J. Tang, H. Tang et al. · MLSys 2024 (best paper) · <a href="https://arxiv.org/abs/2306.00978">arXiv:2306.00978</a> <span class="tag hard">advanced</span></div>
+<p class="pwhy">Observes that a small fraction of weight channels, identified by activation magnitude, dominate the quantization error, and protects them by per-channel scaling rather than mixed precision — hardware-friendly 4-bit weight-only quantization, with an inference system for edge GPUs.</p>
+<p class="pq"><b>Focus</b>Why is scaling preferable to keeping salient weights in higher precision on real hardware? What does "weight-only" quantization save, and what not?</p></div></li>
+</ol>
+<p class="wnote" style="margin-top:10px">Background reading for anyone in this topic: M. Nagel et al., "A White Paper on Neural Network Quantization," 2021, <a href="https://arxiv.org/abs/2106.08295">arXiv:2106.08295</a>; R. Krishnamoorthi, "Quantizing deep convolutional networks for efficient inference: A whitepaper," 2018, <a href="https://arxiv.org/abs/1806.08342">arXiv:1806.08342</a>.</p>
+</div></div>
+
+<h3 id="topic-b">Topic B — Pruning, sparsity and distillation</h3>
+<div class="topic">
+<header><p class="k">Topic B · background: Session 3, Parts G and H</p><h4 class="ttl">Fewer numbers, and smaller models taught by larger ones</h4>
+<p>The papers that established pruning as a field, the debate about what pruning actually finds, and the distillation objective that lets a small network inherit a large one's behaviour.</p></header>
+<div class="tb"><ol class="papers">
+<li><div><div class="ptitle">Learning both Weights and Connections for Efficient Neural Networks</div>
+<div class="pmeta">S. Han, J. Pool, J. Tran, W. J. Dally · NIPS 2015 · <a href="https://arxiv.org/abs/1506.02626">arXiv:1506.02626</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">The train–prune–retrain recipe with magnitude pruning, reducing the parameters of AlexNet by 9× and VGG-16 by 13× without accuracy loss on ImageNet. The starting point of modern pruning research.</p>
+<p class="pq"><b>Focus</b>Which layers can be pruned most and why? Do 13× fewer parameters mean 13× less memory traffic or time — on what hardware?</p></div></li>
+<li><div><div class="ptitle">Deep Compression: Compressing Deep Neural Networks with Pruning, Trained Quantization and Huffman Coding</div>
+<div class="pmeta">S. Han, H. Mao, W. J. Dally · ICLR 2016 · <a href="https://arxiv.org/abs/1510.00149">arXiv:1510.00149</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Chains pruning, weight sharing by k-means clustering and Huffman coding to shrink AlexNet's storage by 35× and VGG-16's by 49×, and measures the effect on speed and energy of sparse matrix–vector products on CPU, GPU and mobile GPU.</p>
+<p class="pq"><b>Focus</b>Separate the storage gain from the compute gain. Which of the three stages contributes what, and which would survive on a microcontroller?</p></div></li>
+<li><div><div class="ptitle">The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks</div>
+<div class="pmeta">J. Frankle, M. Carbin · ICLR 2019 · <a href="https://arxiv.org/abs/1803.03635">arXiv:1803.03635</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Proposes that dense networks contain sparse subnetworks that, reset to their original initialisation, train to full accuracy in isolation; demonstrates it with iterative magnitude pruning and rewinding on small vision benchmarks.</p>
+<p class="pq"><b>Focus</b>What exactly is the hypothesis, and what would falsify it? What changes on larger models (late rewinding), and does any of this make inference cheaper?</p></div></li>
+<li><div><div class="ptitle">Rethinking the Value of Network Pruning</div>
+<div class="pmeta">Z. Liu, M. Sun, T. Zhou et al. · ICLR 2019 · <a href="https://arxiv.org/abs/1810.05270">arXiv:1810.05270</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Finds that, for structured pruning, training the pruned architecture from scratch usually matches fine-tuning the inherited weights — suggesting that pruning is valuable as architecture search rather than as weight selection. The natural counterpart to the lottery ticket paper.</p>
+<p class="pq"><b>Focus</b>Present the controlled experiment that carries the claim. How do the two papers' settings differ, and can both be right?</p></div></li>
+<li><div><div class="ptitle">Pruning Filters for Efficient ConvNets</div>
+<div class="pmeta">H. Li, A. Kadav, I. Durdanovic et al. · ICLR 2017 · <a href="https://arxiv.org/abs/1608.08710">arXiv:1608.08710</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Removes whole filters (output channels) ranked by their L1 norm, producing a smaller dense network that needs no sparse kernels — the simplest form of structured pruning, with layer-by-layer sensitivity analysis on CIFAR-10.</p>
+<p class="pq"><b>Focus</b>Why does structured pruning translate into speed when unstructured pruning does not? Show the sensitivity analysis and what it says about which layers matter.</p></div></li>
+<li><div><div class="ptitle">Distilling the Knowledge in a Neural Network</div>
+<div class="pmeta">G. Hinton, O. Vinyals, J. Dean · NIPS 2014 Deep Learning Workshop · <a href="https://arxiv.org/abs/1503.02531">arXiv:1503.02531</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Trains a small model to match the temperature-softened output distribution of a large model or ensemble, transferring the "dark knowledge" in the relative probabilities of wrong classes; experiments on MNIST, speech recognition and a large image dataset with specialist models.</p>
+<p class="pq"><b>Focus</b>Derive why the soft-target loss is scaled by T². What information do soft targets carry that one-hot labels do not, and when is there none?</p></div></li>
+<li><div><div class="ptitle">SparseGPT: Massive Language Models Can Be Accurately Pruned in One-Shot</div>
+<div class="pmeta">E. Frantar, D. Alistarh · ICML 2023 · <a href="https://arxiv.org/abs/2301.00774">arXiv:2301.00774</a> <span class="tag hard">advanced</span></div>
+<p class="pwhy">Prunes GPT-family models with over a hundred billion parameters to 50–60 % sparsity in one shot, without retraining, by solving a layer-wise sparse reconstruction problem approximately; also handles the 2:4 semi-structured pattern supported by recent GPUs.</p>
+<p class="pq"><b>Focus</b>Why does retraining-free pruning become essential at this scale? Relate the 2:4 pattern to the "when does sparsity pay" analysis of Session 3.</p></div></li>
+</ol>
+<p class="wnote" style="margin-top:10px">Background reading: D. Blalock, J. J. Gonzalez Ortiz, J. Frankle, J. Guttag, "What is the State of Neural Network Pruning?," MLSys 2020, <a href="https://arxiv.org/abs/2003.03033">arXiv:2003.03033</a>; A. Romero et al., "FitNets: Hints for Thin Deep Nets," ICLR 2015, <a href="https://arxiv.org/abs/1412.6550">arXiv:1412.6550</a>; S. I. Mirzadeh et al., "Improved Knowledge Distillation via Teacher Assistant," AAAI 2020, <a href="https://arxiv.org/abs/1902.03393">arXiv:1902.03393</a>.</p>
+</div></div>
+
+<h3 id="topic-c">Topic C — Efficient architectures and neural architecture search</h3>
+<div class="topic">
+<header><p class="k">Topic C · background: Session 3, Part D</p><h4 class="ttl">Designing the network to be cheap from the start</h4>
+<p>The architecture families that run on phones and microcontrollers, the argument that FLOPs are the wrong target, and the methods that automated the design.</p></header>
+<div class="tb"><ol class="papers">
+<li><div><div class="ptitle">MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</div>
+<div class="pmeta">A. G. Howard, M. Zhu, B. Chen et al. · arXiv 2017 · <a href="https://arxiv.org/abs/1704.04861">arXiv:1704.04861</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Builds a whole network from depthwise-separable convolutions and introduces two knobs — a width multiplier and a resolution multiplier — that trade accuracy for cost smoothly. The architecture behind most microcontroller vision models.</p>
+<p class="pq"><b>Focus</b>Derive the cost ratio of a depthwise-separable versus a standard convolution. How do the two multipliers act on parameters, MACs and activation memory differently?</p></div></li>
+<li><div><div class="ptitle">MobileNetV2: Inverted Residuals and Linear Bottlenecks</div>
+<div class="pmeta">M. Sandler, A. Howard, M. Zhu et al. · CVPR 2018 · <a href="https://arxiv.org/abs/1801.04381">arXiv:1801.04381</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Introduces the inverted residual block — expand, filter depthwise, project back without a non-linearity — and argues for linear bottlenecks from a manifold perspective; evaluated on classification, detection (SSDLite) and segmentation.</p>
+<p class="pq"><b>Focus</b>Why invert the classical bottleneck? What does the expanded middle tensor mean for peak SRAM on a microcontroller?</p></div></li>
+<li><div><div class="ptitle">ShuffleNet V2: Practical Guidelines for Efficient CNN Architecture Design</div>
+<div class="pmeta">N. Ma, X. Zhang, H.-T. Zheng, J. Sun · ECCV 2018 · <a href="https://arxiv.org/abs/1807.11164">arXiv:1807.11164</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Shows that FLOPs are an indirect and often misleading proxy for speed, derives four practical guidelines from memory-access cost and parallelism, and measures them on GPU and ARM platforms.</p>
+<p class="pq"><b>Focus</b>Present one guideline with its derivation and its measurement. Which of the four would you expect to hold on a microcontroller, and which not?</p></div></li>
+<li><div><div class="ptitle">EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks</div>
+<div class="pmeta">M. Tan, Q. V. Le · ICML 2019 · <a href="https://arxiv.org/abs/1905.11946">arXiv:1905.11946</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Scales depth, width and input resolution together with a single compound coefficient, starting from a baseline found by architecture search; the resulting family dominated the accuracy–parameter trade-off on ImageNet at publication.</p>
+<p class="pq"><b>Focus</b>Why should the three dimensions be scaled together? Does the gain in parameters and FLOPs translate into latency and memory on edge hardware?</p></div></li>
+<li><div><div class="ptitle">Neural Architecture Search with Reinforcement Learning</div>
+<div class="pmeta">B. Zoph, Q. V. Le · ICLR 2017 · <a href="https://arxiv.org/abs/1611.01578">arXiv:1611.01578</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">A recurrent controller generates architecture descriptions and is trained with policy gradients to maximise the validation accuracy of the networks it proposes — the paper that started modern NAS, at a compute cost of hundreds of GPUs.</p>
+<p class="pq"><b>Focus</b>Decompose the method into search space, search strategy and performance estimation. Which of the three made it so expensive?</p></div></li>
+<li><div><div class="ptitle">DARTS: Differentiable Architecture Search</div>
+<div class="pmeta">H. Liu, K. Simonyan, Y. Yang · ICLR 2019 · <a href="https://arxiv.org/abs/1806.09055">arXiv:1806.09055</a> <span class="tag hard">advanced</span></div>
+<p class="pwhy">Relaxes the discrete choice of operations into a softmax-weighted mixture, so that architecture and weights can be optimised jointly by gradient descent as a bilevel problem — reducing search cost from thousands of GPU-days to a few.</p>
+<p class="pq"><b>Focus</b>Explain the bilevel optimisation and its first-order approximation. What are the known failure modes (e.g. collapse to skip connections), and why do they occur?</p></div></li>
+<li><div><div class="ptitle">Once-for-All: Train One Network and Specialize it for Efficient Deployment</div>
+<div class="pmeta">H. Cai, C. Gan, T. Wang et al. · ICLR 2020 · <a href="https://arxiv.org/abs/1908.09791">arXiv:1908.09791</a> <span class="tag hard">advanced</span></div>
+<p class="pwhy">Trains a single super-network whose sub-networks of varying depth, width, kernel size and resolution all work, using progressive shrinking; a specialised model for each new hardware target is then selected without retraining.</p>
+<p class="pq"><b>Focus</b>How does progressive shrinking prevent sub-networks from interfering? What does the approach assume about the latency predictor for a new device?</p></div></li>
+</ol>
+<p class="wnote" style="margin-top:10px">Further candidates in this topic: A. Howard et al., "Searching for MobileNetV3," ICCV 2019, <a href="https://arxiv.org/abs/1905.02244">arXiv:1905.02244</a>; M. Tan et al., "MnasNet: Platform-Aware Neural Architecture Search for Mobile," CVPR 2019, <a href="https://arxiv.org/abs/1807.11626">arXiv:1807.11626</a>; H. Cai, L. Zhu, S. Han, "ProxylessNAS," ICLR 2019, <a href="https://arxiv.org/abs/1812.00332">arXiv:1812.00332</a>.</p>
+</div></div>
+
+<h3 id="topic-d">Topic D — TinyML systems and hardware</h3>
+<div class="topic">
+<header><p class="k">Topic D · background: Session 4</p><h4 class="ttl">The machines, the runtimes and the measurements</h4>
+<p>Landmark accelerators, the systems that made deep learning run on microcontrollers, the benchmark that measures them, and the first steps towards learning on the device.</p></header>
+<div class="tb"><ol class="papers">
+<li><div><div class="ptitle">In-Datacenter Performance Analysis of a Tensor Processing Unit</div>
+<div class="pmeta">N. P. Jouppi, C. Young, N. Patil et al. · ISCA 2017 · <a href="https://arxiv.org/abs/1704.04760">arXiv:1704.04760</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">The first TPU: a 256×256 systolic array of 8-bit multiply–accumulators with large on-chip buffers, evaluated on Google's production inference workloads against contemporary CPUs and GPUs — and analysed with the roofline model.</p>
+<p class="pq"><b>Focus</b>Use the paper's rooflines to explain which workloads benefit and why. What carries over from a 40-W datacentre chip to a milliwatt edge NPU?</p></div></li>
+<li><div><div class="ptitle">Eyeriss: An Energy-Efficient Reconfigurable Accelerator for Deep Convolutional Neural Networks</div>
+<div class="pmeta">Y.-H. Chen, T. Krishna, J. S. Emer, V. Sze · IEEE Journal of Solid-State Circuits 52(1), 2017 (also ISSCC 2016) <span class="tag hard">advanced</span></div>
+<p class="pwhy">A spatial accelerator built around the row-stationary dataflow, which maximises reuse of weights, inputs and partial sums in local storage to minimise energy-expensive data movement; a fabricated chip running AlexNet's convolutional layers at a few hundred milliwatts.</p>
+<p class="pq"><b>Focus</b>Explain row-stationary against the other dataflows of Session 4. Where does the energy go, according to the paper's own breakdown?</p></div></li>
+<li><div><div class="ptitle">MCUNet: Tiny Deep Learning on IoT Devices</div>
+<div class="pmeta">J. Lin, W.-M. Chen, Y. Lin et al. · NeurIPS 2020 · <a href="https://arxiv.org/abs/2007.10319">arXiv:2007.10319</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">Co-designs the network (TinyNAS, which first shrinks the search space to fit the device) and the inference engine (TinyEngine, with memory-aware scheduling and code generation) to run ImageNet-scale classification on an off-the-shelf microcontroller.</p>
+<p class="pq"><b>Focus</b>Which gains come from the network and which from the engine? How is peak SRAM, rather than parameter count, made the optimisation target?</p></div></li>
+<li><div><div class="ptitle">TensorFlow Lite Micro: Embedded Machine Learning for TinyML Systems</div>
+<div class="pmeta">R. David, J. Duke, A. Jain et al. · MLSys 2021 · <a href="https://arxiv.org/abs/2010.08678">arXiv:2010.08678</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">The design of the most widely used microcontroller inference framework: an interpreter rather than a code generator, a single statically planned memory arena, and a mechanism for vendor-optimised kernels — and the measured overheads of these choices.</p>
+<p class="pq"><b>Focus</b>Argue for and against interpretation versus code generation on an MCU. What does the arena planner do, and what does it cost?</p></div></li>
+<li><div><div class="ptitle">MLPerf Tiny Benchmark</div>
+<div class="pmeta">C. Banbury, V. J. Reddi, P. Torelli et al. · NeurIPS 2021 Datasets and Benchmarks · <a href="https://arxiv.org/abs/2106.07597">arXiv:2106.07597</a> <span class="tag ok">foundational</span></div>
+<p class="pwhy">An industry-standard benchmark for ultra-low-power ML: four tasks (keyword spotting, visual wake words, image classification, anomaly detection) with reference models, quality targets, and a methodology for measuring latency and energy on real devices.</p>
+<p class="pq"><b>Focus</b>Why these four tasks and models? Explain the energy measurement set-up and the closed versus open divisions. What would you add?</p></div></li>
+<li><div><div class="ptitle">On-Device Training Under 256KB Memory</div>
+<div class="pmeta">J. Lin, L. Zhu, W.-M. Chen et al. · NeurIPS 2022 · <a href="https://arxiv.org/abs/2206.15472">arXiv:2206.15472</a> <span class="tag hard">advanced</span></div>
+<p class="pwhy">Makes fine-tuning possible on a microcontroller with 256 kB of SRAM by combining quantization-aware scaling for stable int8 training, sparse updates of only the most useful layers and tensors, and a training engine that prunes the backward graph at compile time.</p>
+<p class="pq"><b>Focus</b>Where does the memory of training go (Session 4's on-device learning figure), and which of the three techniques removes which part?</p></div></li>
+<li><div><div class="ptitle">Loihi: A Neuromorphic Manycore Processor with On-Chip Learning</div>
+<div class="pmeta">M. Davies, N. Srinivasa, T.-H. Lin et al. · IEEE Micro 38(1):82–99, 2018 · <a href="https://doi.org/10.1109/MM.2018.112130359">doi:10.1109/MM.2018.112130359</a> <span class="tag hard">advanced</span></div>
+<p class="pwhy">Intel's research chip for spiking neural networks: many asynchronous neuromorphic cores with programmable synaptic learning rules on chip, evaluated on sparse-coding problems against a conventional processor.</p>
+<p class="pq"><b>Focus</b>What computational model does the chip implement, and what does it require of the algorithm? Assess the benchmark: is the comparison with a CPU the right one?</p></div></li>
+</ol>
+<p class="wnote" style="margin-top:10px">Further candidates: L. Lai, N. Suda, V. Chandra, "CMSIS-NN," 2018, <a href="https://arxiv.org/abs/1801.06601">arXiv:1801.06601</a>; J. Lin et al., "MCUNetV2: Memory-Efficient Patch-based Inference for Tiny Deep Learning," NeurIPS 2021, <a href="https://arxiv.org/abs/2110.15352">arXiv:2110.15352</a>; T. Chen et al., "TVM," OSDI 2018, <a href="https://arxiv.org/abs/1802.04799">arXiv:1802.04799</a>.</p>
+</div></div>
+
+<h3 id="howtoread">How to read a systems paper</h3>
+<p>Every presenter should read their paper in the four passes below, and check it against the list of common failures that follows. The same method is useful for every paper you will review during your PhD.</p>
+
+<h3 id="sec-7">How to read a systems paper in four passes <span class="kicker">method</span></h3>
+<ol>
+  <li><b>Locate the claim (5 min).</b> Title, abstract, conclusion, figure captions. Write the claim as one sentence with an explicit scope: <i>on these models, on this hardware, under this metric</i>. Most misreading happens here, by dropping the scope.</li>
+  <li><b>Locate the evidence (15 min).</b> Go to the tables before the method. What is the baseline, and is it a strong one? What is held constant? Is accuracy measured on the same split as the tuning? Are the compared systems given equal engineering effort — a hand-tuned proposal against an untuned baseline is not a comparison.</li>
+  <li><b>Reconstruct the mechanism (30 min).</b> Now read the method, and try to explain <i>why</i> it should work before accepting that it does. If you cannot, either the paper is unclear or you have found the interesting question.</li>
+  <li><b>Find the boundary (10 min).</b> What would break this? Which item of the checklist below is doing the work? Papers rarely state their own limits fully; the limits are usually visible in what was <i>not</i> tested.</li>
+</ol>
+
+
+
+<h3 id="sec-8">The checklist for compression papers specifically</h3>
+<ol>
+  <li><b>Compression of what?</b> Model file size, parameters, MACs, latency or energy — these differ by orders of magnitude and papers slide between them.</li>
+  <li><b>Measured or counted?</b> A FLOP reduction is a count. A speedup is a measurement, and needs a device, a compiler, a clock and a repetition count.</li>
+  <li><b>Which baseline?</b> Compression against an over-parameterised model is easy. The honest comparison is against the best small model trained directly — the "train a small one from scratch" control.</li>
+  <li><b>Accuracy at what operating point?</b> A single accuracy number hides the trade-off curve. Demand the curve.</li>
+  <li><b>How much retraining?</b> A method requiring full retraining is not comparable to one requiring 128 calibration images, whatever their accuracies.</li>
+  <li><b>Does the gain survive composition?</b> Pruning and quantization each recover most accuracy; applied together they may not.</li>
+  <li><b>Variance.</b> One seed is an anecdote. Compression methods are notoriously seed-sensitive at high compression ratios.</li>
+</ol>
+
+
+
+<h3 id="sec-9">Eight ways an efficiency claim goes wrong</h3>
+<ol>
+  <li><b>Metric substitution.</b> A FLOP reduction reported as a speedup, or a storage reduction reported as a memory reduction. Ask which of the five budgets (<a class="xref" href="session-1.html#sec-1-6">§1.6</a>) actually moved.</li>
+  <li><b>Asymmetric effort.</b> The proposed method is hand-tuned; the baseline is the reference implementation.</li>
+  <li><b>Weak baseline by construction.</b> Compressing an over-parameterised model is easy. The control is "the best small model trained directly".</li>
+  <li><b>Single operating point.</b> One accuracy/size pair hides the curve. Two methods can cross.</li>
+  <li><b>Undisclosed retraining.</b> Methods needing full retraining and methods needing 128 unlabelled images are not comparable at equal accuracy.</li>
+  <li><b>Hardware mismatch.</b> A result measured on a GPU says little about a Cortex-M, and vice versa. Ask what changes with the memory hierarchy.</li>
+  <li><b>Missing variance.</b> One seed, one run, no dispersion. Compression at high ratios is seed-sensitive.</li>
+  <li><b>Non-composability.</b> Two techniques that each recover accuracy may not when combined. Very rarely tested.</li>
+</ol>
+
+
+
+<h3 id="talk">What the talk should contain</h3>
+<p>Fifteen minutes is short. The structure below fits it; slide counts are a guide, not a rule.</p>
+<ol>
+  <li><b>The problem and the claim</b> (1–2 slides). What problem, why it mattered at the time, and the claim in one sentence with its scope.</li>
+  <li><b>The idea</b> (2–3 slides). The mechanism, explained so that the audience could re-derive it. One equation or one figure that carries it.</li>
+  <li><b>The evidence</b> (2–3 slides). The experiment that carries the claim — the load-bearing table or plot — with its baseline and its measurement method.</li>
+  <li><b>The critique</b> (1–2 slides). Apply the checklist above: what is counted versus measured, what baseline, what is not tested, what would falsify the claim.</li>
+  <li><b>The embedded view</b> (1 slide). What it would take to use this on a microcontroller or an edge NPU, in terms of the five budgets of Session 1.</li>
+  <li><b>Since then</b> (1 slide). Two or three follow-up works or how the idea is used in practice today.</li>
+</ol>
+<p>Do not re-teach background the course already covered; refer to it. Use the paper's own figures where they help, with attribution, and redraw them when they do not.</p>
+
+<h3 id="assessment">Assessment</h3>
+<div class="tw"><table class="rubric">
+<thead><tr><th>Criterion</th><th class="num">Weight</th><th>Excellent</th><th>Inadequate</th></tr></thead>
+<tbody>
+<tr><td>Claim identified precisely</td><td class="num">20 %</td><td>One sentence, correct scope; distinguishes what is shown from what is suggested</td><td>Repeats the abstract; scope silently widened</td></tr>
+<tr><td>Mechanism explained</td><td class="num">20 %</td><td>The audience could re-derive the core idea; explained in the course's cost vocabulary</td><td>Paraphrases the method section</td></tr>
+<tr><td>Evidence assessed</td><td class="num">20 %</td><td>Names the load-bearing experiment; evaluates baseline strength and measurement method</td><td>Accepts headline numbers</td></tr>
+<tr><td>Critique and embedded relevance</td><td class="num">20 %</td><td>Identifies a real limitation and states what it means for deployment on a constrained device</td><td>Generic criticism ("more datasets would be good")</td></tr>
+<tr><td>Delivery and discussion</td><td class="num">20 %</td><td>Within time; one figure carries the argument; answers questions precisely; discussant question prepared</td><td>Overruns; reads slides; no engagement with questions</td></tr>
+</tbody>
+</table></div>
+<p class="tcap" id="tab-rubric">Table 1 — Presentation rubric. Severity of criticism earns nothing on its own; precision and discriminating power do. The weights are a default and may be adjusted by the lecturer.</p>
+
+<h3 id="timeline">Timeline</h3>
+<div class="tw"><table>
+<thead><tr><th>When</th><th>What</th></tr></thead>
+<tbody>
+<tr><td>Session 1</td><td>Topics presented; read this page and shortlist two papers.</td></tr>
+<tr><td>End of Session 2</td><td>First and second choice sent to the lecturer; papers and discussant pairs confirmed shortly after.</td></tr>
+<tr><td>Between Sessions 3 and 4</td><td>Optional 10-minute consultation: bring your one-sentence claim and the load-bearing figure.</td></tr>
+<tr><td>Evening before Session 5</td><td>Slides (PDF) sent to the lecturer; discussants receive them.</td></tr>
+<tr><td>Session 5</td><td>Talks and discussion, timed as in the figure above.</td></tr>
+</tbody>
+</table></div>
+<p class="tcap" id="tab-timeline">Table 2 — Presentation timeline. Exact dates are announced in class.</p>
+</div><nav class="prevnext" aria-label="Previous and next"><a class="prev" href="session-4.html"><b>← Previous</b><span>Session 4 — Hardware &amp; deployment</span></a></nav></main></div><footer class="site"><div class="in"><span>Embedded Machine Learning · PhD course · 2026/27</span><span><a href="credits.html">Credits, licences &amp; image sources</a> · <a href="references.html">References</a></span><span>Figures are original unless credited. Text and figures may be reused for teaching with attribution.</span></div></footer><script src="assets/js/site.js" defer></script></body></html>

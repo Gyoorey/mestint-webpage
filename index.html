@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Course overview · Embedded Machine Learning</title><meta name="description" content="How learned models are made to run inside kilobytes, milliwatts and milliseconds: the embedded system and its budgets, the signal and its features, classical and deep models and their compression, and the hardware and toolchains they run on. For doctoral students from machine learning, electrical en"><link rel="stylesheet" href="assets/css/site.css"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script>try{var t=localStorage.getItem("eml-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script></head><body><a class="skip" href="#content">Skip to content</a><header class="topbar"><div class="in"><a class="brand" href="index.html">Embedded Machine Learning<span>PhD course</span></a><button class="menubtn" aria-expanded="false" aria-controls="topnav">Menu</button><nav class="topnav" id="topnav" aria-label="Course"><a href="index.html" aria-current="page">Overview</a><a href="session-1.html"><em>S1</em>Embedded</a><a href="session-2.html"><em>S2</em>Data</a><a href="session-3.html"><em>S3</em>Models</a><a href="session-4.html"><em>S4</em>Hardware</a><a href="presentations.html"><em>S5</em>Presentations</a><a href="glossary.html">Glossary</a><a href="references.html">References</a></nav><button class="themebtn" type="button" aria-label="Toggle colour theme">◐<span class="tl"> theme</span></button></div></header><div class="pagehead"><div class="inner"><p class="eyebrow">PhD course · four lectures × 90 minutes + one presentation session</p><h1>Embedded Machine Learning</h1><p class="sub">How learned models are made to run inside kilobytes, milliwatts and milliseconds: the embedded system and its budgets, the signal and its features, classical and deep models and their compression, and the hardware and toolchains they run on. For doctoral students from machine learning, electrical engineering, computer science, physics and the life sciences.</p><div class="specstrip"><div><b>Level</b><span>PhD / doctoral school</span></div><div><b>Format</b><span>4 × 90 min lectures + 1 × 90 min presentations</span></div><div><b>Language</b><span>English</span></div><div><b>Prerequisites</b><span>calculus, linear algebra, some programming</span></div><div><b>Assessment</b><span>paper presentation</span></div></div></div></div><div class="wrap"><nav class="toc" aria-label="On this page"><details open><summary>On this page</summary><ol class="sec nonum"><li><a href="#about"><em></em><span>About the course</span></a></li><li><a href="#sessions"><em></em><span>Sessions</span></a></li><li><a href="#outcomes"><em></em><span>Learning outcomes</span></a></li><li><a href="#howtouse"><em></em><span>How to use these materials</span></a></li><li><a href="#assessment"><em></em><span>Assessment</span></a></li><li><a href="#numbers"><em></em><span>A note on numbers</span></a></li></ol></details></nav><main id="content"><div class="col">
+
+<h3 id="about">About the course</h3>
+<p>Most machine-learning teaching optimises one number: accuracy on a held-out set. Embedded machine learning cannot. A model that reaches 94 % accuracy but needs 900 kB of working memory does not "almost work" on a microcontroller with 320 kB — it does not run at all. Here feasibility is a hard set of constraints, and the interesting intellectual content lies in how accuracy trades against memory, latency, energy and engineering effort along that constraint boundary.</p>
+<p>The course is written for doctoral students whose research touches sensing, signal processing, wearable or industrial devices, robotics, or efficient machine learning. Participants arrive with very different backgrounds, so the material has two layers. The lecture covers the core in four sessions of 90 minutes. The web chapters go further: they contain <b>primer sections</b> that build the machine-learning and hardware background from first principles for those who need it, and <b>depth sections</b> with derivations and research-level detail for those who want it.</p>
+
+<figure id="fig-course_roadmap_4"><div class="figscroll"><svg viewBox="0 0 720 300" role="img" aria-label="Course roadmap: four 90-minute lecture sessions following the embedded ML pipeline, from the embedded system and its budgets through data and features, models and compression, to hardware and deployment, followed by a fifth session of student paper presentations">
+  <rect x="8.0" y="40.0" width="170.0" height="168.0" class="ax" fill="none"/>
+  <rect x="8.0" y="40.0" width="170.0" height="28.0" class="fillsoft"/>
+  <text x="18.0" y="59.0" class="lbl accf">SESSION 1</text>
+  <text x="18.0" y="88.0" class="lblb">Embedded systems &amp;</text>
+  <text x="18.0" y="104.0" class="lblb">the case for edge ML</text>
+  <text x="20.0" y="130.0" class="lbl">· budgets, constraints</text>
+  <text x="20.0" y="148.0" class="lbl">· cost of data movement</text>
+  <text x="20.0" y="166.0" class="lbl">· apps &amp; workloads</text>
+  <text x="20.0" y="184.0" class="lbl">· the ML workflow</text>
+  <line x1="180.0" y1="124.0" x2="192.0" y2="124.0" class="ax"/>
+  <path d="M192.0 124.0 L185.8 127.2 L185.8 120.8 Z" fill="currentColor"/>
+  <rect x="186.0" y="40.0" width="170.0" height="168.0" class="ax" fill="none"/>
+  <rect x="186.0" y="40.0" width="170.0" height="28.0" class="fillsoft"/>
+  <text x="196.0" y="59.0" class="lbl accf">SESSION 2</text>
+  <text x="196.0" y="88.0" class="lblb">Data, preprocessing</text>
+  <text x="196.0" y="104.0" class="lblb">&amp; features</text>
+  <text x="198.0" y="130.0" class="lbl">· sensors, sampling, ADC</text>
+  <text x="198.0" y="148.0" class="lbl">· filtering, normalising</text>
+  <text x="198.0" y="166.0" class="lbl">· STFT, mel, MFCC, IMU</text>
+  <text x="198.0" y="184.0" class="lbl">· select &amp; reduce</text>
+  <line x1="358.0" y1="124.0" x2="370.0" y2="124.0" class="ax"/>
+  <path d="M370.0 124.0 L363.8 127.2 L363.8 120.8 Z" fill="currentColor"/>
+  <rect x="364.0" y="40.0" width="170.0" height="168.0" class="ax" fill="none"/>
+  <rect x="364.0" y="40.0" width="170.0" height="28.0" class="fillsoft"/>
+  <text x="374.0" y="59.0" class="lbl accf">SESSION 3</text>
+  <text x="374.0" y="88.0" class="lblb">Classical vs deep</text>
+  <text x="374.0" y="104.0" class="lblb">models &amp; compression</text>
+  <text x="376.0" y="130.0" class="lbl">· ML &amp; NN primer</text>
+  <text x="376.0" y="148.0" class="lbl">· classical cost models</text>
+  <text x="376.0" y="166.0" class="lbl">· efficient archs, NAS</text>
+  <text x="376.0" y="184.0" class="lbl">· quantise, prune, KD</text>
+  <line x1="536.0" y1="124.0" x2="548.0" y2="124.0" class="ax"/>
+  <path d="M548.0 124.0 L541.8 127.2 L541.8 120.8 Z" fill="currentColor"/>
+  <rect x="542.0" y="40.0" width="170.0" height="168.0" class="ax" fill="none"/>
+  <rect x="542.0" y="40.0" width="170.0" height="28.0" class="fillsoft"/>
+  <text x="552.0" y="59.0" class="lbl accf">SESSION 4</text>
+  <text x="552.0" y="88.0" class="lblb">Hardware platforms</text>
+  <text x="552.0" y="104.0" class="lblb">&amp; deployment</text>
+  <text x="554.0" y="130.0" class="lbl">· CPU, memory, roofline</text>
+  <text x="554.0" y="148.0" class="lbl">· MCU · DSP · GPU · NPU</text>
+  <text x="554.0" y="166.0" class="lbl">· FPGA · analog · neuro</text>
+  <text x="554.0" y="184.0" class="lbl">· toolchains, MLOps</text>
+  <text x="8.0" y="26.0" class="lbl">four lectures × 90 min — the order follows the pipeline from sensor to silicon</text>
+  <rect x="8.0" y="228.0" width="704.0" height="40.0" class="acc" fill="none" stroke-width="1.4"/>
+  <text x="360.0" y="247.0" class="lblb" text-anchor="middle">Session 5 — student presentations: one landmark paper each, four topic areas</text>
+  <text x="360.0" y="262.0" class="lbl" text-anchor="middle">quantization · pruning &amp; distillation · efficient architectures &amp; NAS · TinyML systems &amp; hardware</text>
+  <line x1="93.0" y1="208.0" x2="93.0" y2="228.0" class="grid" stroke-dasharray="3 3"/>
+  <line x1="271.0" y1="208.0" x2="271.0" y2="228.0" class="grid" stroke-dasharray="3 3"/>
+  <line x1="449.0" y1="208.0" x2="449.0" y2="228.0" class="grid" stroke-dasharray="3 3"/>
+  <line x1="627.0" y1="208.0" x2="627.0" y2="228.0" class="grid" stroke-dasharray="3 3"/>
+  <text x="8.0" y="292.0" class="lbl">every session is priced against the same five budgets: flash · SRAM · MACs · latency · energy per inference</text>
+</svg></div><figcaption><b>Fig 1</b>The course in one picture. Four lecture sessions follow the embedded ML pipeline from the device and its budgets, through the signal and its representation, to the model and finally the silicon it runs on. A fifth session is given over to student presentations of landmark papers from the four topic areas listed in the copper band.</figcaption></figure>
+
+<h3 id="sessions">Sessions</h3>
+<div class="cards">
+  <div class="card">
+    <p class="no">Session 1 · 90 min</p>
+    <h4 class="ct"><a href="session-1.html">Embedded systems and the case for edge ML</a></h4>
+    <p>What is scarce on a small device, why it is still worth running models there, and the five budgets every design is priced against.</p>
+    <ul><li>microcontrollers in plain terms</li><li>an ML primer: model, training, inference</li><li>applications, workloads, sensor fusion</li><li>energy of data movement; the cascade</li></ul>
+    <div class="links"><a href="session-1.html">Read →</a><a href="slides/session-1.pdf">Slides (PDF)</a><a href="slides/session-1.html">Slides (HTML)</a></div>
+  </div>
+  <div class="card">
+    <p class="no">Session 2 · 90 min</p>
+    <h4 class="ct"><a href="session-2.html">Data acquisition, preprocessing and features</a></h4>
+    <p>From physical quantity to feature vector: what each stage of the chain discards, and the cheapest representation that keeps what the model needs.</p>
+    <ul><li>sensors; time and frequency</li><li>sampling, aliasing, quantization, noise</li><li>datasets, normalisation, leakage</li><li>STFT, mel, MFCC, IMU features; PCA, LDA</li></ul>
+    <div class="links"><a href="session-2.html">Read →</a><a href="slides/session-2.pdf">Slides (PDF)</a><a href="slides/session-2.html">Slides (HTML)</a></div>
+  </div>
+  <div class="card">
+    <p class="no">Session 3 · 90 min</p>
+    <h4 class="ct"><a href="session-3.html">Classical versus deep learning, and compression</a></h4>
+    <p>Model families and their inference cost, built up from a primer; efficient architectures; quantization, pruning and distillation.</p>
+    <ul><li>loss, gradient descent, evaluation</li><li>SVMs, trees, neural networks, CNNs</li><li>MobileNets, EfficientNet, NAS</li><li><a href="session-3-compression.html">compression (page 2)</a></li></ul>
+    <div class="links"><a href="session-3.html">Read →</a><a href="slides/session-3.pdf">Slides (PDF)</a><a href="slides/session-3.html">Slides (HTML)</a></div>
+  </div>
+  <div class="card">
+    <p class="no">Session 4 · 90 min</p>
+    <h4 class="ct"><a href="session-4.html">Hardware platforms and deployment</a></h4>
+    <p>What the processor does with a network; the platform landscape from MCU to neuromorphic; and the path from a trained graph to a monitored binary.</p>
+    <ul><li>memory hierarchy, roofline, GEMM</li><li>MCU, DSP, GPU, NPU, FPGA, analog</li><li>compilers, memory planning, benchmarks</li><li>drift, on-device learning, security</li></ul>
+    <div class="links"><a href="session-4.html">Read →</a><a href="slides/session-4.pdf">Slides (PDF)</a><a href="slides/session-4.html">Slides (HTML)</a></div>
+  </div>
+  <div class="card pres">
+    <p class="no">Session 5 · 90 min</p>
+    <h4 class="ct"><a href="presentations.html">Paper presentations</a></h4>
+    <p>Three or four participants each present a landmark paper from a different topic area, followed by discussion.</p>
+    <ul><li>A — quantization</li><li>B — pruning, sparsity, distillation</li><li>C — efficient architectures and NAS</li><li>D — TinyML systems and hardware</li></ul>
+    <div class="links"><a href="presentations.html">Topics and papers →</a><a href="presentations.html#assessment">Rubric</a></div>
+  </div>
+</div>
+
+<h3 id="outcomes">Learning outcomes</h3>
+<p>On completing the course a participant should be able to:</p>
+<ol>
+  <li><b>Budget.</b> From a device datasheet and an application specification, derive the admissible model size, peak working memory, operation count and energy per inference, and say which of them binds.</li>
+  <li><b>Represent.</b> Specify sampling rate, resolution, windowing and features for a sensing task, and justify each choice by what it keeps and what it costs.</li>
+  <li><b>Choose.</b> Select between a classical and a deep model for a stated task, data regime and budget, and evaluate it honestly under class imbalance and subject-wise splits.</li>
+  <li><b>Compress.</b> Explain and apply quantization, pruning and distillation, and predict which gains a given hardware target can actually realise.</li>
+  <li><b>Analyse.</b> Place a layer on the roofline of a named device and predict whether it is compute- or memory-bound.</li>
+  <li><b>Deploy.</b> Describe the path from a trained graph to a running binary, design an honest benchmark, and plan for drift and updates after deployment.</li>
+  <li><b>Read.</b> Critically present a primary paper in the field: its claim, its evidence, its mechanism, its limits and its relevance to constrained devices.</li>
+</ol>
+
+<h3 id="howtouse">How to use these materials</h3>
+<p>Each session has a web chapter (this site) and a slide deck (PDF and HTML, linked from each chapter and from the cards above). The slides follow the lecture; the chapters contain more than 90 minutes can hold, deliberately. Sections marked <span class="kicker">depth</span> go further than 90 minutes allow: the lecture presents their result, the page gives the full argument. Sections marked <span class="kicker">method</span> describe a procedure to follow. Recurring boxes carry different kinds of content:</p>
+<div class="legendbox">
+  <div><b>In one sentence</b>The session compressed to its single load-bearing idea. Read it first; read it again afterwards.</div>
+  <div><b>Foundations</b>Background some participants will not have — CMOS power, decibels, the Fourier transform, two's complement, caches. Self-contained; skip if you know it.</div>
+  <div><b>Derivation</b>The mathematics done properly rather than quoted.</div>
+  <div><b>Common misconception</b>A specific, widespread wrong belief, and what is actually true.</div>
+  <div><b>Interactive</b>A live calculator or plot. Several results in this course are easier to feel than to read: move the sliders.</div>
+  <div><b>Takeaway</b>A closing card per session. Before Session 5, read the four takeaways and the four "in one sentence" boxes.</div>
+</div>
+<p>Primer sections for participants without a machine-learning background: <a href="session-1.html#ml-primer">what machine learning adds</a> (Session 1), <a href="session-2.html#signals">signals in time and frequency</a> (Session 2), and <a href="session-3.html#learning">Part A of Session 3</a>. Reading them before the corresponding lecture is the single most effective preparation.</p>
+
+<h3 id="assessment">Assessment</h3>
+<p>The course is assessed by a paper presentation in Session 5. Each presenter chooses one landmark paper from a different topic area, presents it in 15 minutes and leads a 5-minute discussion, and acts as discussant for one other talk. The <a href="presentations.html">presentations page</a> lists the topics and papers, explains how to read a systems paper, and gives the rubric. Choices are due at the end of Session 2.</p>
+
+<h3 id="numbers">A note on numbers</h3>
+<p>Figures quoted from papers are attributed to their source and reflect the hardware and software of that paper's date. Hardware figures quoted without a citation are order-of-magnitude teaching values, not datasheet guarantees: always re-derive against the datasheet of the part you actually have. Where a worked example rests on assumptions, the assumptions are stated next to it.</p>
+</div><nav class="prevnext" aria-label="Previous and next"><a class="next" href="session-1.html"><b>Next →</b><span>Session 1 — Embedded systems</span></a></nav></main></div><footer class="site"><div class="in"><span>Embedded Machine Learning · PhD course · 2026/27</span><span><a href="credits.html">Credits, licences &amp; image sources</a> · <a href="references.html">References</a></span><span>Figures are original unless credited. Text and figures may be reused for teaching with attribution.</span></div></footer><script src="assets/js/site.js" defer></script></body></html>

@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Session 1 — Embedded systems and edge ML · Embedded Machine Learning</title><meta name="description" content="What an embedded system is, what is scarce on it, and why it is nevertheless worth running learned models there. The session builds the vocabulary and the five budgets that every later session prices its techniques against."><link rel="stylesheet" href="assets/css/site.css"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script>try{var t=localStorage.getItem("eml-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script></head><body><a class="skip" href="#content">Skip to content</a><header class="topbar"><div class="in"><a class="brand" href="index.html">Embedded Machine Learning<span>PhD course</span></a><button class="menubtn" aria-expanded="false" aria-controls="topnav">Menu</button><nav class="topnav" id="topnav" aria-label="Course"><a href="index.html">Overview</a><a href="session-1.html" aria-current="page"><em>S1</em>Embedded</a><a href="session-2.html"><em>S2</em>Data</a><a href="session-3.html"><em>S3</em>Models</a><a href="session-4.html"><em>S4</em>Hardware</a><a href="presentations.html"><em>S5</em>Presentations</a><a href="glossary.html">Glossary</a><a href="references.html">References</a></nav><button class="themebtn" type="button" aria-label="Toggle colour theme">◐<span class="tl"> theme</span></button></div></header><div class="pagehead"><div class="inner"><p class="eyebrow">Session 1 · 90 minutes · lecture</p><h1>Embedded systems and the case for machine learning at the edge</h1><p class="sub">What an embedded system is, what is scarce on it, and why it is nevertheless worth running learned models there. The session builds the vocabulary and the five budgets that every later session prices its techniques against.</p><div class="specstrip"><div><b>Duration</b><span>90 min, with a short break</span></div><div><b>Prerequisites</b><span>none beyond undergraduate maths</span></div><div><b>Slides</b><span><a href="slides/session-1.pdf">PDF</a> · <a href="slides/session-1.html">HTML</a></span></div><div><b>Core reading</b><span>Sze et al. 2017, §I–III</span></div></div></div></div><div class="wrap"><nav class="toc" aria-label="On this page"><details open><summary>Sections</summary><ol class="sec"><li><a href="#embedded"><em>1.1</em><span>Embedded systems, in plain terms</span></a></li><li><a href="#sec-1-2"><em>1.2</em><span>Definition by constraint, not by size</span></a></li><li><a href="#ml-primer"><em>1.3</em><span>What machine learning adds — a primer for non-specialists</span></a></li><li><a href="#sec-1-4"><em>1.4</em><span>Why push inference to the device at all</span></a></li><li><a href="#applications"><em>1.5</em><span>Applications, workloads and sensor fusion</span></a></li><li><a href="#sec-1-6"><em>1.6</em><span>The five budgets </span></a></li><li><a href="#sec-1-7"><em>1.7</em><span>Where the energy actually goes</span></a></li><li><a href="#sec-1-8"><em>1.8</em><span>The cascade: the architectural pattern that follows from Fig 1.7</span></a></li><li><a href="#cases"><em>1.9</em><span>Three systems, end to end</span></a></li><li><a href="#sec-1-10"><em>1.10</em><span>A short honest history</span></a></li></ol></details></nav><main id="content"><div class="col">
+<div class="reslinks">
+  <a class="btn primary" href="slides/session-1.pdf"><b>Slides</b>Session 1 · PDF</a>
+  <a class="btn" href="slides/session-1.html"><b>Slides</b>HTML version</a>
+  <a class="btn" href="presentations.html"><b>Session 5</b>Presentation topics</a>
+</div>
+
+<div class="meta">
+<h5>Learning outcomes</h5>
+<ul>
+  <li>Explain what an embedded system is in terms of its constraints, and name the parts of a microcontroller that matter for machine learning.</li>
+  <li>Describe, without jargon, what a machine-learning model is, the difference between training and inference, and where each happens in an embedded product.</li>
+  <li>Give the five reasons for on-device inference and judge which of them actually holds for a given application.</li>
+  <li>State the five budgets — flash, peak SRAM, compute, latency, energy per inference — and derive each from a specification.</li>
+  <li>Explain with numbers why moving data costs more than computing on it, and design a cascade that exploits this.</li>
+  <li>Locate a research question of your own on the map of the field.</li>
+</ul>
+</div>
+
+<div class="timing">
+<h5>Timing plan · 90 minutes</h5>
+<ol>
+  <li><span>0–8</span>Framing: a model that is 94 % accurate and does not fit is 0 % useful. Who is in the room — and why the course has a primer track for non-ML backgrounds.</li>
+  <li><span>8–22</span>Embedded systems in plain terms (<a class="xref" href="#fig-mcu_anatomy">Fig 1.1</a>); definition by constraint; the compute continuum and the Dennard story.</li>
+  <li><span>22–32</span>What machine learning adds: model, training, inference; the embedded ML workflow.</li>
+  <li><span>32–43</span>Why on the device at all; applications, workloads and sensor fusion.</li>
+  <li><span>43–50</span><b>Break.</b></li>
+  <li><span>50–65</span>The five budgets, with the coin-cell derivation done live; the energy calculator.</li>
+  <li><span>65–77</span>Where the energy goes (Horowitz); the cascade.</li>
+  <li><span>77–86</span>Three case studies end-to-end; research directions.</li>
+  <li><span>86–90</span>Takeaway; what to read before Session 2; reminder to pick a presentation paper.</li>
+</ol>
+</div>
+
+<div class="intu">
+<h5>In one sentence</h5>
+<p>Everything in this course follows from two facts: on a small device, memory and energy are fixed in advance and cannot be borrowed; and moving a byte costs a hundred to ten thousand times more energy than computing with it.</p>
+</div>
+
+<h3 id="embedded"><span class="sn">1.1</span>Embedded systems, in plain terms</h3>
+
+<p>Most of you use embedded systems many times a day without seeing one. The washing machine that adjusts its spin to the load, the hearing aid that suppresses background noise, the smartwatch that counts steps, the brake controller of a car, the thermostat that learns when you come home — each contains a small computer that is <em>built into</em> a larger product, does one job, and does it for years without anyone installing updates or watching a screen. That is the working definition we will refine below: an <em class="term">embedded system</em> is a computer that is part of something else.</p>
+
+<p>The computer inside is usually a <em class="term">microcontroller</em> (MCU): a single chip that contains a processor core, its memory and its input/output interfaces. It is worth looking at one as a machine-learning engineer would, because almost every constraint in this course is visible in its block diagram.</p>
+
+<figure id="fig-mcu_anatomy"><div class="figscroll"><svg viewBox="0 0 720 360" role="img" aria-label="Block diagram of a typical microcontroller used for embedded machine learning: a Cortex-M class core with FPU and SIMD extensions, on-chip flash and SRAM, DMA, a bus matrix, analog and digital peripherals, power management, and an optional neural processing unit, connected to sensors on the left and radio and actuators on the right">
+  <rect x="150.0" y="30.0" width="420.0" height="300.0" class="ax" fill="none" stroke-width="1.6"/>
+  <text x="160.0" y="48.0" class="lbl">MICROCONTROLLER (single die, one package)</text>
+  <rect x="170.0" y="62.0" width="150.0" height="92.0" class="fillsoft"/>
+  <rect x="170.0" y="62.0" width="150.0" height="92.0" class="ax" fill="none"/>
+  <text x="245.0" y="88.0" class="lblb" text-anchor="middle">CPU core</text>
+  <text x="245.0" y="112.0" class="lbl" text-anchor="middle">Cortex-M4F / M7 / M55</text>
+  <text x="245.0" y="126.0" class="lbl" text-anchor="middle">FPU, 2×16-bit SIMD</text>
+  <text x="245.0" y="140.0" class="lbl" text-anchor="middle">48–480 MHz, no MMU</text>
+  <rect x="340.0" y="62.0" width="210.0" height="92.0" class="acc" fill="none" stroke-dasharray="5 4" stroke-width="1.3"/>
+  <text x="445.0" y="92.0" class="lblb" text-anchor="middle">optional NPU / ML accelerator</text>
+  <text x="445.0" y="110.0" class="lbl" text-anchor="middle">e.g. Ethos-U55/U65 class</text>
+  <text x="445.0" y="124.0" class="lbl" text-anchor="middle">32–256 int8 MAC per cycle</text>
+  <text x="445.0" y="138.0" class="lbl" text-anchor="middle">shares the SRAM with the CPU</text>
+  <rect x="170.0" y="166.0" width="380.0" height="20.0" class="fillsoft"/>
+  <text x="360.0" y="180.0" class="lbl" text-anchor="middle">bus matrix (AHB/AXI) + DMA engines move data without the CPU</text>
+  <rect x="170.0" y="198.0" width="120.0" height="60.0" class="ax" fill="none"/>
+  <text x="230.0" y="217.0" class="lblb" text-anchor="middle">Flash / MRAM</text>
+  <text x="230.0" y="232.0" class="lblb" text-anchor="middle">0.25–4 MB</text>
+  <text x="230.0" y="247.0" class="lbl" text-anchor="middle">weights, code</text>
+  <rect x="300.0" y="198.0" width="120.0" height="60.0" class="ax" fill="none"/>
+  <text x="360.0" y="217.0" class="lblb" text-anchor="middle">SRAM</text>
+  <text x="360.0" y="232.0" class="lblb" text-anchor="middle">64 kB – 3 MB</text>
+  <text x="360.0" y="247.0" class="lbl" text-anchor="middle">activations</text>
+  <rect x="430.0" y="198.0" width="120.0" height="60.0" class="ax" fill="none"/>
+  <text x="490.0" y="224.5" class="lblb" text-anchor="middle">Power, clocks</text>
+  <text x="490.0" y="239.5" class="lbl" text-anchor="middle">sleep, RTC</text>
+  <rect x="170.0" y="268.0" width="380.0" height="46.0" class="ax" fill="none"/>
+  <text x="360.0" y="295.0" class="lbl" text-anchor="middle">ADC · PDM/I²S (mic) · I²C/SPI (IMU) · timers · UART · GPIO</text>
+  <rect x="14.0" y="70.0" width="110.0" height="44.0" class="ax" fill="none"/>
+  <text x="69.0" y="88.5" class="lblb" text-anchor="middle">microphone</text>
+  <text x="69.0" y="103.5" class="lbl" text-anchor="middle">PDM, 16 kHz</text>
+  <line x1="124.0" y1="92.0" x2="168.0" y2="291.0" class="grid"/>
+  <rect x="14.0" y="132.0" width="110.0" height="44.0" class="ax" fill="none"/>
+  <text x="69.0" y="150.5" class="lblb" text-anchor="middle">IMU</text>
+  <text x="69.0" y="165.5" class="lbl" text-anchor="middle">I²C/SPI, 100 Hz</text>
+  <line x1="124.0" y1="154.0" x2="168.0" y2="291.0" class="grid"/>
+  <rect x="14.0" y="194.0" width="110.0" height="44.0" class="ax" fill="none"/>
+  <text x="69.0" y="212.5" class="lblb" text-anchor="middle">ECG / analog</text>
+  <text x="69.0" y="227.5" class="lbl" text-anchor="middle">ADC, 250 Hz</text>
+  <line x1="124.0" y1="216.0" x2="168.0" y2="291.0" class="grid"/>
+  <rect x="14.0" y="256.0" width="110.0" height="44.0" class="ax" fill="none"/>
+  <text x="69.0" y="274.5" class="lblb" text-anchor="middle">camera</text>
+  <text x="69.0" y="289.5" class="lbl" text-anchor="middle">DCMI, low-res</text>
+  <line x1="124.0" y1="278.0" x2="168.0" y2="291.0" class="grid"/>
+  <text x="14.0" y="58.0" class="lbl">SENSORS</text>
+  <text x="596.0" y="58.0" class="lbl">OUTPUTS</text>
+  <rect x="596.0" y="70.0" width="112.0" height="44.0" class="ax" fill="none"/>
+  <text x="652.0" y="88.5" class="lblb" text-anchor="middle">radio</text>
+  <text x="652.0" y="103.5" class="lbl" text-anchor="middle">BLE, LoRa</text>
+  <rect x="596.0" y="132.0" width="112.0" height="44.0" class="ax" fill="none"/>
+  <text x="652.0" y="150.5" class="lblb" text-anchor="middle">actuators</text>
+  <text x="652.0" y="165.5" class="lbl" text-anchor="middle">motor, LED</text>
+  <rect x="596.0" y="194.0" width="112.0" height="44.0" class="ax" fill="none"/>
+  <text x="652.0" y="212.5" class="lblb" text-anchor="middle">host / cloud</text>
+  <text x="652.0" y="227.5" class="lbl" text-anchor="middle">rare, expensive</text>
+  <line x1="552.0" y1="291.0" x2="594.0" y2="92.0" class="grid"/>
+  <line x1="552.0" y1="291.0" x2="594.0" y2="154.0" class="grid"/>
+  <line x1="552.0" y1="291.0" x2="594.0" y2="216.0" class="grid"/>
+  <text x="360.0" y="350.0" class="lbl" text-anchor="middle">Typical figures, not a specific part — always read the datasheet of the device you have.</text>
+</svg></div><figcaption><b>Fig 1.1</b>Anatomy of a microcontroller as an ML engineer sees it. Weights live in non-volatile memory (flash or MRAM) and can be read in place; activations, buffers and the stack share a small SRAM; DMA moves sensor data without waking the core. There is no operating system to page memory in, no cache large enough to hide a poor access pattern, and frequently no heap. An NPU, where present, is a co-processor that shares the same SRAM, so it speeds up arithmetic but does not enlarge the memory budget.</figcaption></figure>
+
+<p>Five features of that picture shape everything that follows.</p>
+<ul>
+  <li><b>Two kinds of memory, both small.</b> <em class="term">Flash</em> (or, on newer parts, MRAM) keeps its contents without power; it holds the program and, for us, the trained model's weights. <em class="term">SRAM</em> is fast working memory that is lost when power is removed; it holds the input data, the intermediate results of the network (its <em>activations</em>), and everything else the program is doing. Typical sizes are 256&nbsp;kB to 2&nbsp;MB of flash and 32&nbsp;kB to 1&nbsp;MB of SRAM — a thousand to a million times less than a laptop.</li>
+  <li><b>No operating system, or a tiny one.</b> The program runs <em>bare-metal</em> (directly on the hardware) or under a small <em class="term">real-time operating system</em> (RTOS) such as FreeRTOS or Zephyr, which schedules a few tasks with guaranteed timing. There is no virtual memory: if a buffer does not fit, nothing pages it out to disk. Many projects forbid dynamic memory allocation altogether, so every buffer's size is fixed when the firmware is compiled.</li>
+  <li><b>A modest processor.</b> An Arm Cortex-M class core at tens to a few hundred MHz, typically with a floating-point unit and with <em class="term">SIMD</em> instructions that perform two 16-bit multiply–accumulates in a single instruction (8-bit values are widened to 16 bits first; newer cores with vector extensions handle many more lanes). That last feature is why 8-bit integer networks run several times faster than floating-point ones on these chips (Session 3).</li>
+  <li><b>Peripherals that talk to the physical world.</b> Analog-to-digital converters (ADCs), digital microphone interfaces, serial buses for motion sensors, timers. <em class="term">DMA</em> engines copy sensor samples into memory while the core sleeps — the basis of every low-power design.</li>
+  <li><b>Power modes.</b> The chip can switch off most of itself for microseconds or hours and wake on a timer or a sensor interrupt. Average power is therefore set by how rarely and how briefly it wakes up, not by its peak speed.</li>
+</ul>
+
+<div class="photogrid">
+<figure class="photo"><img src="assets/img/nucleo-board.jpg" alt="A typical microcontroller development board. The MCU is the square chip in the middle; most of the board is programming and debugging circuitry that a product would not carry." loading="lazy" onerror="this.closest('figure').classList.add('missing')"><figcaption>A typical microcontroller development board. The MCU is the square chip in the middle; most of the board is programming and debugging circuitry that a product would not carry.</figcaption><p class="credit" data-img="nucleo-board.jpg">Photo: Wikimedia Commons</p></figure>
+<figure class="photo"><img src="assets/img/esp32-module.jpg" alt="A Wi-Fi/Bluetooth microcontroller module of the ESP32 family — a popular low-cost platform for hobbyist and research TinyML." loading="lazy" onerror="this.closest('figure').classList.add('missing')"><figcaption>A Wi-Fi/Bluetooth microcontroller module of the ESP32 family — a popular low-cost platform for hobbyist and research TinyML.</figcaption><p class="credit" data-img="esp32-module.jpg">Photo: Wikimedia Commons</p></figure>
+<figure class="photo"><img src="assets/img/arduino-nano.jpg" alt="An Arduino Nano-format board. Arduino boards with Cortex-M4 cores are a common teaching platform for TinyML." loading="lazy" onerror="this.closest('figure').classList.add('missing')"><figcaption>An Arduino Nano-format board. Arduino boards with Cortex-M4 cores are a common teaching platform for TinyML.</figcaption><p class="credit" data-img="arduino-nano.jpg">Photo: Wikimedia Commons</p></figure>
+<figure class="photo"><img src="assets/img/raspberry-pi-4.jpg" alt="A Raspberry Pi 4 single-board computer. It runs Linux on a multi-core application processor — a different class of device from a microcontroller, as the next section explains." loading="lazy" onerror="this.closest('figure').classList.add('missing')"><figcaption>A Raspberry Pi 4 single-board computer. It runs Linux on a multi-core application processor — a different class of device from a microcontroller, as the next section explains.</figcaption><p class="credit" data-img="raspberry-pi-4.jpg">Photo: Wikimedia Commons</p></figure>
+</div>
+
+<div class="found">
+<h5>Foundations · bits, bytes and orders of magnitude</h5>
+<p>Throughout the course, a <b>byte</b> is 8 bits; <b>kB</b> is 1024 bytes and <b>MB</b> is 1024&nbsp;kB (we follow the embedded convention; the difference from 1000 is irrelevant at our precision). A neural-network weight stored as a 32-bit float occupies 4 bytes; stored as an 8-bit integer, 1 byte. So a network with 250&nbsp;000 parameters needs about 1&nbsp;MB as floats and 250&nbsp;kB as 8-bit integers — the difference between "does not fit" and "fits" on a typical microcontroller. Energy is in joules (J), power in watts (W = J/s); you will meet the prefixes m (10⁻³), µ (10⁻⁶), n (10⁻⁹) and p (10⁻¹²) constantly. A useful habit for this course: always write the order of magnitude before the digits.</p>
+</div>
+
+<h3 id="sec-1-2"><span class="sn">1.2</span>Definition by constraint, not by size</h3>
+<div class="found">
+<h5>Foundations · where the constraint came from</h5>
+<p>A CMOS gate burns energy in two ways. <b>Dynamic</b> power is paid every time a node switches:</p>
+<div class="eq">P_dyn = α · C · V² · f</div>
+<p>with <span class="eqn">α</span> the activity factor (how often it switches), <span class="eqn">C</span> the switched capacitance, <span class="eqn">V</span> the supply voltage and <span class="eqn">f</span> the clock. <b>Static</b> power is leakage, paid continuously whether anything switches or not.</p>
+<p><em class="term">Dennard scaling</em> was the observation that shrinking a transistor also let you shrink <span class="eqn">V</span> and <span class="eqn">C</span> proportionally, so each generation gave more transistors <i>and</i> a higher clock at constant power. It ended in the mid-2000s, because below roughly 1&nbsp;V the threshold voltage cannot fall further without leakage exploding.</p>
+<p>Read the square on <span class="eqn">V</span> carefully: it was the most powerful term in the equation, and it is the one that ran out. What remains is <span class="eqn">α</span> — do less work — and <span class="eqn">C</span> — move data a shorter distance. Those two are exactly what quantization, sparsity, efficient architectures and accelerators buy. A hardware fact from 2004 is why this syllabus looks the way it does in 2026.</p>
+</div>
+
+<figure id="fig-tech_scaling"><div class="figscroll"><svg viewBox="0 0 720 300" role="img" aria-label="Four microprocessor trends on a logarithmic scale from 1975 to 2020: transistor count keeps rising while clock frequency, single-thread performance and power all flatten after about 2004">
+  <line x1="62.0" y1="236.0" x2="528.0" y2="236.0" class="ax"/>
+  <line x1="62.0" y1="40.0" x2="62.0" y2="236.0" class="ax"/>
+  <line x1="111.6" y1="40.0" x2="111.6" y2="236.0" class="grid"/>
+  <line x1="111.6" y1="236.0" x2="111.6" y2="240.0" class="ax"/>
+  <text x="111.6" y="253.0" class="lbl" text-anchor="middle">1980</text>
+  <line x1="210.7" y1="40.0" x2="210.7" y2="236.0" class="grid"/>
+  <line x1="210.7" y1="236.0" x2="210.7" y2="240.0" class="ax"/>
+  <text x="210.7" y="253.0" class="lbl" text-anchor="middle">1990</text>
+  <line x1="309.9" y1="40.0" x2="309.9" y2="236.0" class="grid"/>
+  <line x1="309.9" y1="236.0" x2="309.9" y2="240.0" class="ax"/>
+  <text x="309.9" y="253.0" class="lbl" text-anchor="middle">2000</text>
+  <line x1="409.0" y1="40.0" x2="409.0" y2="236.0" class="grid"/>
+  <line x1="409.0" y1="236.0" x2="409.0" y2="240.0" class="ax"/>
+  <text x="409.0" y="253.0" class="lbl" text-anchor="middle">2010</text>
+  <line x1="508.2" y1="40.0" x2="508.2" y2="236.0" class="grid"/>
+  <line x1="508.2" y1="236.0" x2="508.2" y2="240.0" class="ax"/>
+  <text x="508.2" y="253.0" class="lbl" text-anchor="middle">2020</text>
+  <line x1="62.0" y1="236.0" x2="528.0" y2="236.0" class="grid"/>
+  <line x1="58.0" y1="236.0" x2="62.0" y2="236.0" class="ax"/>
+  <text x="54.0" y="239.6" class="lbl" text-anchor="end">1</text>
+  <line x1="62.0" y1="192.4" x2="528.0" y2="192.4" class="grid"/>
+  <line x1="58.0" y1="192.4" x2="62.0" y2="192.4" class="ax"/>
+  <text x="54.0" y="196.0" class="lbl" text-anchor="end">100</text>
+  <line x1="62.0" y1="148.9" x2="528.0" y2="148.9" class="grid"/>
+  <line x1="58.0" y1="148.9" x2="62.0" y2="148.9" class="ax"/>
+  <text x="54.0" y="152.5" class="lbl" text-anchor="end">10⁴</text>
+  <line x1="62.0" y1="105.3" x2="528.0" y2="105.3" class="grid"/>
+  <line x1="58.0" y1="105.3" x2="62.0" y2="105.3" class="ax"/>
+  <text x="54.0" y="108.9" class="lbl" text-anchor="end">10⁶</text>
+  <line x1="62.0" y1="61.8" x2="528.0" y2="61.8" class="grid"/>
+  <line x1="58.0" y1="61.8" x2="62.0" y2="61.8" class="ax"/>
+  <text x="54.0" y="65.4" class="lbl" text-anchor="end">10⁸</text>
+  <path d="M62.0 162.8 L71.9 159.9 L81.8 157.0 L91.7 154.1 L101.7 151.2 L111.6 148.2 L121.5 145.3 L131.4 142.4 L141.3 139.5 L151.2 136.6 L161.1 133.7 L171.1 130.8 L181.0 127.9 L190.9 125.0 L200.8 122.1 L210.7 119.2 L220.6 116.3 L230.6 113.3 L240.5 110.4 L250.4 107.5 L260.3 104.6 L270.2 101.7 L280.1 98.8 L290.0 95.9 L300.0 93.0 L309.9 90.1 L319.8 87.2 L329.7 84.3 L339.6 81.4 L349.5 78.5 L359.4 75.5 L369.4 72.6 L379.3 69.7 L389.2 66.8 L399.1 63.9 L409.0 61.0 L418.9 58.1 L428.9 55.2 L438.8 52.3 L448.7 49.4 L458.6 46.5 L468.5 43.6 L478.4 40.6 L488.3 37.7 L498.3 34.8 L508.2 31.9 L518.1 29.0 L528.0 26.1" class="ser" stroke-width="2.3"/>
+  <path d="M62.0 209.8 L71.9 207.3 L81.8 204.8 L91.7 202.3 L101.7 199.9 L111.6 197.4 L121.5 194.9 L131.4 192.4 L141.3 189.9 L151.2 187.4 L161.1 185.0 L171.1 182.5 L181.0 180.0 L190.9 177.5 L200.8 175.0 L210.7 172.6 L220.6 170.1 L230.6 167.6 L240.5 165.1 L250.4 162.6 L260.3 160.1 L270.2 157.7 L280.1 155.2 L290.0 152.7 L300.0 150.2 L309.9 147.7 L319.8 145.3 L329.7 142.8 L339.6 140.3 L349.5 137.8 L359.4 135.3 L369.4 134.9 L379.3 134.5 L389.2 134.1 L399.1 133.7 L409.0 133.3 L418.9 132.8 L428.9 132.4 L438.8 132.0 L448.7 131.6 L458.6 131.2 L468.5 130.8 L478.4 130.3 L488.3 129.9 L498.3 129.5 L508.2 129.1 L518.1 128.7 L528.0 128.3" class="ser" stroke-width="1.6" opacity="0.62"/>
+  <path d="M62.0 236.0 L71.9 233.8 L81.8 231.6 L91.7 229.4 L101.7 227.3 L111.6 225.1 L121.5 222.9 L131.4 220.7 L141.3 218.5 L151.2 216.3 L161.1 214.1 L171.1 212.0 L181.0 209.8 L190.9 207.6 L200.8 205.4 L210.7 203.2 L220.6 201.0 L230.6 198.8 L240.5 196.7 L250.4 194.5 L260.3 192.3 L270.2 190.1 L280.1 187.9 L290.0 185.7 L300.0 183.5 L309.9 181.4 L319.8 179.2 L329.7 177.0 L339.6 174.8 L349.5 172.6 L359.4 172.6 L369.4 172.6 L379.3 172.6 L389.2 172.5 L399.1 172.5 L409.0 172.5 L418.9 172.5 L428.9 172.5 L438.8 172.4 L448.7 172.4 L458.6 172.4 L468.5 172.4 L478.4 172.4 L488.3 172.3 L498.3 172.3 L508.2 172.3 L518.1 172.3 L528.0 172.3" class="acc" stroke-width="2.1" fill="none"/>
+  <path d="M62.0 247.4 L71.9 245.7 L81.8 244.1 L91.7 242.5 L101.7 240.8 L111.6 239.2 L121.5 237.5 L131.4 235.9 L141.3 234.2 L151.2 232.6 L161.1 230.9 L171.1 229.3 L181.0 227.6 L190.9 226.0 L200.8 224.4 L210.7 222.7 L220.6 221.1 L230.6 219.4 L240.5 217.8 L250.4 216.1 L260.3 214.5 L270.2 212.8 L280.1 211.2 L290.0 209.5 L300.0 207.9 L309.9 206.3 L319.8 204.6 L329.7 203.0 L339.6 201.3 L349.5 199.7 L359.4 199.6 L369.4 199.6 L379.3 199.6 L389.2 199.5 L399.1 199.5 L409.0 199.4 L418.9 199.4 L428.9 199.4 L438.8 199.3 L448.7 199.3 L458.6 199.3 L468.5 199.2 L478.4 199.2 L488.3 199.1 L498.3 199.1 L508.2 199.1 L518.1 199.0 L528.0 199.0" class="tl" stroke-width="1.9" fill="none" stroke-dasharray="5 3"/>
+  <text x="534.0" y="30.1" class="lblb">transistors</text>
+  <text x="534.0" y="132.3" class="lblb" opacity="0.75">1-thread speed</text>
+  <text x="534.0" y="176.3" class="lblb" fill="var(--copper)">clock</text>
+  <text x="534.0" y="203.0" class="lblb" fill="var(--teal)">power</text>
+  <line x1="349.5" y1="40.0" x2="349.5" y2="236.0" class="grid" stroke-dasharray="4 3" opacity="0.6"/>
+  <text x="342.5" y="56.0" class="lbl" text-anchor="end" fill="var(--copper)">Dennard scaling ends</text>
+  <text x="356.5" y="56.0" class="lbl">parallelism + specialisation</text>
+  <text x="295.0" y="272.0" class="lbl" text-anchor="middle">year</text>
+  <text x="18.0" y="138.0" class="lbl" text-anchor="middle" transform="rotate(-90 18.0 138.0)">relative, log scale</text>
+  <text x="62.0" y="26.0" class="lbl">schematic reconstruction of the standard microprocessor trend curves</text>
+  <text x="62.0" y="284.0" class="lblb">Transistors kept doubling. Clock speed did not.</text>
+</svg></div><figcaption><b>Fig 1.2</b>Why this course exists. Until about 2004, shrinking a transistor also let you lower its supply voltage — Dennard scaling — so each generation ran faster at the same power. When that stopped, the transistor budget kept growing but the free speed did not, and the industry turned to parallelism and to specialised hardware. Every technique in this course is a way of spending transistors well rather than waiting for faster ones.</figcaption></figure>
+
+
+<p>An <em class="term">embedded system</em> is a computing system built into a larger artefact to perform a dedicated function, usually under real-time and resource constraints, and usually without a general-purpose user-facing operating system. The useful part of that definition is the constraint set, not the physical size. A rack-mounted automotive ECU is embedded; a Raspberry&nbsp;Pi 4 running Debian on a desk is mostly not, even though it is smaller.</p>
+
+<p>Three constraint dimensions matter for us:</p>
+<ul>
+  <li><b>Timing.</b> A <em class="term">hard real-time</em> system fails if a deadline is missed (airbag deployment, motor commutation). A <em class="term">soft real-time</em> system degrades (a keyword detector that occasionally answers late). Most ML-in-the-loop systems are soft real-time inside a hard real-time host, and the interface between them is where scheduling bugs live.</li>
+  <li><b>Resources.</b> Memory in kilobytes to a few megabytes; clocks in tens of MHz to low GHz; no virtual memory, often no heap.</li>
+  <li><b>Energy.</b> Frequently a fixed energy store (a cell) and a required service life, which converts directly into an average power ceiling — see <a class="xref" href="#sec-1-6">§1.6</a>.</li>
+</ul>
+
+<div class="tw"><table>
+<thead><tr><th>Tier</th><th class="num">Compute</th><th class="num">Memory</th><th class="num">Power</th><th>Representative model</th></tr></thead>
+<tbody>
+<tr><td>Cloud / datacentre accelerator</td><td class="num">10²–10³ TOPS</td><td class="num">10–100 GB</td><td class="num">200–700 W</td><td>Anything; foundation models</td></tr>
+<tr><td>Edge server / workstation GPU</td><td class="num">10–100 TOPS</td><td class="num">8–48 GB</td><td class="num">50–300 W</td><td>Multi-stream video analytics</td></tr>
+<tr><td>Embedded AI module (e.g. Jetson class)</td><td class="num">1–100 TOPS</td><td class="num">4–32 GB</td><td class="num">5–60 W</td><td>Detection/segmentation CNNs, small VLMs</td></tr>
+<tr><td>Mobile SoC / application processor</td><td class="num">1–50 TOPS</td><td class="num">2–16 GB</td><td class="num">1–8 W</td><td>MobileNet-class, on-device SLMs</td></tr>
+<tr><td>MCU + NPU (e.g. Cortex-M + Ethos-U class)</td><td class="num">10–500 GOPS</td><td class="num">0.5–8 MB</td><td class="num">10–200 mW</td><td>Small CNNs, int8 only</td></tr>
+<tr><td>Plain MCU (Cortex-M0+/M4/M7 class)</td><td class="num">10–500 MOPS</td><td class="num">32 kB – 1 MB SRAM</td><td class="num">1–50 mW</td><td>DS-CNN keyword spotting, tree ensembles</td></tr>
+<tr><td>Always-on / sub-threshold sensor front end</td><td class="num">&lt; 10 MOPS</td><td class="num">2–64 kB</td><td class="num">1 µW – 1 mW</td><td>Threshold + tiny MLP wake-up stage</td></tr>
+</tbody>
+</table></div>
+<p class="tcap" id="tab-T1-1">Table 1.1 — The compute continuum. Order-of-magnitude teaching values spanning the classes of device the course refers to; always re-derive from the datasheet of the specific part. The interesting design work happens in the bottom three rows, where the constraint is binding rather than merely annoying.</p>
+<figure id="fig-continuum_scatter"><div class="figscroll"><svg viewBox="0 0 720 320" role="img" aria-label="Scatter of device classes on logarithmic axes of memory against power, from microwatt sensor front ends through microcontrollers to datacentre accelerators, with the tinyML region shaded at the lower left">
+  <line x1="74.0" y1="236.0" x2="520.0" y2="236.0" class="ax"/>
+  <line x1="74.0" y1="36.0" x2="74.0" y2="236.0" class="ax"/>
+  <line x1="74.0" y1="36.0" x2="74.0" y2="236.0" class="grid"/>
+  <line x1="74.0" y1="236.0" x2="74.0" y2="240.0" class="ax"/>
+  <text x="74.0" y="253.0" class="lbl" text-anchor="middle">1 µW</text>
+  <line x1="173.1" y1="36.0" x2="173.1" y2="236.0" class="grid"/>
+  <line x1="173.1" y1="236.0" x2="173.1" y2="240.0" class="ax"/>
+  <text x="173.1" y="253.0" class="lbl" text-anchor="middle">100 µW</text>
+  <line x1="272.2" y1="36.0" x2="272.2" y2="236.0" class="grid"/>
+  <line x1="272.2" y1="236.0" x2="272.2" y2="240.0" class="ax"/>
+  <text x="272.2" y="253.0" class="lbl" text-anchor="middle">10 mW</text>
+  <line x1="371.3" y1="36.0" x2="371.3" y2="236.0" class="grid"/>
+  <line x1="371.3" y1="236.0" x2="371.3" y2="240.0" class="ax"/>
+  <text x="371.3" y="253.0" class="lbl" text-anchor="middle">1 W</text>
+  <line x1="470.4" y1="36.0" x2="470.4" y2="236.0" class="grid"/>
+  <line x1="470.4" y1="236.0" x2="470.4" y2="240.0" class="ax"/>
+  <text x="470.4" y="253.0" class="lbl" text-anchor="middle">100 W</text>
+  <line x1="74.0" y1="236.0" x2="520.0" y2="236.0" class="grid"/>
+  <line x1="70.0" y1="236.0" x2="74.0" y2="236.0" class="ax"/>
+  <text x="66.0" y="239.6" class="lbl" text-anchor="end">16 kB</text>
+  <line x1="74.0" y1="178.9" x2="520.0" y2="178.9" class="grid"/>
+  <line x1="70.0" y1="178.9" x2="74.0" y2="178.9" class="ax"/>
+  <text x="66.0" y="182.5" class="lbl" text-anchor="end">1 MB</text>
+  <line x1="74.0" y1="121.7" x2="520.0" y2="121.7" class="grid"/>
+  <line x1="70.0" y1="121.7" x2="74.0" y2="121.7" class="ax"/>
+  <text x="66.0" y="125.3" class="lbl" text-anchor="end">100 MB</text>
+  <line x1="74.0" y1="64.6" x2="520.0" y2="64.6" class="grid"/>
+  <line x1="70.0" y1="64.6" x2="74.0" y2="64.6" class="ax"/>
+  <text x="66.0" y="68.2" class="lbl" text-anchor="end">10 GB</text>
+  <rect x="74.0" y="161.7" width="271.4" height="74.3" class="fillsoft"/>
+  <text x="81.2" y="152.7" class="lblb" fill="var(--copper)">the tinyML region</text>
+  <circle cx="97.6" cy="222.4" r="5.0" class="accf" opacity="0.85"/>
+  <text x="108.6" y="226.4" class="lblb">sensor front end</text>
+  <circle cx="237.6" cy="213.8" r="6.0" class="accf" opacity="0.85"/>
+  <text x="249.6" y="217.8" class="lblb">MCU · Cortex-M0+</text>
+  <circle cx="276.1" cy="193.8" r="6.5" class="accf" opacity="0.85"/>
+  <text x="263.6" y="197.8" class="lblb" text-anchor="end">MCU · M4F</text>
+  <circle cx="310.8" cy="176.6" r="7.0" class="accf" opacity="0.85"/>
+  <text x="323.8" y="180.6" class="lblb">MCU · M7</text>
+  <circle cx="331.9" cy="165.2" r="7.5" class="accf" opacity="0.85"/>
+  <text x="318.4" y="169.2" class="lblb" text-anchor="end">MCU + microNPU</text>
+  <circle cx="395.0" cy="75.9" r="9.0" fill="currentColor" opacity="0.85"/>
+  <text x="414.0" y="85.9" class="lblb">mobile SoC</text>
+  <circle cx="435.8" cy="65.9" r="9.0" fill="currentColor" opacity="0.85"/>
+  <text x="414.8" y="63.9" class="lblb" text-anchor="end">embedded module</text>
+  <circle cx="497.4" cy="38.8" r="11.0" fill="currentColor" opacity="0.85"/>
+  <text x="480.4" y="42.8" class="lblb" text-anchor="end">datacentre GPU</text>
+  <text x="297.0" y="272.0" class="lbl" text-anchor="middle">typical active power</text>
+  <text x="26.0" y="136.0" class="lbl" text-anchor="middle" transform="rotate(-90 26.0 136.0)">addressable memory</text>
+  <text x="74.0" y="26.0" class="lbl">six orders of magnitude of power, seven of memory</text>
+  <text x="74.0" y="300.0" class="lblb">"Small" is never absolute — it is relative to one point on this plane.</text>
+</svg></div><figcaption><b>Fig 1.3</b>The compute continuum. Copper markers are devices with no operating system, no heap and no cache to hide a mistake; grey markers have all three. The gap between an MCU and a mobile SoC is not a matter of degree — it is roughly four orders of magnitude in memory and two to three in power, which is why a model that runs on a phone tells you almost nothing about whether it will run on a microcontroller. Order-of-magnitude teaching values; always re-derive from the datasheet of the part you have.</figcaption></figure>
+
+
+<div class="box">
+<h5>In-class exercise — which of these is embedded?</h5>
+<p>Raspberry&nbsp;Pi 4, STM32L4 microcontroller, NVIDIA Jetson Orin Nano, a smartwatch SoC, a car's brake ECU. The productive answer is not a classification but a ranking: order them by <i>how binding</i> the memory, power and timing constraints are, and note that the ranking changes with the application. The Pi is general-purpose on a bench and embedded inside a machine that must boot in 400&nbsp;ms and never swap.</p>
+</div>
+
+
+
+<h3 id="ml-primer"><span class="sn">1.3</span>What machine learning adds — a primer for non-specialists</h3>
+
+<p>Several of you come from electronics, physics, signal processing or computer engineering rather than machine learning. This section gives the minimum you need for the next three sessions; Session 3 returns to it in depth.</p>
+
+<p>A <em class="term">model</em> is a function <span class="eqn">ŷ = f(x; θ)</span> that maps an input <span class="eqn">x</span> — a second of audio, a window of accelerometer samples, an image — to an output <span class="eqn">ŷ</span>: a class label ("yes", "no", "silence"), a number (remaining battery life), or a score (how anomalous this vibration is). The function has a fixed form chosen by the engineer (a decision tree, a neural network of a certain shape) and a large set of numerical <em class="term">parameters</em> <span class="eqn">θ</span>, which are not chosen by hand but <em>learned</em> from examples.</p>
+
+<ul>
+  <li><b>Training</b> is the search for good parameters. Given many examples <span class="eqn">(x, y)</span> with known answers, an optimisation algorithm adjusts <span class="eqn">θ</span> so that <span class="eqn">f(x; θ)</span> agrees with <span class="eqn">y</span> as often as possible. Training is computationally heavy — millions to billions of evaluations of <span class="eqn">f</span> and its derivatives — and in almost all embedded products it happens on a workstation or in the cloud.</li>
+  <li><b>Inference</b> is the use of a trained model: evaluate <span class="eqn">f(x; θ)</span> once for a new input. It is orders of magnitude cheaper than training, and it is what runs on the device. When this course says "embedded ML" it almost always means <em>embedded inference</em>; on-device training is a research frontier (Session 4).</li>
+  <li><b>Generalisation</b> is the whole point: the model must be right on inputs it has never seen. A model that only reproduces its training examples is useless, and most of the methodology of machine learning — separate test data, regularisation, honest evaluation — exists to measure and protect generalisation.</li>
+</ul>
+
+<p>Why learn the function rather than design it? Because for many sensing tasks nobody can write the rule down. "Fire when the user says <i>hey device</i>, but not when the television says something similar, in any accent, with a dishwasher running" is not a rule an engineer can code by hand; it is a function that can be estimated from thousands of recordings. Embedded machine learning — often called <em class="term">TinyML</em> when the target is a microcontroller — is the practice of making such learned functions small, fast and frugal enough to run inside the device.</p>
+
+<figure id="fig-ml_workflow"><div class="figscroll"><svg viewBox="0 0 720 260" role="img" aria-label="The embedded ML workflow as a loop: define the problem and budgets, collect and label data, preprocess and extract features, train, compress and optimise, convert and compile, test on the device, deploy and monitor, with drift feeding back to data collection">
+  <rect x="8.0" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="47.0" y="94.0" class="lblb" text-anchor="middle">Define task</text>
+  <text x="47.0" y="110.0" class="lbl" text-anchor="middle">&amp; budgets</text>
+  <text x="47.0" y="144.0" class="lbl accf" text-anchor="middle">S1</text>
+  <line x1="87.0" y1="99.0" x2="95.5" y2="99.0" class="ax"/>
+  <path d="M95.5 99.0 L91.0 101.3 L91.0 96.7 Z" fill="currentColor"/>
+  <rect x="96.5" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="135.5" y="94.0" class="lblb" text-anchor="middle">Collect &amp;</text>
+  <text x="135.5" y="110.0" class="lbl" text-anchor="middle">label data</text>
+  <text x="135.5" y="144.0" class="lbl accf" text-anchor="middle">S2</text>
+  <line x1="175.5" y1="99.0" x2="184.0" y2="99.0" class="ax"/>
+  <path d="M184.0 99.0 L179.5 101.3 L179.5 96.7 Z" fill="currentColor"/>
+  <rect x="185.0" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="224.0" y="94.0" class="lblb" text-anchor="middle">Preprocess,</text>
+  <text x="224.0" y="110.0" class="lbl" text-anchor="middle">features</text>
+  <text x="224.0" y="144.0" class="lbl accf" text-anchor="middle">S2</text>
+  <line x1="264.0" y1="99.0" x2="272.5" y2="99.0" class="ax"/>
+  <path d="M272.5 99.0 L268.0 101.3 L268.0 96.7 Z" fill="currentColor"/>
+  <rect x="273.5" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="312.5" y="94.0" class="lblb" text-anchor="middle">Train</text>
+  <text x="312.5" y="110.0" class="lbl" text-anchor="middle">model</text>
+  <text x="312.5" y="144.0" class="lbl accf" text-anchor="middle">S3</text>
+  <line x1="352.5" y1="99.0" x2="361.0" y2="99.0" class="ax"/>
+  <path d="M361.0 99.0 L356.5 101.3 L356.5 96.7 Z" fill="currentColor"/>
+  <rect x="362.0" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="401.0" y="94.0" class="lblb" text-anchor="middle">Compress</text>
+  <text x="401.0" y="110.0" class="lbl" text-anchor="middle">quantise</text>
+  <text x="401.0" y="144.0" class="lbl accf" text-anchor="middle">S3</text>
+  <line x1="441.0" y1="99.0" x2="449.5" y2="99.0" class="ax"/>
+  <path d="M449.5 99.0 L445.0 101.3 L445.0 96.7 Z" fill="currentColor"/>
+  <rect x="450.5" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="489.5" y="94.0" class="lblb" text-anchor="middle">Convert &amp;</text>
+  <text x="489.5" y="110.0" class="lbl" text-anchor="middle">compile</text>
+  <text x="489.5" y="144.0" class="lbl accf" text-anchor="middle">S4</text>
+  <line x1="529.5" y1="99.0" x2="538.0" y2="99.0" class="ax"/>
+  <path d="M538.0 99.0 L533.5 101.3 L533.5 96.7 Z" fill="currentColor"/>
+  <rect x="539.0" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="578.0" y="94.0" class="lblb" text-anchor="middle">Test on</text>
+  <text x="578.0" y="110.0" class="lbl" text-anchor="middle">device</text>
+  <text x="578.0" y="144.0" class="lbl accf" text-anchor="middle">S4</text>
+  <line x1="618.0" y1="99.0" x2="626.5" y2="99.0" class="ax"/>
+  <path d="M626.5 99.0 L622.0 101.3 L622.0 96.7 Z" fill="currentColor"/>
+  <rect x="627.5" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="666.5" y="94.0" class="lblb" text-anchor="middle">Deploy &amp;</text>
+  <text x="666.5" y="110.0" class="lbl" text-anchor="middle">monitor</text>
+  <text x="666.5" y="144.0" class="lbl accf" text-anchor="middle">S4</text>
+  <path d="M666.5 150 L666.5 180 L135.5 180 L135.5 154" class="acc" stroke-width="1.4"/>
+  <line x1="135.5" y1="160.0" x2="135.5" y2="152.0" class="acc"/>
+  <path d="M135.5 152.0 L138.2 157.3 L132.8 157.3 Z" class="accf"/>
+  <text x="360.0" y="198.0" class="lbl" text-anchor="middle">drift, new failure cases and field data flow back into the dataset</text>
+  <path d="M578.0 66 L578.0 40 L312.5 40 L312.5 62" class="tl" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <line x1="312.5" y1="52.0" x2="312.5" y2="64.0" class="tl"/>
+  <path d="M312.5 64.0 L309.8 58.7 L315.2 58.7 Z" class="tlf"/>
+  <text x="445.2" y="33.0" class="lbl" text-anchor="middle">inner loop: does it fit, is it fast enough, is it still accurate?</text>
+  <text x="8.0" y="232.0" class="lblb">Most of the effort in an embedded project sits in the two loops, not in the single "train" box.</text>
+  <text x="8.0" y="250.0" class="lbl">S1–S4 mark the session in which each step is treated.</text>
+</svg></div><figcaption><b>Fig 1.4</b>The embedded ML workflow. The teal inner loop — train, compress, compile, measure on the device, repeat — is where budgets are actually met; the copper outer loop — field data and drift flowing back into the dataset — is where deployed systems stay useful. A model that has only been through the "train" box has not been engineered yet.</figcaption></figure>
+
+<p>The workflow above is also the map of this course. Session 2 covers the left half — how the physical signal becomes data, and how data becomes features. Session 3 covers the middle — which model family to choose, and how to shrink a model without destroying it. Session 4 covers the right half — the hardware, the compilers and what happens after deployment. The point to take away now is the two loops: in an embedded project, almost all the effort is in iterating between training, compression and on-device measurement, and in feeding field data back into the dataset.</p>
+
+<div class="miss">
+<h5>Common misconception</h5>
+<p>"The model is the product." In a deployed embedded system the trained network is often a few tens of kilobytes inside firmware of several hundred, surrounded by signal conditioning, feature extraction, decision logic, power management and an update mechanism. Many deployed ML failures are failures of those surroundings — a changed microphone gain, a sampling rate set wrongly in firmware, a buffer overwritten — not of the model.</p>
+</div>
+
+<h3 id="sec-1-4"><span class="sn">1.4</span>Why push inference to the device at all</h3>
+
+<p>Five reasons, in rough order of how often they are the <i>real</i> reason:</p>
+<ol>
+  <li><b>Energy of communication.</b> Transmitting raw sensor data costs far more energy per useful decision than computing the decision locally. This is the argument that most often survives scrutiny, and it is quantified in <a class="xref" href="#sec-1-7">§1.7</a>.</li>
+  <li><b>Privacy and regulation.</b> Data that never leaves the device cannot be intercepted, subpoenaed or mis-shared. For biosignals and audio in the home this is frequently a legal requirement rather than a preference.</li>
+  <li><b>Latency and its variance.</b> A network round trip adds not just milliseconds but a heavy tail. Control loops care about the 99.9th percentile, not the mean.</li>
+  <li><b>Availability.</b> Agricultural, marine, underground and in-flight deployments have no reliable link.</li>
+  <li><b>Cost at scale.</b> Bandwidth and cloud inference are recurring per-device costs; on-device inference is a one-off silicon cost.</li>
+</ol>
+<p>Note the corollary that students routinely miss: these reasons argue for putting <i>the decision</i> on the device, not necessarily <i>the whole model</i>. Hybrid designs — a tiny always-on model that gates an expensive cloud model — are usually the strongest engineering answer, and they are a recurring pattern in this course.</p>
+
+
+
+<h3 id="applications"><span class="sn">1.5</span>Applications, workloads and sensor fusion</h3>
+
+<p>It helps to see the breadth of what is actually deployed before narrowing to techniques. The table groups embedded ML applications by sensing modality; the figure after it places representative workloads by their raw data rate and their compute per inference.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Domain</th><th>Typical sensors</th><th>Example tasks</th><th>Usual binding constraint</th></tr></thead>
+<tbody>
+<tr><td>Audio and voice</td><td>MEMS microphone</td><td>keyword spotting, voice activity, acoustic event and scene detection</td><td>always-on energy</td></tr>
+<tr><td>Wearables and health</td><td>IMU, PPG, ECG, temperature</td><td>activity recognition, fall detection, arrhythmia and seizure detection</td><td>battery life, regulatory validation</td></tr>
+<tr><td>Industrial monitoring</td><td>accelerometer, current, acoustic</td><td>predictive maintenance, anomaly detection on motors and bearings</td><td>scarce labels for faults</td></tr>
+<tr><td>Vision at the edge</td><td>low-resolution CMOS camera</td><td>person detection, counting, gesture, visual wake words</td><td>SRAM for activations</td></tr>
+<tr><td>Environment and agriculture</td><td>gas, humidity, soil, acoustic</td><td>air quality, pest or animal detection, irrigation control</td><td>energy harvesting, connectivity</td></tr>
+<tr><td>Automotive and robotics</td><td>radar, IMU, camera, ultrasound</td><td>driver monitoring, gesture, obstacle detection, control</td><td>hard real-time deadlines, safety</td></tr>
+<tr><td>Human–machine interfaces</td><td>capacitive, radar, IMU</td><td>gesture recognition, presence detection, handwriting</td><td>latency perceived by the user</td></tr>
+</tbody>
+</table></div>
+<p class="tcap" id="tab-apps">Table 1.2 — Embedded ML application domains. The last column is the constraint that most often decides the design; it is a starting hypothesis, not a rule.</p>
+
+<figure id="fig-workloads_bandwidth"><div class="figscroll"><svg viewBox="0 0 720 360" role="img" aria-label="Log-log scatter of embedded ML applications by raw sensor data rate and typical model compute per inference, from temperature anomaly detection at a few bytes per second to video object detection at hundreds of megabytes per second">
+  <line x1="84.0" y1="270.0" x2="540.0" y2="270.0" class="ax"/>
+  <line x1="84.0" y1="30.0" x2="84.0" y2="270.0" class="ax"/>
+  <line x1="84.0" y1="30.0" x2="84.0" y2="270.0" class="grid"/>
+  <line x1="84.0" y1="270.0" x2="84.0" y2="274.0" class="ax"/>
+  <text x="84.0" y="286.0" class="lbl" text-anchor="middle">1 B/s</text>
+  <line x1="236.0" y1="30.0" x2="236.0" y2="270.0" class="grid"/>
+  <line x1="236.0" y1="270.0" x2="236.0" y2="274.0" class="ax"/>
+  <text x="236.0" y="286.0" class="lbl" text-anchor="middle">1 kB/s</text>
+  <line x1="388.0" y1="30.0" x2="388.0" y2="270.0" class="grid"/>
+  <line x1="388.0" y1="270.0" x2="388.0" y2="274.0" class="ax"/>
+  <text x="388.0" y="286.0" class="lbl" text-anchor="middle">1 MB/s</text>
+  <line x1="540.0" y1="30.0" x2="540.0" y2="270.0" class="grid"/>
+  <line x1="540.0" y1="270.0" x2="540.0" y2="274.0" class="ax"/>
+  <text x="540.0" y="286.0" class="lbl" text-anchor="middle">1 GB/s</text>
+  <line x1="84.0" y1="270.0" x2="540.0" y2="270.0" class="grid"/>
+  <line x1="80.0" y1="270.0" x2="84.0" y2="270.0" class="ax"/>
+  <text x="77.0" y="273.6" class="lbl" text-anchor="end">10²</text>
+  <line x1="84.0" y1="210.0" x2="540.0" y2="210.0" class="grid"/>
+  <line x1="80.0" y1="210.0" x2="84.0" y2="210.0" class="ax"/>
+  <text x="77.0" y="213.6" class="lbl" text-anchor="end">10⁴</text>
+  <line x1="84.0" y1="150.0" x2="540.0" y2="150.0" class="grid"/>
+  <line x1="80.0" y1="150.0" x2="84.0" y2="150.0" class="ax"/>
+  <text x="77.0" y="153.6" class="lbl" text-anchor="end">10⁶</text>
+  <line x1="84.0" y1="90.0" x2="540.0" y2="90.0" class="grid"/>
+  <line x1="80.0" y1="90.0" x2="84.0" y2="90.0" class="ax"/>
+  <text x="77.0" y="93.6" class="lbl" text-anchor="end">10⁸</text>
+  <line x1="84.0" y1="30.0" x2="540.0" y2="30.0" class="grid"/>
+  <line x1="80.0" y1="30.0" x2="84.0" y2="30.0" class="ax"/>
+  <text x="77.0" y="33.6" class="lbl" text-anchor="end">10¹⁰</text>
+  <text x="312.0" y="303.0" class="lbl" text-anchor="middle">raw sensor data rate (log)</text>
+  <text x="40.0" y="150.0" class="lbl" text-anchor="middle" transform="rotate(-90 40.0 150.0)">MACs per inference (log)</text>
+  <rect x="84.0" y="105.7" width="456.0" height="164.3" class="fillsoft"/>
+  <text x="534.0" y="262.0" class="lbl" text-anchor="end">typical microcontroller territory</text>
+  <circle cx="99.3" cy="255.7" r="4.2" class="accf"/>
+  <text x="107.3" y="259.7" class="lbl">temperature anomaly</text>
+  <circle cx="240.0" cy="180.0" r="4.2" class="accf"/>
+  <text x="248.0" y="184.0" class="lbl">IMU gesture / activity</text>
+  <circle cx="215.8" cy="144.7" r="4.2" class="accf"/>
+  <text x="207.8" y="148.7" class="lbl" text-anchor="end">ECG arrhythmia</text>
+  <circle cx="301.9" cy="167.6" r="4.2" class="accf"/>
+  <text x="309.9" y="171.6" class="lbl">vibration anomaly (AE)</text>
+  <circle cx="312.3" cy="137.1" r="4.2" class="accf"/>
+  <text x="320.3" y="141.1" class="lbl">keyword spotting (DS-CNN)</text>
+  <circle cx="284.8" cy="123.7" r="4.2" class="accf"/>
+  <text x="276.8" y="127.7" class="lbl" text-anchor="end">person detection 96×96</text>
+  <circle cx="430.5" cy="41.9" r="4.2" class="tlf"/>
+  <text x="422.5" y="45.9" class="lbl" text-anchor="end">object detection, VGA video</text>
+  <circle cx="503.5" cy="54.7" r="4.2" class="tlf"/>
+  <text x="495.5" y="58.7" class="lbl" text-anchor="end">1080p segmentation</text>
+  <text x="560.0" y="60.0" class="lblb">Read across:</text>
+  <text x="560.0" y="78.0" class="lbl">data rate decides</text>
+  <text x="560.0" y="92.0" class="lbl">whether streaming raw</text>
+  <text x="560.0" y="106.0" class="lbl">data off the device is</text>
+  <text x="560.0" y="120.0" class="lbl">even possible.</text>
+  <text x="560.0" y="150.0" class="lblb">Read up:</text>
+  <text x="560.0" y="168.0" class="lbl">compute decides which</text>
+  <text x="560.0" y="182.0" class="lbl">device class can run</text>
+  <text x="560.0" y="196.0" class="lbl">the model at all.</text>
+  <text x="84.0" y="334.0" class="lbl">Illustrative placement. KWS, person detection and anomaly detection use</text>
+  <text x="84.0" y="348.0" class="lbl">the MLPerf Tiny reference models; the others are typical published sizes.</text>
+</svg></div><figcaption><b>Fig 1.5</b>Embedded ML workloads span seven decades of data rate and eight of compute. Copper points fit the microcontroller band; teal points need an application processor, GPU or NPU. The horizontal position also tells you how expensive it would be to avoid on-device inference by streaming raw data: a thermometer can afford to transmit everything, a camera cannot. Placement is illustrative; the keyword-spotting, person-detection and anomaly-detection points correspond to the MLPerf Tiny reference models.</figcaption></figure>
+
+<p>Two readings of that figure matter. Reading across: the raw data rate decides whether the alternative to on-device inference — streaming everything to a server — is even possible. A temperature sensor produces a few bytes per second and can afford to send all of it; a microphone produces 32&nbsp;kB/s and a VGA camera several MB/s, which no battery-powered radio can sustain continuously. Reading up: compute per inference decides which class of device can run the model at all, and spans eight orders of magnitude.</p>
+
+<h4>Sensor fusion</h4>
+<p>Many applications combine several sensors — an earbud that uses both its microphone and its accelerometer to detect that its wearer, not a bystander, is speaking; a wrist device that combines motion and heart-rate signals. Where the information is merged is a design decision with direct cost consequences.</p>
+
+<figure id="fig-sensor_fusion"><div class="figscroll"><svg viewBox="0 0 720 290" role="img" aria-label="Three sensor fusion strategies side by side: early fusion concatenates raw signals into one model; intermediate fusion extracts features per sensor and concatenates them; late fusion runs one model per sensor and combines the decisions">
+  <text x="120.0" y="22.0" class="lblb" text-anchor="middle">Early fusion</text>
+  <text x="120.0" y="38.0" class="lbl" text-anchor="middle">one model sees all raw data</text>
+  <text x="360.0" y="22.0" class="lblb" text-anchor="middle">Intermediate (feature) fusion</text>
+  <text x="360.0" y="38.0" class="lbl" text-anchor="middle">per-sensor encoders, joint head</text>
+  <text x="600.0" y="22.0" class="lblb" text-anchor="middle">Late (decision) fusion</text>
+  <text x="600.0" y="38.0" class="lbl" text-anchor="middle">per-sensor models, vote / average</text>
+  <rect x="10.0" y="58.0" width="56.0" height="32.0" class="ax" fill="none"/>
+  <text x="38.0" y="78.0" class="lbl" text-anchor="middle">mic</text>
+  <line x1="66.0" y1="74.0" x2="102.0" y2="120.0" class="grid"/>
+  <path d="M102.0 120.0 L102.0 120.0 L102.0 120.0 Z" fill="currentColor"/>
+  <rect x="10.0" y="104.0" width="56.0" height="32.0" class="ax" fill="none"/>
+  <text x="38.0" y="124.0" class="lbl" text-anchor="middle">IMU</text>
+  <line x1="66.0" y1="120.0" x2="102.0" y2="120.0" class="grid"/>
+  <path d="M102.0 120.0 L102.0 120.0 L102.0 120.0 Z" fill="currentColor"/>
+  <rect x="10.0" y="150.0" width="56.0" height="32.0" class="ax" fill="none"/>
+  <text x="38.0" y="170.0" class="lbl" text-anchor="middle">PPG</text>
+  <line x1="66.0" y1="166.0" x2="102.0" y2="120.0" class="grid"/>
+  <path d="M102.0 120.0 L102.0 120.0 L102.0 120.0 Z" fill="currentColor"/>
+  <rect x="102.0" y="100.0" width="52.0" height="40.0" class="ax" fill="none"/>
+  <text x="128.0" y="124.0" class="lbl" text-anchor="middle">concat</text>
+  <line x1="154.0" y1="120.0" x2="170.0" y2="120.0" class="ax"/>
+  <path d="M170.0 120.0 L165.5 122.3 L165.5 117.7 Z" fill="currentColor"/>
+  <rect x="170.0" y="92.0" width="60.0" height="56.0" class="ax" fill="none"/>
+  <text x="200.0" y="124.0" class="lblb" text-anchor="middle">model</text>
+  <line x1="200.0" y1="148.0" x2="200.0" y2="196.0" class="ax"/>
+  <path d="M200.0 196.0 L197.3 190.7 L202.7 190.7 Z" fill="currentColor"/>
+  <rect x="160.0" y="198.0" width="80.0" height="30.0" class="ax" fill="none"/>
+  <text x="200.0" y="217.0" class="lbl" text-anchor="middle">decision</text>
+  <rect x="250.0" y="58.0" width="46.0" height="32.0" class="ax" fill="none"/>
+  <text x="273.0" y="78.0" class="lbl" text-anchor="middle">mic</text>
+  <line x1="296.0" y1="74.0" x2="308.0" y2="74.0" class="ax"/>
+  <path d="M308.0 74.0 L304.4 75.8 L304.4 72.2 Z" fill="currentColor"/>
+  <rect x="308.0" y="58.0" width="58.0" height="32.0" class="ax" fill="none"/>
+  <text x="337.0" y="78.0" class="lbl" text-anchor="middle">enc</text>
+  <line x1="366.0" y1="74.0" x2="390.0" y2="120.0" class="grid"/>
+  <path d="M390.0 120.0 L390.0 120.0 L390.0 120.0 Z" fill="currentColor"/>
+  <rect x="250.0" y="104.0" width="46.0" height="32.0" class="ax" fill="none"/>
+  <text x="273.0" y="124.0" class="lbl" text-anchor="middle">IMU</text>
+  <line x1="296.0" y1="120.0" x2="308.0" y2="120.0" class="ax"/>
+  <path d="M308.0 120.0 L304.4 121.8 L304.4 118.2 Z" fill="currentColor"/>
+  <rect x="308.0" y="104.0" width="58.0" height="32.0" class="ax" fill="none"/>
+  <text x="337.0" y="124.0" class="lbl" text-anchor="middle">enc</text>
+  <line x1="366.0" y1="120.0" x2="390.0" y2="120.0" class="grid"/>
+  <path d="M390.0 120.0 L390.0 120.0 L390.0 120.0 Z" fill="currentColor"/>
+  <rect x="250.0" y="150.0" width="46.0" height="32.0" class="ax" fill="none"/>
+  <text x="273.0" y="170.0" class="lbl" text-anchor="middle">PPG</text>
+  <line x1="296.0" y1="166.0" x2="308.0" y2="166.0" class="ax"/>
+  <path d="M308.0 166.0 L304.4 167.8 L304.4 164.2 Z" fill="currentColor"/>
+  <rect x="308.0" y="150.0" width="58.0" height="32.0" class="ax" fill="none"/>
+  <text x="337.0" y="170.0" class="lbl" text-anchor="middle">enc</text>
+  <line x1="366.0" y1="166.0" x2="390.0" y2="120.0" class="grid"/>
+  <path d="M390.0 120.0 L390.0 120.0 L390.0 120.0 Z" fill="currentColor"/>
+  <rect x="390.0" y="100.0" width="34.0" height="40.0" class="ax" fill="none"/>
+  <text x="407.0" y="124.0" class="lblb" text-anchor="middle">∥</text>
+  <line x1="424.0" y1="120.0" x2="436.0" y2="120.0" class="ax"/>
+  <path d="M436.0 120.0 L431.5 122.3 L431.5 117.7 Z" fill="currentColor"/>
+  <rect x="436.0" y="96.0" width="40.0" height="48.0" class="ax" fill="none"/>
+  <text x="456.0" y="124.0" class="lbl" text-anchor="middle">head</text>
+  <line x1="456.0" y1="144.0" x2="456.0" y2="196.0" class="ax"/>
+  <path d="M456.0 196.0 L453.3 190.7 L458.7 190.7 Z" fill="currentColor"/>
+  <rect x="416.0" y="198.0" width="80.0" height="30.0" class="ax" fill="none"/>
+  <text x="456.0" y="217.0" class="lbl" text-anchor="middle">decision</text>
+  <rect x="490.0" y="58.0" width="46.0" height="32.0" class="ax" fill="none"/>
+  <text x="513.0" y="78.0" class="lbl" text-anchor="middle">mic</text>
+  <line x1="536.0" y1="74.0" x2="548.0" y2="74.0" class="ax"/>
+  <path d="M548.0 74.0 L544.4 75.8 L544.4 72.2 Z" fill="currentColor"/>
+  <rect x="548.0" y="58.0" width="62.0" height="32.0" class="ax" fill="none"/>
+  <text x="579.0" y="78.0" class="lbl" text-anchor="middle">model</text>
+  <line x1="610.0" y1="74.0" x2="638.0" y2="120.0" class="grid"/>
+  <path d="M638.0 120.0 L638.0 120.0 L638.0 120.0 Z" fill="currentColor"/>
+  <rect x="490.0" y="104.0" width="46.0" height="32.0" class="ax" fill="none"/>
+  <text x="513.0" y="124.0" class="lbl" text-anchor="middle">IMU</text>
+  <line x1="536.0" y1="120.0" x2="548.0" y2="120.0" class="ax"/>
+  <path d="M548.0 120.0 L544.4 121.8 L544.4 118.2 Z" fill="currentColor"/>
+  <rect x="548.0" y="104.0" width="62.0" height="32.0" class="ax" fill="none"/>
+  <text x="579.0" y="124.0" class="lbl" text-anchor="middle">model</text>
+  <line x1="610.0" y1="120.0" x2="638.0" y2="120.0" class="grid"/>
+  <path d="M638.0 120.0 L638.0 120.0 L638.0 120.0 Z" fill="currentColor"/>
+  <rect x="490.0" y="150.0" width="46.0" height="32.0" class="ax" fill="none"/>
+  <text x="513.0" y="170.0" class="lbl" text-anchor="middle">PPG</text>
+  <line x1="536.0" y1="166.0" x2="548.0" y2="166.0" class="ax"/>
+  <path d="M548.0 166.0 L544.4 167.8 L544.4 164.2 Z" fill="currentColor"/>
+  <rect x="548.0" y="150.0" width="62.0" height="32.0" class="ax" fill="none"/>
+  <text x="579.0" y="170.0" class="lbl" text-anchor="middle">model</text>
+  <line x1="610.0" y1="166.0" x2="638.0" y2="120.0" class="grid"/>
+  <path d="M638.0 120.0 L638.0 120.0 L638.0 120.0 Z" fill="currentColor"/>
+  <rect x="638.0" y="100.0" width="70.0" height="40.0" class="ax" fill="none"/>
+  <text x="673.0" y="124.0" class="lbl" text-anchor="middle">combine</text>
+  <line x1="673.0" y1="140.0" x2="673.0" y2="196.0" class="ax"/>
+  <path d="M673.0 196.0 L670.3 190.7 L675.7 190.7 Z" fill="currentColor"/>
+  <rect x="633.0" y="198.0" width="80.0" height="30.0" class="ax" fill="none"/>
+  <text x="673.0" y="217.0" class="lbl" text-anchor="middle">decision</text>
+  <text x="10.0" y="258.0" class="lbl">needs synchronised sampling;</text>
+  <text x="10.0" y="272.0" class="lbl">captures cross-sensor detail</text>
+  <text x="250.0" y="258.0" class="lbl">usual best trade-off;</text>
+  <text x="250.0" y="272.0" class="lbl">encoders can run at different rates</text>
+  <text x="490.0" y="258.0" class="lbl">robust to a failed sensor;</text>
+  <text x="490.0" y="272.0" class="lbl">cheapest to gate and duty-cycle</text>
+</svg></div><figcaption><b>Fig 1.6</b>Where to merge information from several sensors. Early fusion is the most expressive but needs synchronised, co-located raw streams and one large model; late fusion is the most robust and the easiest to duty-cycle, because each sensor's model can sleep independently; intermediate fusion of learned or hand-crafted features is the usual compromise on embedded devices.</figcaption></figure>
+
+<p>On a power-constrained device, late fusion has a property that matters more than its accuracy: each sensor's model can be switched off independently, so a cheap sensor can gate an expensive one. That is the cascade idea of <a class="xref" href="#sec-1-8">§1.8</a> applied across sensors.</p>
+
+<h3 id="sec-1-6"><span class="sn">1.6</span>The five budgets <span class="kicker">depth</span></h3>
+
+<p>Given a device and an application, write these down before opening a notebook.</p>
+
+<h4>(a) Weight memory — flash / ROM</h4>
+<p>Parameters live in non-volatile memory. For a model with <span class="eqn">P</span> parameters at <span class="eqn">b</span> bits, the weight footprint is <span class="eqn">P·b/8</span> bytes, plus per-tensor quantization metadata, plus the interpreter or generated kernel code, plus the rest of the firmware. A useful rule: the model may have about half of the flash, never all of it.</p>
+
+<h4>(b) Peak activation memory — SRAM</h4>
+<p>This is the budget that kills naive designs, and it is not the model size. Executing a graph layer by layer, the memory that must be simultaneously live at step <span class="eqn">i</span> is (input tensor) + (output tensor) + (any tensor produced earlier that is still needed later, i.e. a residual skip). Peak SRAM is the maximum of that quantity over the whole graph:</p>
+<div class="eq">peak_SRAM = max over layers i of  ( |x_i| + |y_i| + Σ |t| for t still live )</div>
+<p>For a typical classification CNN this maximum occurs in the <i>first few layers</i>, where the spatial resolution is still high, even though almost all the parameters are at the other end of the network. This asymmetry — parameters at the back, activations at the front — is the single most important structural fact about deploying CNNs on microcontrollers, and it is precisely the observation that MCUNetV2 exploits (<a class="xref" href="session-4.html#codesign">§4.16</a>).</p>
+
+<h4>(c) Compute — MACs and effective operations</h4>
+<p>Count multiply&ndash;accumulate operations, not "FLOPs", and state the convention: one MAC is two floating-point operations if you insist on FLOPs, and much of the literature disagrees with itself here. For a convolution with input <span class="eqn">H×W×C<sub>in</sub></span>, kernel <span class="eqn">k×k</span>, output channels <span class="eqn">C<sub>out</sub></span>, stride 1 and 'same' padding:</p>
+<div class="eq">MACs = H · W · k · k · C_in · C_out</div>
+<p>Then divide by the device's sustained MAC rate — never its peak — to get a latency <i>lower bound</i>. <a class="xref" href="session-4.html#sec-4-3">§4.3</a> shows why the true latency can be several times that bound.</p>
+
+<h4>(d) Latency and the real-time budget</h4>
+<p>The deadline is set by the application, not the model: a wake-word detector processing 1-second windows with 50&nbsp;% overlap must finish in well under 500&nbsp;ms, and in practice under ~100&nbsp;ms so the rest of the firmware can run. Include feature extraction in the budget; on an MCU, an FFT-plus-mel front end can cost a substantial fraction of what the network costs.</p>
+
+<h4>(e) Energy per inference, and the duty cycle that follows</h4>
+<div class="derive">
+<h5>Worked derivation — a one-year coin cell</h5>
+<p>A CR2032 lithium coin cell is nominally 3&nbsp;V with roughly 225&nbsp;mAh of capacity, so its stored energy is about</p>
+<div class="eq">E = 0.225 A·h × 3 V × 3600 s/h ≈ 2.4 × 10³ J</div>
+<p>A one-year service life is 3.15 × 10⁷ s, so the admissible <i>average</i> power is</p>
+<div class="eq">P_avg ≤ 2.4×10³ J / 3.15×10⁷ s ≈ 77 µW</div>
+<p>Suppose the always-on part of the system (RTC, sensor bias, leakage) already draws 20&nbsp;µW. That leaves ≈ 57&nbsp;µW for inference. If one inference costs 5&nbsp;mJ — a plausible figure for a small CNN plus front end on an MCU running for tens of milliseconds — then the admissible inference <i>rate</i> is</p>
+<div class="eq">f ≤ 57 µW / 5 mJ ≈ 0.011 Hz  →  one inference every ~90 s</div>
+<p>If the application requires one inference per second, you are short by a factor of about 90. That factor is the design problem, and the four ways out are: reduce energy per inference (compression, <a class="xref" href="session-3.html">Session 3</a>), reduce the rate (cascade with a cheap always-on stage, <a class="xref" href="#sec-1-8">§1.8</a>), increase the store (bigger cell, harvesting), or relax the specification. Notice that none of these is "train a better model".</p>
+<p><i>Caveat:</i> real coin cells deliver much less than nameplate capacity under pulsed loads with high peak current, because of internal resistance and voltage sag. Derating by 30–50 % for a radio-bearing design is normal engineering practice. Quote the derivation, then quote the derating.</p>
+</div>
+<div class="widget">
+ <header><b>Interactive</b><span>Energy budget calculator — drag the sliders</span></header>
+ <div class="wbody">
+  <div class="ctrls">
+   <div class="ctrl"><label for="e-cap">battery capacity <b id="e-cap-v">225 mAh</b></label><input type="range" id="e-cap" min="20" max="3000" step="5" value="225"></div>
+   <div class="ctrl"><label for="e-life">required service life <b id="e-life-v">12 months</b></label><input type="range" id="e-life" min="1" max="60" step="1" value="12"></div>
+   <div class="ctrl"><label for="e-idle">standby power <b id="e-idle-v">20 µW</b></label><input type="range" id="e-idle" min="0" max="200" step="1" value="20"></div>
+   <div class="ctrl"><label for="e-inf">energy per inference <b id="e-inf-v">5.00 mJ</b></label><input type="range" id="e-inf" min="1" max="2000" step="1" value="500"></div>
+  </div>
+  <div class="readout">
+   <div><b>stored energy</b><span id="e-store">–</span></div>
+   <div><b>average power ceiling</b><span id="e-ceil">–</span></div>
+   <div><b>left for inference</b><span id="e-left">–</span></div>
+   <div><b>max inference rate</b><span id="e-rate" class="hi">–</span></div>
+  </div>
+  <div class="verdict" id="e-verdict">…</div>
+  <p class="wnote">Assumes a 3&nbsp;V cell and nameplate capacity. Real cells under pulsed load deliver 30–50&nbsp;% less — derate before believing any of this.</p>
+ </div>
+</div>
+<div class="miss">
+<h5>Common misconception</h5>
+<p>“Our chip does 2 TOPS, so it is 12× faster than the 160 GOPS part.” TOPS is a <i>peak</i> multiplier count — the number you get if every arithmetic unit is fed every cycle. Whether your layer can feed them is decided by arithmetic intensity and memory bandwidth (<a class="xref" href="session-4.html#sec-4-1">Session 4</a>), and whether the compiler supports your operators at all is decided by the vendor toolchain (<a class="xref" href="session-4.html#sec-4-6">Session 4</a>). A part with a quarter of the peak and twice the usable bandwidth is routinely faster on real models. Ask for measured latency on <i>your</i> graph, or measure it yourself.</p>
+</div>
+
+
+
+
+<h3 id="sec-1-7"><span class="sn">1.7</span>Where the energy actually goes</h3>
+
+<p>Students arrive believing that arithmetic is the expensive part. It is not, and the gap is roughly two orders of magnitude. Horowitz's widely-cited ISSCC 2014 figures for a 45&nbsp;nm process make the point cleanly:</p>
+
+<div class="tw"><table>
+<thead><tr><th>Operation (45 nm)</th><th class="num">Energy</th><th>Relative to an 8-bit add</th></tr></thead>
+<tbody>
+<tr><td>8-bit integer add</td><td class="num">0.03 pJ</td><td class="num">1×</td></tr>
+<tr><td>32-bit integer add</td><td class="num">0.1 pJ</td><td class="num">3×</td></tr>
+<tr><td>8-bit integer multiply</td><td class="num">0.2 pJ</td><td class="num">7×</td></tr>
+<tr><td>16-bit float multiply</td><td class="num">1 pJ</td><td class="num">33×</td></tr>
+<tr><td>32-bit float multiply</td><td class="num">4 pJ</td><td class="num">133×</td></tr>
+<tr><td>8 kB cache read</td><td class="num">10 pJ</td><td class="num">333×</td></tr>
+<tr><td>32 kB cache read</td><td class="num">20 pJ</td><td class="num">667×</td></tr>
+<tr><td>1 MB cache read</td><td class="num">100 pJ</td><td class="num">3 300×</td></tr>
+<tr><td>DRAM access</td><td class="num">1.3–2.6 nJ</td><td class="num">≈ 43 000–87 000×</td></tr>
+</tbody>
+</table></div>
+<p class="tcap" id="tab-T1-2">Table 1.3 — Rough energy per operation at 45 nm, after Horowitz (ISSCC 2014). Absolute values shrink with process node; the <i>ratios</i> — and therefore the design conclusions — have proved remarkably stable.</p>
+
+<p>Three conclusions follow, and they organise most of the rest of the course:</p>
+<ol>
+  <li><b>Precision is an energy knob.</b> Going from fp32 multiply to int8 multiply is a ≈20× energy reduction in the multiplier itself, before counting the halved memory traffic. This is why <a class="xref" href="session-3-compression.html#sec-3-22">Session 3</a> exists.</li>
+  <li><b>Locality is a bigger knob than precision.</b> A single DRAM access can cost more than ten thousand 8-bit adds. Any technique that keeps operands in registers or on-chip SRAM beats any technique that merely reduces arithmetic. This is why <a class="xref" href="session-4.html">Session 4</a> exists, and why a "50 % FLOP reduction" that doubles memory traffic is a regression.</li>
+  <li><b>Sparsity only pays if the hardware can skip.</b> Removing a multiply saves 0.2&nbsp;pJ; the index bookkeeping needed to exploit unstructured sparsity may cost more. <a class="xref" href="session-3-compression.html#sec-3-30">Session 3</a> makes this precise.</li>
+</ol>
+
+<figure id="fig-energy_ladder"><div class="figscroll"><svg viewBox="0 0 720 330" role="img" aria-label="Bar chart on a logarithmic scale comparing the energy of an 8-bit add, an 8-bit multiply, on-chip SRAM reads, a DRAM access, and a radio transmission of the same 32 bits">
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12.5" fill="currentColor">
+    <!-- axis -->
+    <line x1="196" y1="34" x2="196" y2="272" stroke="currentColor" stroke-width="1.2"/>
+    <g stroke="currentColor" stroke-width="0.6" opacity="0.28">
+      <line x1="292" y1="34" x2="292" y2="272"/>
+      <line x1="388" y1="34" x2="388" y2="272"/>
+      <line x1="484" y1="34" x2="484" y2="272"/>
+      <line x1="580" y1="34" x2="580" y2="272"/>
+      <line x1="676" y1="34" x2="676" y2="272"/>
+    </g>
+    <g font-family="IBM Plex Mono, monospace" font-size="11" fill="currentColor" opacity="0.72" text-anchor="middle">
+      <text x="196" y="290">0.01 pJ</text>
+      <text x="292" y="290">0.1 pJ</text>
+      <text x="388" y="290">1 pJ</text>
+      <text x="484" y="290">10 pJ</text>
+      <text x="580" y="290">100 pJ</text>
+      <text x="676" y="290">1 nJ</text>
+    </g>
+    <text x="436" y="312" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.72">energy per operation, logarithmic</text>
+
+    <!-- bars: x = 196 + 96*log10(pJ/0.01) -->
+    <g>
+      <rect x="196" y="44" width="46" height="20" fill="currentColor" opacity="0.35"/>
+      <text x="188" y="59" text-anchor="end">int8 add · 0.03 pJ</text>
+      <rect x="196" y="76" width="125" height="20" fill="currentColor" opacity="0.35"/>
+      <text x="188" y="91" text-anchor="end">int8 multiply · 0.2 pJ</text>
+      <rect x="196" y="108" width="192" height="20" fill="currentColor" opacity="0.35"/>
+      <text x="188" y="123" text-anchor="end">fp32 multiply · 4 pJ</text>
+      <rect x="196" y="140" width="292" height="20" fill="currentColor" opacity="0.5"/>
+      <text x="188" y="155" text-anchor="end">32 kB SRAM read · 20 pJ</text>
+      <rect x="196" y="172" width="388" height="20" fill="currentColor" opacity="0.5"/>
+      <text x="188" y="187" text-anchor="end">1 MB cache read · 100 pJ</text>
+      <rect x="196" y="204" width="500" height="20" class="accf"/>
+      <text x="188" y="219" text-anchor="end">DRAM access · ~2 nJ</text>
+      <rect x="196" y="236" width="510" height="20" class="accf" opacity="0.45"/>
+      <text x="188" y="251" text-anchor="end">radio TX, same 32 bits</text>
+    </g>
+    <text x="8" y="22" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.72">45 nm reference values, after Horowitz (ISSCC 2014)</text>
+    <text x="712" y="251" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.72">order 10²–10³ nJ, protocol dependent</text>
+  </g>
+</svg></div><figcaption><b>Fig 1.7</b>The cost hierarchy that governs embedded ML. Arithmetic occupies the left decade; moving the same operands occupies the right ones. The radio bar is drawn as a range because it depends strongly on protocol, duty cycle and link margin — but it is never cheaper than local computation, which is the quantitative core of the case for edge inference.</figcaption></figure>
+
+
+
+<h3 id="sec-1-8"><span class="sn">1.8</span>The cascade: the architectural pattern that follows from <a class="xref" href="#fig-energy_ladder">Fig 1.7</a></h3>
+<p>If energy per inference is the binding budget and most inferences are negative (no keyword, no person, no fault), then the right system is not one model but a <em class="term">cascade</em>: a very cheap always-on stage that runs constantly with a high false-positive rate, gating a more expensive stage that runs rarely, optionally gating a cloud model that runs almost never.</p>
+<p>Let stage <span class="eqn">j</span> have energy <span class="eqn">E<sub>j</sub></span> and let <span class="eqn">p<sub>j</sub></span> be the probability that stage <span class="eqn">j</span> passes its input onward. The expected energy per input window is</p>
+<div class="eq">E[total] = E₁ + p₁·E₂ + p₁·p₂·E₃ + …</div>
+<p>With <span class="eqn">p₁ = 0.02</span>, a second stage 100× more expensive than the first costs only twice the first stage's energy on average. The design consequence: the always-on stage should be optimised for <i>recall at a fixed energy</i>, and precision is the next stage's job. Students frequently optimise the wrong metric here, which is why it is worth stating explicitly.</p>
+<figure id="fig-cascade_energy"><div class="figscroll"><svg viewBox="0 0 720 300" role="img" aria-label="Expected energy per window of a two-stage cascade against the first stage&#x27;s pass rate, showing that a second stage a hundred times more expensive adds little when it runs rarely">
+  <line x1="70.0" y1="224.0" x2="500.0" y2="224.0" class="ax"/>
+  <line x1="70.0" y1="36.0" x2="70.0" y2="224.0" class="ax"/>
+  <line x1="70.0" y1="36.0" x2="70.0" y2="224.0" class="grid"/>
+  <line x1="70.0" y1="224.0" x2="70.0" y2="228.0" class="ax"/>
+  <text x="70.0" y="241.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="156.0" y1="36.0" x2="156.0" y2="224.0" class="grid"/>
+  <line x1="156.0" y1="224.0" x2="156.0" y2="228.0" class="ax"/>
+  <text x="156.0" y="241.0" class="lbl" text-anchor="middle">20 %</text>
+  <line x1="242.0" y1="36.0" x2="242.0" y2="224.0" class="grid"/>
+  <line x1="242.0" y1="224.0" x2="242.0" y2="228.0" class="ax"/>
+  <text x="242.0" y="241.0" class="lbl" text-anchor="middle">40 %</text>
+  <line x1="328.0" y1="36.0" x2="328.0" y2="224.0" class="grid"/>
+  <line x1="328.0" y1="224.0" x2="328.0" y2="228.0" class="ax"/>
+  <text x="328.0" y="241.0" class="lbl" text-anchor="middle">60 %</text>
+  <line x1="414.0" y1="36.0" x2="414.0" y2="224.0" class="grid"/>
+  <line x1="414.0" y1="224.0" x2="414.0" y2="228.0" class="ax"/>
+  <text x="414.0" y="241.0" class="lbl" text-anchor="middle">80 %</text>
+  <line x1="500.0" y1="36.0" x2="500.0" y2="224.0" class="grid"/>
+  <line x1="500.0" y1="224.0" x2="500.0" y2="228.0" class="ax"/>
+  <text x="500.0" y="241.0" class="lbl" text-anchor="middle">100 %</text>
+  <line x1="70.0" y1="224.0" x2="500.0" y2="224.0" class="grid"/>
+  <line x1="66.0" y1="224.0" x2="70.0" y2="224.0" class="ax"/>
+  <text x="62.0" y="227.6" class="lbl" text-anchor="end">0</text>
+  <line x1="70.0" y1="181.3" x2="500.0" y2="181.3" class="grid"/>
+  <line x1="66.0" y1="181.3" x2="70.0" y2="181.3" class="ax"/>
+  <text x="62.0" y="184.9" class="lbl" text-anchor="end">25×</text>
+  <line x1="70.0" y1="138.5" x2="500.0" y2="138.5" class="grid"/>
+  <line x1="66.0" y1="138.5" x2="70.0" y2="138.5" class="ax"/>
+  <text x="62.0" y="142.1" class="lbl" text-anchor="end">50×</text>
+  <line x1="70.0" y1="95.8" x2="500.0" y2="95.8" class="grid"/>
+  <line x1="66.0" y1="95.8" x2="70.0" y2="95.8" class="ax"/>
+  <text x="62.0" y="99.4" class="lbl" text-anchor="end">75×</text>
+  <line x1="70.0" y1="53.1" x2="500.0" y2="53.1" class="grid"/>
+  <line x1="66.0" y1="53.1" x2="70.0" y2="53.1" class="ax"/>
+  <text x="62.0" y="56.7" class="lbl" text-anchor="end">100×</text>
+  <path d="M70.0 222.3 L81.0 217.9 L92.1 213.5 L103.1 209.1 L114.1 204.8 L125.1 200.4 L136.2 196.0 L147.2 191.6 L158.2 187.2 L169.2 182.9 L180.3 178.5 L191.3 174.1 L202.3 169.7 L213.3 165.3 L224.4 160.9 L235.4 156.6 L246.4 152.2 L257.4 147.8 L268.5 143.4 L279.5 139.0 L290.5 134.6 L301.5 130.3 L312.6 125.9 L323.6 121.5 L334.6 117.1 L345.6 112.7 L356.7 108.4 L367.7 104.0 L378.7 99.6 L389.7 95.2 L400.8 90.8 L411.8 86.4 L422.8 82.1 L433.8 77.7 L444.9 73.3 L455.9 68.9 L466.9 64.5 L477.9 60.1 L489.0 55.8 L500.0 51.4" class="ser" opacity="1.0"/>
+  <text x="506.0" y="55.4" class="lblb" opacity="1.0">E₂ = 100×</text>
+  <path d="M70.0 222.3 L81.0 221.0 L92.1 219.7 L103.1 218.3 L114.1 217.0 L125.1 215.7 L136.2 214.4 L147.2 213.1 L158.2 211.8 L169.2 210.5 L180.3 209.1 L191.3 207.8 L202.3 206.5 L213.3 205.2 L224.4 203.9 L235.4 202.6 L246.4 201.3 L257.4 199.9 L268.5 198.6 L279.5 197.3 L290.5 196.0 L301.5 194.7 L312.6 193.4 L323.6 192.1 L334.6 190.7 L345.6 189.4 L356.7 188.1 L367.7 186.8 L378.7 185.5 L389.7 184.2 L400.8 182.9 L411.8 181.5 L422.8 180.2 L433.8 178.9 L444.9 177.6 L455.9 176.3 L466.9 175.0 L477.9 173.6 L489.0 172.3 L500.0 171.0" class="ser" opacity="0.55"/>
+  <text x="506.0" y="175.0" class="lblb" opacity="0.55">E₂ = 30×</text>
+  <path d="M70.0 222.3 L81.0 221.9 L92.1 221.4 L103.1 221.0 L114.1 220.5 L125.1 220.1 L136.2 219.7 L147.2 219.2 L158.2 218.8 L169.2 218.3 L180.3 217.9 L191.3 217.5 L202.3 217.0 L213.3 216.6 L224.4 216.2 L235.4 215.7 L246.4 215.3 L257.4 214.8 L268.5 214.4 L279.5 214.0 L290.5 213.5 L301.5 213.1 L312.6 212.6 L323.6 212.2 L334.6 211.8 L345.6 211.3 L356.7 210.9 L367.7 210.5 L378.7 210.0 L389.7 209.6 L400.8 209.1 L411.8 208.7 L422.8 208.3 L433.8 207.8 L444.9 207.4 L455.9 207.0 L466.9 206.5 L477.9 206.1 L489.0 205.6 L500.0 205.2" class="ser" opacity="0.4"/>
+  <text x="506.0" y="209.2" class="lblb" opacity="0.4">E₂ = 10×</text>
+  <circle cx="78.6" cy="218.9" r="5.5" class="accf"/>
+  <line x1="78.6" y1="218.9" x2="181.8" y2="145.4" class="acc" stroke-dasharray="3 3"/>
+  <text x="186.1" y="149.4" class="lblb" fill="var(--copper)">p₁ = 2 %  →  total = 3×</text>
+  <text x="285.0" y="260.0" class="lbl" text-anchor="middle">p₁ — share of windows passed to stage 2</text>
+  <text x="26.0" y="130.0" class="lbl" text-anchor="middle" transform="rotate(-90 26.0 130.0)">energy, in units of stage 1</text>
+  <text x="70.0" y="26.0" class="lblb">E[total] = E₁ + p₁·E₂</text>
+  <text x="70.0" y="286.0" class="lblb">Rare invocation makes an expensive stage almost free.</text>
+</svg></div><figcaption><b>Fig 1.8</b>The arithmetic behind the cascade. If the cheap always-on stage passes 2&nbsp;% of windows onward, a second stage that costs 100× as much raises the average bill only to 3× the cheap stage alone. Two design consequences follow, and students routinely get both wrong: the always-on stage should be tuned for <i>recall</i> at a fixed energy — false positives are cheap, missed events are not — and the second stage's own efficiency barely matters until <span class="eqn">p₁</span> gets large.</figcaption></figure>
+
+
+
+
+<h3 id="cases"><span class="sn">1.9</span>Three systems, end to end</h3>
+
+<p>The budgets become concrete only when applied. The three vignettes below are composites of published designs, simplified to show the reasoning; each names the constraint that turned out to bind. You will return to all three in later sessions.</p>
+
+<h4>(a) Keyword spotting on a coin cell</h4>
+<p>A wake-word detector listens continuously for one or a few words. <b>Signal:</b> one MEMS microphone at 16&nbsp;kHz, 16-bit — 32&nbsp;kB/s. <b>Features:</b> 40 ms frames every 20 ms, 10 MFCCs per frame, one second of context: a 49×10 feature matrix (Session 2). <b>Model:</b> a depthwise-separable CNN of the kind introduced by Zhang et al. (2017) — about 39 k parameters, 2.7 million multiply–accumulates (MACs) per inference, 94 % accuracy on the 12-class Speech Commands task. <b>Device:</b> a Cortex-M4F class MCU. <b>What binds:</b> energy. The network itself is cheap (<a class="xref" href="session-4.html#fig-apollo4_case">Fig 4.8</a> in Session 4 estimates ≈ 20 µJ per inference on a modern low-power MCU), but running it continuously, plus the microphone and front end, is not; deployed designs therefore put a voice-activity detector costing microwatts in front of it — a cascade.</p>
+
+<h4>(b) Vibration anomaly detection on a motor</h4>
+<p><b>Signal:</b> a three-axis accelerometer on a motor housing at 1–10&nbsp;kHz. <b>Features:</b> spectral band energies over a one-second window. <b>Model:</b> an autoencoder trained only on healthy-machine data, which flags inputs it reconstructs poorly — anomaly detection, because faults are rare and every machine fails differently. <b>Device:</b> an MCU in a sensor node that wakes every few minutes. <b>What binds:</b> not compute or energy but <i>data</i>: there are no labelled examples of the failure you most care about, and the healthy baseline drifts with load and temperature (Session 4 discusses drift).</p>
+
+<h4>(c) Arrhythmia detection in a wearable</h4>
+<p><b>Signal:</b> single-lead ECG at 250&nbsp;Hz, 12-bit. <b>Features:</b> either hand-designed (R-peak intervals, QRS width) or none — a 1-D CNN on raw samples. <b>Model:</b> a small 1-D CNN or a gradient-boosted tree on interval features. <b>Device:</b> a wearable SoC. <b>What binds:</b> the cost of a wrong answer, and therefore validation: a medical device must document sensitivity and specificity on clinically representative data, which makes the evaluation methodology of Session 3 a regulatory requirement rather than good practice. The data rate is small enough that streaming to a phone is feasible — so the case for on-device inference here rests on battery life (the radio) and privacy, not on bandwidth.</p>
+
+<div class="box">
+<h5>In-class exercise — find the binding budget</h5>
+<p>For each vignette, write down the five budgets of <a class="xref" href="#sec-1-6">§1.6</a> with order-of-magnitude numbers, and circle the one that binds. Then change one thing — a camera instead of a microphone, a mains-powered device instead of a coin cell, a 10× larger dataset — and say which budget binds now.</p>
+</div>
+
+<h3 id="sec-1-10"><span class="sn">1.10</span>A short honest history</h3>
+<p>Signal processing on microcontrollers is decades old; what changed is which functions we are willing to learn rather than design. Three inflection points are worth naming: the arrival of practical mobile-scale CNNs (2016–2017, <a class="xref" href="session-3.html#sec-3-17">Session 3</a>); the arrival of integer-only inference and its toolchain (2017–2018, <a class="xref" href="session-3-compression.html#sec-3-22">Session 3</a>); and the arrival of memory-aware co-design of architecture and runtime for microcontrollers (2020 onwards, <a class="xref" href="session-4.html#sec-4-17">Session 4</a>). Since roughly 2023 a fourth wave has been in progress — transformer and state-space models at the edge, and on-device language models — which <a class="xref" href="session-4.html#sec-4-14">Session 4</a> treats as an open research area rather than settled practice.</p>
+
+
+
+
+<h4>Research directions — where a PhD fits</h4>
+<p>The field is young enough that many basic questions are open. The list below is a map, not a ranking; each item is attached to the session in which its background is taught, and the presentation topics of Session 5 were chosen to touch most of them.</p>
+<ul>
+  <li><b>Learning on the device.</b> Adapting a deployed model to its user, its sensor or its drifting environment within kilobytes of memory and without labels (Session 4; Lin et al. 2022).</li>
+  <li><b>Data efficiency.</b> Self-supervised pre-training, few-shot adaptation and synthetic data for sensing tasks where labelling is expensive (Sessions 2–3).</li>
+  <li><b>Hardware-aware model design.</b> Neural architecture search and compression that optimise measured latency, peak memory and energy on a specific chip rather than proxy counts (Session 3).</li>
+  <li><b>Compilers and runtimes.</b> Memory planning, operator fusion, patch-based execution and code generation for heterogeneous MCU + NPU systems (Session 4).</li>
+  <li><b>Beyond-digital hardware.</b> Analog in-memory computing and neuromorphic processors, and the algorithms that tolerate their noise and constraints (Session 4).</li>
+  <li><b>Intermittent and batteryless computing.</b> Inference on energy-harvesting devices that lose power mid-computation and must checkpoint progress.</li>
+  <li><b>Trustworthiness.</b> Robustness to sensor faults and adversarial inputs, privacy guarantees for federated learning, and the security of model updates in the field.</li>
+  <li><b>Foundation models at the edge.</b> Which parts of large pretrained models can be distilled, quantized or partitioned onto phones, wearables and gateways — and with what loss.</li>
+  <li><b>Measurement science.</b> Benchmarks, energy measurement methodology and reproducibility — the unglamorous foundation every other item depends on.</li>
+</ul>
+
+<div class="takeaway">
+<h5>If you remember one thing from Session 1</h5>
+<p>Write the five budgets down before you write any code. Arithmetic is nearly free; data movement and communication are not. When the numbers do not close, the legitimate moves are cheaper inference, fewer inferences, more energy, or a different specification — never "train a better model".</p>
+</div>
+
+<h5>Before Session 2</h5>
+<ul class="reading">
+  <li>V. Sze, Y.-H. Chen, T.-J. Yang, J. Emer, "Efficient Processing of Deep Neural Networks: A Tutorial and Survey," <i>Proceedings of the IEEE</i> 105(12), 2017. <a href="https://arxiv.org/abs/1703.09039">arXiv:1703.09039</a>.<span class="v">Sections I–III. The field's canonical statement that efficiency is a hardware–algorithm co-design problem; introduces the vocabulary of Session 4.</span></li>
+  <li>P. Warden, "Speech Commands: A Dataset for Limited-Vocabulary Speech Recognition," 2018. <a href="https://arxiv.org/abs/1804.03209">arXiv:1804.03209</a>.<span class="v">Short and readable; how a benchmark dataset for embedded audio was designed and why its choices matter. Background for Session 2.</span></li>
+  <li>Browse the <a href="presentations.html">presentation topics</a> and shortlist two papers.</li>
+</ul>
+
+<h5>Discussion questions</h5>
+<ol class="qs">
+  <li>The "privacy" argument for edge inference is often made loosely. Construct a case where moving inference to the device makes privacy worse.</li>
+  <li><a class="xref" href="#tab-T1-2">Table 1.3</a> (energy per operation) is from a 45&nbsp;nm process. Which of its ratios would you expect to be least stable across process nodes, and why?</li>
+  <li>A vendor advertises "2 TOPS at 1 W". Name four things you must know before that number predicts anything about your application.</li>
+  <li>Pick a sensing problem from your own research. Which of the three fusion strategies would you use, and which budget would bind first?</li>
+</ol>
+
+<h5>Exercises</h5>
+<ol class="qs">
+  <li>A device runs on two AA cells (≈ 2×1.5 V, ≈ 2000 mAh) and must survive three years. Derive the average power ceiling. If a 30 % derate for pulsed load is applied and the standby draw is 40 µW, what energy per inference is admissible at 1 Hz?</li>
+  <li>Explain why peak activation memory, not parameter count, determines whether a CNN fits on an MCU, and describe the shape of the per-layer memory profile that makes this true.</li>
+  <li>A two-stage cascade has E₁ = 50 µJ, E₂ = 5 mJ and a first-stage pass rate of 3 %. Compute the expected energy per window. What pass rate makes the second stage cost as much, on average, as the first?</li>
+  <li>You reduce a model's MACs by 40 % but its measured latency increases. Give two distinct mechanisms that could explain this.</li>
+</ol>
+
+<h5>Further reading</h5>
+<ul class="reading">
+  <li>M. Horowitz, "Computing's Energy Problem (and what we can do about it)," ISSCC 2014.<span class="v">Source of <a class="xref" href="#tab-T1-2">Table 1.3</a>; the whole talk is worth an hour.</span></li>
+  <li>P. Warden and D. Situnayake, <i>TinyML</i>, O'Reilly, 2019.<span class="v">The practitioner's counterpart to this course.</span></li>
+  <li>V. Janapa Reddi et al., <i>Machine Learning Systems</i> (open textbook, mlsysbook.ai).<span class="v">Systems-level framing; good background for Session 4.</span></li>
+  <li>C. Banbury et al., "Benchmarking TinyML Systems: Challenges and Direction," 2020. <a href="https://arxiv.org/abs/2003.04821">arXiv:2003.04821</a>.<span class="v">Why measuring embedded ML is harder than it looks.</span></li>
+</ul>
+</div><nav class="prevnext" aria-label="Previous and next"><a class="prev" href="index.html"><b>← Previous</b><span>Course overview</span></a><a class="next" href="session-2.html"><b>Next →</b><span>Session 2 — Data &amp; features</span></a></nav></main></div><footer class="site"><div class="in"><span>Embedded Machine Learning · PhD course · 2026/27</span><span><a href="credits.html">Credits, licences &amp; image sources</a> · <a href="references.html">References</a></span><span>Figures are original unless credited. Text and figures may be reused for teaching with attribution.</span></div></footer><script src="assets/js/site.js" defer></script></body></html>
