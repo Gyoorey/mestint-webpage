@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="A two-by-two confusion matrix for an event detector evaluated on one thousand windows containing fifty events: forty true positives, ten false negatives, sixty false positives and eight hundred and ninety true negatives, with precision, recall, accuracy and F1 computed alongside"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <text x="240.0" y="30.0" class="lblb" text-anchor="middle">predicted</text>
+  <text x="185.0" y="50.0" class="lbl" text-anchor="middle">event</text>
+  <text x="295.0" y="50.0" class="lbl" text-anchor="middle">no event</text>
+  <text x="40" y="170.0" class="lblb" text-anchor="middle" transform="rotate(-90 40 170.0)">actual</text>
+  <text x="122.0" y="119.0" class="lbl" text-anchor="end">event</text>
+  <text x="122.0" y="229.0" class="lbl" text-anchor="end">no event</text>
+  <rect x="130.0" y="60.0" width="110.0" height="110.0" class="tlf" opacity="0.18"/>
+  <rect x="130.0" y="60.0" width="110.0" height="110.0" class="ax" fill="none"/>
+  <text x="185.0" y="104.0" class="lblb" text-anchor="middle" font-size="26">40</text>
+  <text x="185.0" y="130.0" class="lblb" text-anchor="middle">TP</text>
+  <text x="185.0" y="148.0" class="lbl" text-anchor="middle">true positive</text>
+  <rect x="240.0" y="60.0" width="110.0" height="110.0" class="accf" opacity="0.18"/>
+  <rect x="240.0" y="60.0" width="110.0" height="110.0" class="ax" fill="none"/>
+  <text x="295.0" y="104.0" class="lblb" text-anchor="middle" font-size="26">10</text>
+  <text x="295.0" y="130.0" class="lblb" text-anchor="middle">FN</text>
+  <text x="295.0" y="148.0" class="lbl" text-anchor="middle">missed event</text>
+  <rect x="130.0" y="170.0" width="110.0" height="110.0" class="accf" opacity="0.18"/>
+  <rect x="130.0" y="170.0" width="110.0" height="110.0" class="ax" fill="none"/>
+  <text x="185.0" y="214.0" class="lblb" text-anchor="middle" font-size="26">60</text>
+  <text x="185.0" y="240.0" class="lblb" text-anchor="middle">FP</text>
+  <text x="185.0" y="258.0" class="lbl" text-anchor="middle">false alarm</text>
+  <rect x="240.0" y="170.0" width="110.0" height="110.0" class="tlf" opacity="0.18"/>
+  <rect x="240.0" y="170.0" width="110.0" height="110.0" class="ax" fill="none"/>
+  <text x="295.0" y="214.0" class="lblb" text-anchor="middle" font-size="26">890</text>
+  <text x="295.0" y="240.0" class="lblb" text-anchor="middle">TN</text>
+  <text x="295.0" y="258.0" class="lbl" text-anchor="middle">true negative</text>
+  <text x="400.0" y="74.0" class="lblb">recall (sensitivity)</text>
+  <text x="400.0" y="89.0" class="lbl">TP / (TP + FN)</text>
+  <text x="706.0" y="81.0" class="lbl" text-anchor="end">40 / 50 = 0.80</text>
+  <text x="400.0" y="108.0" class="lblb">precision</text>
+  <text x="400.0" y="123.0" class="lbl">TP / (TP + FP)</text>
+  <text x="706.0" y="115.0" class="lbl" text-anchor="end">40 / 100 = 0.40</text>
+  <text x="400.0" y="142.0" class="lblb">F1</text>
+  <text x="400.0" y="157.0" class="lbl">2PR / (P + R)</text>
+  <text x="706.0" y="149.0" class="lbl" text-anchor="end">0.53</text>
+  <text x="400.0" y="176.0" class="lblb">specificity</text>
+  <text x="400.0" y="191.0" class="lbl">TN / (TN + FP)</text>
+  <text x="706.0" y="183.0" class="lbl" text-anchor="end">890 / 950 = 0.94</text>
+  <text x="400.0" y="210.0" class="lblb">accuracy</text>
+  <text x="400.0" y="225.0" class="lbl">(TP + TN) / all</text>
+  <text x="706.0" y="217.0" class="lbl" text-anchor="end">930 / 1000 = 0.93</text>
+  <line x1="400.0" y1="252.0" x2="706.0" y2="252.0" class="grid"/>
+  <text x="400.0" y="268.0" class="lbl">A detector that always says "no event" scores</text>
+  <text x="400.0" y="283.0" class="lbl accf">accuracy 0.95 — better than this one, and useless.</text>
+</svg>

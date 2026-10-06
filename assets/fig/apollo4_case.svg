@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" role="img" aria-label="Case study: a keyword-spotting DS-CNN on an Ambiq Apollo4 Plus class microcontroller. Bars compare the 2 MB MRAM and 2.75 MB SRAM of the device with the 38.6 kB of weights and an estimated 16 kB of peak activations of the model, and a worked energy estimate per inference is shown"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <text x="14.0" y="22.0" class="lblb">Memory: the model is tiny compared with this device</text>
+  <line x1="180.0" y1="34.0" x2="180.0" y2="150.0" class="grid"/>
+  <text x="180.0" y="164.0" class="lbl" text-anchor="middle">1 kB</text>
+  <line x1="252.2" y1="34.0" x2="252.2" y2="150.0" class="grid"/>
+  <text x="252.2" y="164.0" class="lbl" text-anchor="middle">10 kB</text>
+  <line x1="324.4" y1="34.0" x2="324.4" y2="150.0" class="grid"/>
+  <text x="324.4" y="164.0" class="lbl" text-anchor="middle">100 kB</text>
+  <line x1="396.5" y1="34.0" x2="396.5" y2="150.0" class="grid"/>
+  <text x="396.5" y="164.0" class="lbl" text-anchor="middle">1 MB</text>
+  <rect x="180.0" y="40.0" width="239.0" height="18.0" class="fillsoft"/>
+  <text x="174.0" y="53.0" class="lbl" text-anchor="end">MRAM (non-volatile)</text>
+  <text x="425.0" y="53.0" class="lbl">2 MB</text>
+  <rect x="180.0" y="67.0" width="114.5" height="18.0" class="tlf"/>
+  <text x="174.0" y="80.0" class="lbl" text-anchor="end">DS-CNN weights, int8</text>
+  <text x="300.5" y="80.0" class="lbl">38.6 kB</text>
+  <rect x="180.0" y="94.0" width="249.0" height="18.0" class="fillsoft"/>
+  <text x="174.0" y="107.0" class="lbl" text-anchor="end">SRAM</text>
+  <text x="435.0" y="107.0" class="lbl">2.75 MB</text>
+  <rect x="180.0" y="121.0" width="86.9" height="18.0" class="accf"/>
+  <text x="174.0" y="134.0" class="lbl" text-anchor="end">peak activations (est.)</text>
+  <text x="272.9" y="134.0" class="lbl">≈16 kB</text>
+  <text x="14.0" y="196.0" class="lblb">Energy per inference: a worked estimate (assumptions stated)</text>
+  <text x="20.0" y="216.0" class="lbl accf">work</text>
+  <text x="110.0" y="216.0" class="lbl">≈ 2.7 M MACs per inference (5.4 M ops, Zhang et al. 2017)</text>
+  <text x="20.0" y="232.0" class="lbl accf">throughput</text>
+  <text x="110.0" y="232.0" class="lbl">assume ≈ 1 MAC per cycle sustained with SIMD (int8)</text>
+  <text x="20.0" y="248.0" class="lbl accf">time</text>
+  <text x="110.0" y="248.0" class="lbl">2.7 M cycles ÷ 192 MHz ≈ 14 ms</text>
+  <text x="20.0" y="264.0" class="lbl accf">current</text>
+  <text x="110.0" y="264.0" class="lbl">4 µA/MHz × 192 MHz ≈ 0.77 mA (vendor "as low as" figure)</text>
+  <text x="20.0" y="280.0" class="lbl accf">charge</text>
+  <text x="110.0" y="280.0" class="lbl">0.77 mA × 14 ms ≈ 11 µC</text>
+  <text x="20.0" y="296.0" class="lbl accf">energy</text>
+  <text x="110.0" y="296.0" class="lbl">× ≈1.8 V supply ≈ 20 µJ per inference, core only</text>
+  <text x="518.0" y="64.0" class="lblb">What the estimate leaves out</text>
+  <text x="524.0" y="84.0" class="lbl">· MFCC front end</text>
+  <text x="524.0" y="100.0" class="lbl">· microphone, PDM interface</text>
+  <text x="524.0" y="116.0" class="lbl">· SRAM retention in sleep</text>
+  <text x="524.0" y="132.0" class="lbl">· radio, if results are sent</text>
+  <text x="524.0" y="148.0" class="lbl">· measured kernel efficiency</text>
+  <text x="518.0" y="200.0" class="lblb">At one inference per second:</text>
+  <text x="524.0" y="218.0" class="lbl">20 µJ × 1 Hz = 20 µW</text>
+  <text x="524.0" y="234.0" class="lbl">a quarter of the coin</text>
+  <text x="524.0" y="250.0" class="lbl">cell budget (Session 1)</text>
+</svg>

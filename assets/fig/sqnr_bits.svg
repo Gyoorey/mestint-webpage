@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-label="Signal to quantization noise ratio rising about six decibels per bit, with a marker showing a sixteen-bit converter that delivers only eleven effective bits"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="62.0" y1="214.0" x2="470.0" y2="214.0" class="ax"/>
+  <line x1="62.0" y1="34.0" x2="62.0" y2="214.0" class="ax"/>
+  <line x1="62.0" y1="34.0" x2="62.0" y2="214.0" class="grid"/>
+  <line x1="62.0" y1="214.0" x2="62.0" y2="218.0" class="ax"/>
+  <text x="62.0" y="231.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="124.8" y1="34.0" x2="124.8" y2="214.0" class="grid"/>
+  <line x1="124.8" y1="214.0" x2="124.8" y2="218.0" class="ax"/>
+  <text x="124.8" y="231.0" class="lbl" text-anchor="middle">4</text>
+  <line x1="187.5" y1="34.0" x2="187.5" y2="214.0" class="grid"/>
+  <line x1="187.5" y1="214.0" x2="187.5" y2="218.0" class="ax"/>
+  <text x="187.5" y="231.0" class="lbl" text-anchor="middle">8</text>
+  <line x1="250.3" y1="34.0" x2="250.3" y2="214.0" class="grid"/>
+  <line x1="250.3" y1="214.0" x2="250.3" y2="218.0" class="ax"/>
+  <text x="250.3" y="231.0" class="lbl" text-anchor="middle">12</text>
+  <line x1="313.1" y1="34.0" x2="313.1" y2="214.0" class="grid"/>
+  <line x1="313.1" y1="214.0" x2="313.1" y2="218.0" class="ax"/>
+  <text x="313.1" y="231.0" class="lbl" text-anchor="middle">16</text>
+  <line x1="375.8" y1="34.0" x2="375.8" y2="214.0" class="grid"/>
+  <line x1="375.8" y1="214.0" x2="375.8" y2="218.0" class="ax"/>
+  <text x="375.8" y="231.0" class="lbl" text-anchor="middle">20</text>
+  <line x1="438.6" y1="34.0" x2="438.6" y2="214.0" class="grid"/>
+  <line x1="438.6" y1="214.0" x2="438.6" y2="218.0" class="ax"/>
+  <text x="438.6" y="231.0" class="lbl" text-anchor="middle">24</text>
+  <line x1="62.0" y1="214.0" x2="470.0" y2="214.0" class="grid"/>
+  <line x1="58.0" y1="214.0" x2="62.0" y2="214.0" class="ax"/>
+  <text x="54.0" y="217.6" class="lbl" text-anchor="end">0</text>
+  <line x1="62.0" y1="170.4" x2="470.0" y2="170.4" class="grid"/>
+  <line x1="58.0" y1="170.4" x2="62.0" y2="170.4" class="ax"/>
+  <text x="54.0" y="174.0" class="lbl" text-anchor="end">40</text>
+  <line x1="62.0" y1="126.7" x2="470.0" y2="126.7" class="grid"/>
+  <line x1="58.0" y1="126.7" x2="62.0" y2="126.7" class="ax"/>
+  <text x="54.0" y="130.3" class="lbl" text-anchor="end">80</text>
+  <line x1="62.0" y1="83.1" x2="470.0" y2="83.1" class="grid"/>
+  <line x1="58.0" y1="83.1" x2="62.0" y2="83.1" class="ax"/>
+  <text x="54.0" y="86.7" class="lbl" text-anchor="end">120</text>
+  <line x1="62.0" y1="39.5" x2="470.0" y2="39.5" class="grid"/>
+  <line x1="58.0" y1="39.5" x2="62.0" y2="39.5" class="ax"/>
+  <text x="54.0" y="43.1" class="lbl" text-anchor="end">160</text>
+  <path d="M62.0 212.1 L454.3 47.9" class="ser" stroke-width="2.2"/>
+  <circle cx="187.5" cy="159.5" r="4.2" fill="currentColor"/>
+  <text x="196.5" y="154.5" class="lbl">int8 · 50 dB</text>
+  <circle cx="250.3" cy="133.3" r="4.2" fill="currentColor"/>
+  <text x="259.3" y="128.3" class="lbl">12-bit · 74 dB</text>
+  <circle cx="313.1" cy="107.0" r="4.2" fill="currentColor"/>
+  <text x="322.1" y="102.0" class="lbl">16-bit · 98 dB</text>
+  <circle cx="438.6" cy="54.5" r="4.2" fill="currentColor"/>
+  <text x="447.6" y="49.5" class="lbl">24-bit · 146 dB</text>
+  <line x1="313.1" y1="107.0" x2="234.6" y2="139.8" class="acc" stroke-dasharray="4 3"/>
+  <circle cx="234.6" cy="139.8" r="6.0" class="accf"/>
+  <text x="478.0" y="96.0" class="lblb" fill="var(--copper)">a “16-bit” ADC on a</text>
+  <text x="478.0" y="112.0" class="lblb" fill="var(--copper)">noisy board often</text>
+  <text x="478.0" y="128.0" class="lblb" fill="var(--copper)">measures 11 ENOB</text>
+  <text x="478.0" y="152.0" class="lbl">→ 30 dB gone before</text>
+  <text x="478.0" y="166.0" class="lbl">the model sees anything</text>
+  <text x="266.0" y="250.0" class="lbl" text-anchor="middle">nominal bits, N</text>
+  <text x="20.0" y="124.0" class="lbl" text-anchor="middle" transform="rotate(-90 20.0 124.0)">SQNR (dB)</text>
+  <text x="62.0" y="24.0" class="lblb">SQNR = 6.02 N + 1.76 dB</text>
+  <text x="62.0" y="266.0" class="lbl">Six decibels per bit — and six decibels of unused headroom throws one away.</text>
+</svg>

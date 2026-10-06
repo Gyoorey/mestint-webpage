@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Four bars showing how depth, width and resolution each affect cost: depth scales cost linearly while width and resolution scale it quadratically, which is why the compound-scaling constraint fixes their product"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <text x="34.0" y="30.0" class="lblb">cost of scaling one dimension by a factor φ</text>
+  <text x="34.0" y="72.0" class="lblb">depth  d = α^φ</text>
+  <text x="190.0" y="72.0" class="lbl" fill="var(--teal)">linear in φ</text>
+  <rect x="276.0" y="58.0" width="121.5" height="22.0" class="tlf" opacity="0.55"/>
+  <text x="405.5" y="74.0" class="lbl">each extra layer adds its own MACs</text>
+  <text x="34.0" y="126.0" class="lblb">width  w = β^φ</text>
+  <text x="190.0" y="126.0" class="lbl" fill="var(--copper)">quadratic</text>
+  <rect x="276.0" y="112.0" width="243.0" height="22.0" class="accf" opacity="0.55"/>
+  <text x="527.0" y="128.0" class="lbl">C_in and C_out both grow</text>
+  <text x="34.0" y="180.0" class="lblb">resolution r = γ^φ</text>
+  <text x="190.0" y="180.0" class="lbl" fill="var(--copper)">quadratic</text>
+  <rect x="276.0" y="166.0" width="243.0" height="22.0" class="accf" opacity="0.55"/>
+  <text x="527.0" y="182.0" class="lbl">H and W both grow</text>
+  <line x1="34.0" y1="224.0" x2="686.0" y2="224.0" class="grid"/>
+  <text x="34.0" y="250.0" class="lblb" fill="var(--copper)">α · β² · γ² ≈ 2</text>
+  <text x="34.0" y="272.0" class="lbl">One unit of φ therefore doubles the FLOPs, whichever mix of the three you choose.</text>
+  <text x="34.0" y="292.0" class="lblb">Note what is being held constant: FLOPs — not SRAM. Raising resolution is far more expensive on an MCU.</text>
+</svg>

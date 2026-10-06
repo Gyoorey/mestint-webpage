@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Two memory hierarchies side by side: an application CPU with registers, L1, L2, L3 and DRAM, and a microcontroller with registers, tightly-coupled memory, SRAM and flash, each annotated with capacity and relative access cost"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <text x="8" y="18" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">application CPU — hardware-managed hierarchy</text>
+    <g stroke="currentColor" stroke-width="1.2" fill="none">
+      <rect x="86" y="30" width="140" height="30"/><rect x="66" y="66" width="180" height="30"/>
+      <rect x="46" y="102" width="220" height="30"/><rect x="26" y="138" width="260" height="30"/>
+      <rect x="8" y="174" width="296" height="34"/>
+    </g>
+    <g text-anchor="middle" font-weight="600">
+      <text x="156" y="50">registers · ~1 kB</text><text x="156" y="86">L1 · 32–64 kB</text>
+      <text x="156" y="122">L2 · 256 kB–2 MB</text><text x="156" y="158">L3 · 8–64 MB</text>
+      <text x="156" y="196">DRAM · GB</text>
+    </g>
+    <g font-family="IBM Plex Mono, monospace" font-size="10.5" class="accf" text-anchor="start">
+      <text x="234" y="50">~0 cyc</text><text x="254" y="86">~4 cyc</text>
+      <text x="274" y="122">~12 cyc</text><text x="294" y="158">~40 cyc</text>
+      <text x="312" y="196">~200 cyc</text>
+    </g>
+    <text x="156" y="230" text-anchor="middle" font-family="IBM Plex Mono, monospace" opacity="0.78" font-size="10.87">you tune by <tspan font-weight="600">hinting</tspan>: blocking, prefetch, layout</text>
+
+    <line x1="368" y1="24" x2="368" y2="272" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+
+    <text x="392" y="18" font-family="IBM Plex Mono, monospace" opacity="0.78" font-size="10.76">Cortex-M class MCU — software-managed, mostly flat</text>
+    <g stroke="currentColor" stroke-width="1.2" fill="none">
+      <rect x="470" y="30" width="140" height="30"/><rect x="450" y="66" width="180" height="30"/>
+      <rect x="420" y="102" width="240" height="42"/><rect x="396" y="150" width="288" height="42"/>
+    </g>
+    <g text-anchor="middle" font-weight="600">
+      <text x="540" y="50">registers · 16×32-bit</text><text x="540" y="86">TCM · 16–128 kB</text>
+      <text x="540" y="122">SRAM · 32 kB–1 MB</text><text x="540.0" y="142.0" font-size="10.5" font-weight="400" opacity="0.75">activations, arena, stack</text>
+      <text x="540" y="170">FLASH · 128 kB–8 MB</text><text x="540.0" y="190.0" font-size="10.5" font-weight="400" opacity="0.75">weights, code — wait states on access</text>
+    </g>
+    <g font-family="IBM Plex Mono, monospace" font-size="10.5" class="accf">
+      <text x="618" y="50">0 cyc</text><text x="638" y="86">1 cyc</text>
+      <text x="668" y="126">1–3 cyc</text><text x="616" y="206">3–8 cyc, XIP</text>
+    </g>
+    <text x="540" y="240" text-anchor="middle" font-family="IBM Plex Mono, monospace" opacity="0.78" font-size="10.9">you tune by <tspan font-weight="600">placing</tspan>: which array lives in which memory</text>
+    <text x="360" y="286" text-anchor="middle" font-family="IBM Plex Sans Condensed, sans-serif" font-size="12.5" font-weight="600">Same principle — keep operands close — but on an MCU it is an explicit linker-script decision, not a cache heuristic.</text>
+  </g>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-label="Sixteen weight values mapped onto four shared cluster centroids, with a codebook of four floats and two-bit indices replacing sixteen full-precision numbers"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="56.0" y1="94.1" x2="660.0" y2="94.1" class="ax"/>
+  <circle cx="108.2" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="108.2" y1="94.1" x2="138.4" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="143.9" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="143.9" y1="94.1" x2="138.4" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="160.3" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="160.3" y1="94.1" x2="138.4" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="272.9" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="272.9" y1="94.1" x2="283.9" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="281.1" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="281.1" y1="94.1" x2="283.9" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="297.6" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="297.6" y1="94.1" x2="283.9" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="371.7" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="371.7" y1="94.1" x2="385.5" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="382.7" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="382.7" y1="94.1" x2="385.5" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="388.2" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="388.2" y1="94.1" x2="385.5" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="396.4" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="396.4" y1="94.1" x2="385.5" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="500.8" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="500.8" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="509.0" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="509.0" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="525.5" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="525.5" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="599.6" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="599.6" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="613.3" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="613.3" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="624.3" cy="94.1" r="4.0" fill="currentColor" opacity="0.5"/>
+  <line x1="624.3" y1="94.1" x2="561.2" y2="62.3" class="grid" opacity="0.6"/>
+  <circle cx="138.4" cy="62.3" r="7.0" class="accf"/>
+  <text x="138.4" y="48.3" class="lblb" text-anchor="middle" fill="var(--copper)">c0 = -0.80</text>
+  <circle cx="283.9" cy="62.3" r="7.0" class="tlf"/>
+  <text x="283.9" y="48.3" class="lblb" text-anchor="middle" fill="var(--teal)">c1 = -0.27</text>
+  <circle cx="385.5" cy="62.3" r="7.0" class="accf"/>
+  <text x="385.5" y="48.3" class="lblb" text-anchor="middle" fill="var(--copper)">c2 = +0.10</text>
+  <circle cx="561.2" cy="62.3" r="7.0" class="tlf"/>
+  <text x="561.2" y="48.3" class="lblb" text-anchor="middle" fill="var(--teal)">c3 = +0.74</text>
+  <text x="56.0" y="34.0" class="lbl">4 centroids  (the codebook)</text>
+  <text x="56.0" y="136.0" class="lbl">16 original float32 weights</text>
+  <text x="56.0" y="176.0" class="lblb">before:  16 × 32 bits = 512 bits</text>
+  <text x="56.0" y="198.0" class="lblb" fill="var(--copper)">after:   16 × 2 bits + 4 × 32 bits = 160 bits</text>
+  <text x="56.0" y="220.0" class="lbl">→ 3.2× smaller in flash</text>
+  <text x="392.0" y="176.0" class="lbl">But at inference the indices must be</text>
+  <text x="392.0" y="194.0" class="lbl">decoded back to values before the</text>
+  <text x="392.0" y="212.0" class="lbl">multiply. Storage compression is not</text>
+  <text x="392.0" y="230.0" class="lblb" fill="var(--copper)">runtime compression.</text>
+  <text x="56.0" y="262.0" class="lbl">Gradients of all weights sharing a centroid are summed to update that centroid during fine-tuning.</text>
+</svg>

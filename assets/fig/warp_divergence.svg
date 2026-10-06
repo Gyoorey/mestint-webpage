@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-label="A timeline of one 32-thread warp meeting a data-dependent branch: the two sides of the branch execute one after the other with the inactive lanes masked off, so the divergent region takes twice as long"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <defs><marker id="arG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+  <text x="36.0" y="30.0" class="lblb">one warp · 8 lanes shown of 32</text>
+  <text x="30.0" y="57.0" class="lbl" text-anchor="end">t0</text>
+  <rect x="120.0" y="48.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <rect x="270.0" y="48.0" width="106.0" height="12.0" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.12"/>
+  <rect x="380.0" y="48.0" width="106.0" height="12.0" class="accf" stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
+  <rect x="490.0" y="48.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <text x="30.0" y="73.0" class="lbl" text-anchor="end">t1</text>
+  <rect x="120.0" y="64.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <rect x="270.0" y="64.0" width="106.0" height="12.0" class="accf" stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
+  <rect x="380.0" y="64.0" width="106.0" height="12.0" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.12"/>
+  <rect x="490.0" y="64.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <text x="30.0" y="89.0" class="lbl" text-anchor="end">t2</text>
+  <rect x="120.0" y="80.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <rect x="270.0" y="80.0" width="106.0" height="12.0" class="accf" stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
+  <rect x="380.0" y="80.0" width="106.0" height="12.0" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.12"/>
+  <rect x="490.0" y="80.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <text x="30.0" y="105.0" class="lbl" text-anchor="end">t3</text>
+  <rect x="120.0" y="96.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <rect x="270.0" y="96.0" width="106.0" height="12.0" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.12"/>
+  <rect x="380.0" y="96.0" width="106.0" height="12.0" class="accf" stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
+  <rect x="490.0" y="96.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <text x="30.0" y="121.0" class="lbl" text-anchor="end">t4</text>
+  <rect x="120.0" y="112.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <rect x="270.0" y="112.0" width="106.0" height="12.0" class="accf" stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
+  <rect x="380.0" y="112.0" width="106.0" height="12.0" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.12"/>
+  <rect x="490.0" y="112.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <text x="30.0" y="137.0" class="lbl" text-anchor="end">t5</text>
+  <rect x="120.0" y="128.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <rect x="270.0" y="128.0" width="106.0" height="12.0" class="accf" stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
+  <rect x="380.0" y="128.0" width="106.0" height="12.0" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.12"/>
+  <rect x="490.0" y="128.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <text x="30.0" y="153.0" class="lbl" text-anchor="end">t6</text>
+  <rect x="120.0" y="144.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <rect x="270.0" y="144.0" width="106.0" height="12.0" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.12"/>
+  <rect x="380.0" y="144.0" width="106.0" height="12.0" class="accf" stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
+  <rect x="490.0" y="144.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <text x="30.0" y="169.0" class="lbl" text-anchor="end">t7</text>
+  <rect x="120.0" y="160.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <rect x="270.0" y="160.0" width="106.0" height="12.0" class="accf" stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
+  <rect x="380.0" y="160.0" width="106.0" height="12.0" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.12"/>
+  <rect x="490.0" y="160.0" width="146.0" height="12.0" fill="currentColor" stroke="currentColor" stroke-width="0.7" opacity="0.3"/>
+  <text x="193.0" y="40.0" class="lbl" text-anchor="middle">uniform code</text>
+  <text x="323.0" y="40.0" class="lbl" text-anchor="middle">if-branch</text>
+  <text x="433.0" y="40.0" class="lbl" text-anchor="middle">else-branch</text>
+  <text x="563.0" y="40.0" class="lbl" text-anchor="middle">reconverged</text>
+  <line x1="270.0" y1="182.0" x2="486.0" y2="182.0" class="acc" stroke-width="2"/>
+  <text x="378.0" y="198.0" class="lblb" text-anchor="middle" fill="var(--copper)">divergent region — both paths run, lanes masked</text>
+  <text x="36.0" y="228.0" class="lbl">Faint cells are lanes that are switched off but still occupy their slot in time.</text>
+  <text x="36.0" y="248.0" class="lbl">This is why unstructured sparsity, early exits and any data-dependent branch are expensive on a GPU —</text>
+  <text x="36.0" y="264.0" class="lbl">and why N:M sparsity, whose pattern is fixed at compile time, is not.</text>
+</svg>

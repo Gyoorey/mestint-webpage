@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-label="Comparison of a classical residual bottleneck, which narrows then widens with the skip connecting wide tensors, and an inverted residual, which widens then narrows with the skip connecting narrow tensors, annotated with the tensors that must stay live in memory"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <defs>
+    <marker id="ar12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="11.5" fill="currentColor">
+    <text x="150" y="18" text-anchor="middle" font-weight="600">Classical residual bottleneck</text>
+    <g fill="currentColor" opacity="0.32">
+      <rect x="60" y="40" width="180" height="26"/>
+      <rect x="105" y="86" width="90" height="26"/>
+      <rect x="105" y="132" width="90" height="26"/>
+      <rect x="60" y="178" width="180" height="26"/>
+    </g>
+    <g text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5">
+      <text x="150" y="57">wide · 256 ch</text><text x="150" y="103">1×1 reduce · 64</text>
+      <text x="150" y="149">3×3 · 64</text><text x="150" y="195">1×1 expand · 256</text>
+    </g>
+    <path d="M46 53 L28 53 L28 191 L46 191" fill="none" class="acc" stroke-width="1.6" marker-end="url(#ar12)"/>
+    <text x="150" y="228" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" class="accf">the skip holds a <tspan font-weight="600">wide</tspan> tensor live</text>
+    <text x="150" y="246" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.78">peak memory ∝ 256 channels</text>
+
+    <line x1="360" y1="14" x2="360" y2="262" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+
+    <text x="540" y="18" text-anchor="middle" font-weight="600">Inverted residual, linear bottleneck</text>
+    <g fill="currentColor" opacity="0.32">
+      <rect x="495" y="40" width="90" height="26"/>
+      <rect x="450" y="86" width="180" height="26"/>
+      <rect x="450" y="132" width="180" height="26"/>
+      <rect x="495" y="178" width="90" height="26"/>
+    </g>
+    <g text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5">
+      <text x="540" y="57">narrow · 24 ch</text><text x="540" y="103">1×1 expand · 144</text>
+      <text x="540" y="149">3×3 depthwise · 144</text><text x="540" y="195">1×1 project · 24 (linear)</text>
+    </g>
+    <path d="M436 53 L418 53 L418 191 L436 191" fill="none" class="tl" stroke-width="1.6" marker-end="url(#ar12)"/>
+    <text x="540" y="228" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" class="tlf">the skip holds a <tspan font-weight="600">narrow</tspan> tensor live</text>
+    <text x="540" y="246" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.78">peak memory ∝ 24 channels; the wide tensor is transient</text>
+    <text x="360" y="272" text-anchor="middle" font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" font-weight="600">Inversion is a memory argument, not an accuracy argument.</text>
+  </g>
+</svg>

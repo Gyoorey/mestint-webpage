@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Four accelerator dataflows drawn as a processing-element array with different quantities held stationary: weight stationary, output stationary, no local reuse and row stationary"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <defs><marker id="arG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+  <text x="24.0" y="30.0" class="lblb" fill="var(--copper)">weight-stationary</text>
+  <rect x="24.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="37.0" y="62.0" class="lbl" text-anchor="middle" fill="var(--copper)">W</text>
+  <rect x="56.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="69.0" y="62.0" class="lbl" text-anchor="middle" fill="var(--copper)">W</text>
+  <rect x="88.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="101.0" y="62.0" class="lbl" text-anchor="middle" fill="var(--copper)">W</text>
+  <rect x="24.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="37.0" y="94.0" class="lbl" text-anchor="middle" fill="var(--copper)">W</text>
+  <rect x="56.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="69.0" y="94.0" class="lbl" text-anchor="middle" fill="var(--copper)">W</text>
+  <rect x="88.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="101.0" y="94.0" class="lbl" text-anchor="middle" fill="var(--copper)">W</text>
+  <rect x="24.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="37.0" y="126.0" class="lbl" text-anchor="middle" fill="var(--copper)">W</text>
+  <rect x="56.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="69.0" y="126.0" class="lbl" text-anchor="middle" fill="var(--copper)">W</text>
+  <rect x="88.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="101.0" y="126.0" class="lbl" text-anchor="middle" fill="var(--copper)">W</text>
+  <line x1="12.0" y1="57.0" x2="22.0" y2="57.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="12.0" y1="89.0" x2="22.0" y2="89.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="12.0" y1="121.0" x2="22.0" y2="121.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="69.0" y1="146.0" x2="69.0" y2="158.0" class="ax" marker-end="url(#arG)"/>
+  <text x="24.0" y="180.0" class="lbl">· weights pinned in PEs</text>
+  <text x="24.0" y="196.0" class="lbl">· activations stream</text>
+  <text x="24.0" y="212.0" class="lbl">· partial sums move</text>
+  <text x="198.0" y="30.0" class="lblb" fill="var(--teal)">output-stationary</text>
+  <rect x="198.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="211.0" y="62.0" class="lbl" text-anchor="middle" fill="var(--teal)">Σ</text>
+  <rect x="230.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="243.0" y="62.0" class="lbl" text-anchor="middle" fill="var(--teal)">Σ</text>
+  <rect x="262.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="275.0" y="62.0" class="lbl" text-anchor="middle" fill="var(--teal)">Σ</text>
+  <rect x="198.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="211.0" y="94.0" class="lbl" text-anchor="middle" fill="var(--teal)">Σ</text>
+  <rect x="230.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="243.0" y="94.0" class="lbl" text-anchor="middle" fill="var(--teal)">Σ</text>
+  <rect x="262.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="275.0" y="94.0" class="lbl" text-anchor="middle" fill="var(--teal)">Σ</text>
+  <rect x="198.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="211.0" y="126.0" class="lbl" text-anchor="middle" fill="var(--teal)">Σ</text>
+  <rect x="230.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="243.0" y="126.0" class="lbl" text-anchor="middle" fill="var(--teal)">Σ</text>
+  <rect x="262.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="275.0" y="126.0" class="lbl" text-anchor="middle" fill="var(--teal)">Σ</text>
+  <line x1="186.0" y1="57.0" x2="196.0" y2="57.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="186.0" y1="89.0" x2="196.0" y2="89.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="186.0" y1="121.0" x2="196.0" y2="121.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="243.0" y1="146.0" x2="243.0" y2="158.0" class="ax" marker-end="url(#arG)"/>
+  <text x="198.0" y="180.0" class="lbl">· accumulator pinned</text>
+  <text x="198.0" y="196.0" class="lbl">· weights + acts stream</text>
+  <text x="198.0" y="212.0" class="lbl">· no psum traffic</text>
+  <text x="372.0" y="30.0" class="lblb">no local reuse</text>
+  <rect x="372.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <rect x="404.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <rect x="436.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <rect x="372.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <rect x="404.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <rect x="436.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <rect x="372.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <rect x="404.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <rect x="436.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <line x1="360.0" y1="57.0" x2="370.0" y2="57.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="360.0" y1="89.0" x2="370.0" y2="89.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="360.0" y1="121.0" x2="370.0" y2="121.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="417.0" y1="146.0" x2="417.0" y2="158.0" class="ax" marker-end="url(#arG)"/>
+  <text x="372.0" y="180.0" class="lbl">· nothing pinned</text>
+  <text x="372.0" y="196.0" class="lbl">· big shared buffer</text>
+  <text x="372.0" y="212.0" class="lbl">· highest energy/op</text>
+  <text x="546.0" y="30.0" class="lblb" fill="var(--copper)">row-stationary</text>
+  <rect x="546.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="559.0" y="62.0" class="lbl" text-anchor="middle" fill="var(--copper)">R</text>
+  <rect x="578.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="591.0" y="62.0" class="lbl" text-anchor="middle" fill="var(--copper)">R</text>
+  <rect x="610.0" y="44.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="623.0" y="62.0" class="lbl" text-anchor="middle" fill="var(--copper)">R</text>
+  <rect x="546.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="559.0" y="94.0" class="lbl" text-anchor="middle" fill="var(--copper)">R</text>
+  <rect x="578.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="591.0" y="94.0" class="lbl" text-anchor="middle" fill="var(--copper)">R</text>
+  <rect x="610.0" y="76.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="623.0" y="94.0" class="lbl" text-anchor="middle" fill="var(--copper)">R</text>
+  <rect x="546.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="559.0" y="126.0" class="lbl" text-anchor="middle" fill="var(--copper)">R</text>
+  <rect x="578.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="591.0" y="126.0" class="lbl" text-anchor="middle" fill="var(--copper)">R</text>
+  <rect x="610.0" y="108.0" width="26.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text x="623.0" y="126.0" class="lbl" text-anchor="middle" fill="var(--copper)">R</text>
+  <line x1="534.0" y1="57.0" x2="544.0" y2="57.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="534.0" y1="89.0" x2="544.0" y2="89.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="534.0" y1="121.0" x2="544.0" y2="121.0" class="ax" marker-end="url(#arG)"/>
+  <line x1="591.0" y1="146.0" x2="591.0" y2="158.0" class="ax" marker-end="url(#arG)"/>
+  <text x="546.0" y="180.0" class="lbl">· a filter row + input row</text>
+  <text x="546.0" y="196.0" class="lbl">· captures all three reuses</text>
+  <text x="546.0" y="212.0" class="lbl">· complex mapping</text>
+  <text x="24.0" y="248.0" class="lbl">Energy is dominated by data movement, so the right question about an accelerator is not how many</text>
+  <text x="24.0" y="264.0" class="lbl">multipliers it has but which reuse its dataflow captures — and whether your layer has that kind of reuse.</text>
+  <text x="24.0" y="288.0" class="lblb" fill="var(--copper)">A depthwise layer has almost no weight reuse to capture. Weight-stationary hardware will not save it.</text>
+</svg>

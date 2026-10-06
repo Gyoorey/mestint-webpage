@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Four microprocessor trends on a logarithmic scale from 1975 to 2020: transistor count keeps rising while clock frequency, single-thread performance and power all flatten after about 2004"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="62.0" y1="236.0" x2="528.0" y2="236.0" class="ax"/>
+  <line x1="62.0" y1="40.0" x2="62.0" y2="236.0" class="ax"/>
+  <line x1="111.6" y1="40.0" x2="111.6" y2="236.0" class="grid"/>
+  <line x1="111.6" y1="236.0" x2="111.6" y2="240.0" class="ax"/>
+  <text x="111.6" y="253.0" class="lbl" text-anchor="middle">1980</text>
+  <line x1="210.7" y1="40.0" x2="210.7" y2="236.0" class="grid"/>
+  <line x1="210.7" y1="236.0" x2="210.7" y2="240.0" class="ax"/>
+  <text x="210.7" y="253.0" class="lbl" text-anchor="middle">1990</text>
+  <line x1="309.9" y1="40.0" x2="309.9" y2="236.0" class="grid"/>
+  <line x1="309.9" y1="236.0" x2="309.9" y2="240.0" class="ax"/>
+  <text x="309.9" y="253.0" class="lbl" text-anchor="middle">2000</text>
+  <line x1="409.0" y1="40.0" x2="409.0" y2="236.0" class="grid"/>
+  <line x1="409.0" y1="236.0" x2="409.0" y2="240.0" class="ax"/>
+  <text x="409.0" y="253.0" class="lbl" text-anchor="middle">2010</text>
+  <line x1="508.2" y1="40.0" x2="508.2" y2="236.0" class="grid"/>
+  <line x1="508.2" y1="236.0" x2="508.2" y2="240.0" class="ax"/>
+  <text x="508.2" y="253.0" class="lbl" text-anchor="middle">2020</text>
+  <line x1="62.0" y1="236.0" x2="528.0" y2="236.0" class="grid"/>
+  <line x1="58.0" y1="236.0" x2="62.0" y2="236.0" class="ax"/>
+  <text x="54.0" y="239.6" class="lbl" text-anchor="end">1</text>
+  <line x1="62.0" y1="192.4" x2="528.0" y2="192.4" class="grid"/>
+  <line x1="58.0" y1="192.4" x2="62.0" y2="192.4" class="ax"/>
+  <text x="54.0" y="196.0" class="lbl" text-anchor="end">100</text>
+  <line x1="62.0" y1="148.9" x2="528.0" y2="148.9" class="grid"/>
+  <line x1="58.0" y1="148.9" x2="62.0" y2="148.9" class="ax"/>
+  <text x="54.0" y="152.5" class="lbl" text-anchor="end">10⁴</text>
+  <line x1="62.0" y1="105.3" x2="528.0" y2="105.3" class="grid"/>
+  <line x1="58.0" y1="105.3" x2="62.0" y2="105.3" class="ax"/>
+  <text x="54.0" y="108.9" class="lbl" text-anchor="end">10⁶</text>
+  <line x1="62.0" y1="61.8" x2="528.0" y2="61.8" class="grid"/>
+  <line x1="58.0" y1="61.8" x2="62.0" y2="61.8" class="ax"/>
+  <text x="54.0" y="65.4" class="lbl" text-anchor="end">10⁸</text>
+  <path d="M62.0 162.8 L71.9 159.9 L81.8 157.0 L91.7 154.1 L101.7 151.2 L111.6 148.2 L121.5 145.3 L131.4 142.4 L141.3 139.5 L151.2 136.6 L161.1 133.7 L171.1 130.8 L181.0 127.9 L190.9 125.0 L200.8 122.1 L210.7 119.2 L220.6 116.3 L230.6 113.3 L240.5 110.4 L250.4 107.5 L260.3 104.6 L270.2 101.7 L280.1 98.8 L290.0 95.9 L300.0 93.0 L309.9 90.1 L319.8 87.2 L329.7 84.3 L339.6 81.4 L349.5 78.5 L359.4 75.5 L369.4 72.6 L379.3 69.7 L389.2 66.8 L399.1 63.9 L409.0 61.0 L418.9 58.1 L428.9 55.2 L438.8 52.3 L448.7 49.4 L458.6 46.5 L468.5 43.6 L478.4 40.6 L488.3 37.7 L498.3 34.8 L508.2 31.9 L518.1 29.0 L528.0 26.1" class="ser" stroke-width="2.3"/>
+  <path d="M62.0 209.8 L71.9 207.3 L81.8 204.8 L91.7 202.3 L101.7 199.9 L111.6 197.4 L121.5 194.9 L131.4 192.4 L141.3 189.9 L151.2 187.4 L161.1 185.0 L171.1 182.5 L181.0 180.0 L190.9 177.5 L200.8 175.0 L210.7 172.6 L220.6 170.1 L230.6 167.6 L240.5 165.1 L250.4 162.6 L260.3 160.1 L270.2 157.7 L280.1 155.2 L290.0 152.7 L300.0 150.2 L309.9 147.7 L319.8 145.3 L329.7 142.8 L339.6 140.3 L349.5 137.8 L359.4 135.3 L369.4 134.9 L379.3 134.5 L389.2 134.1 L399.1 133.7 L409.0 133.3 L418.9 132.8 L428.9 132.4 L438.8 132.0 L448.7 131.6 L458.6 131.2 L468.5 130.8 L478.4 130.3 L488.3 129.9 L498.3 129.5 L508.2 129.1 L518.1 128.7 L528.0 128.3" class="ser" stroke-width="1.6" opacity="0.62"/>
+  <path d="M62.0 236.0 L71.9 233.8 L81.8 231.6 L91.7 229.4 L101.7 227.3 L111.6 225.1 L121.5 222.9 L131.4 220.7 L141.3 218.5 L151.2 216.3 L161.1 214.1 L171.1 212.0 L181.0 209.8 L190.9 207.6 L200.8 205.4 L210.7 203.2 L220.6 201.0 L230.6 198.8 L240.5 196.7 L250.4 194.5 L260.3 192.3 L270.2 190.1 L280.1 187.9 L290.0 185.7 L300.0 183.5 L309.9 181.4 L319.8 179.2 L329.7 177.0 L339.6 174.8 L349.5 172.6 L359.4 172.6 L369.4 172.6 L379.3 172.6 L389.2 172.5 L399.1 172.5 L409.0 172.5 L418.9 172.5 L428.9 172.5 L438.8 172.4 L448.7 172.4 L458.6 172.4 L468.5 172.4 L478.4 172.4 L488.3 172.3 L498.3 172.3 L508.2 172.3 L518.1 172.3 L528.0 172.3" class="acc" stroke-width="2.1" fill="none"/>
+  <path d="M62.0 247.4 L71.9 245.7 L81.8 244.1 L91.7 242.5 L101.7 240.8 L111.6 239.2 L121.5 237.5 L131.4 235.9 L141.3 234.2 L151.2 232.6 L161.1 230.9 L171.1 229.3 L181.0 227.6 L190.9 226.0 L200.8 224.4 L210.7 222.7 L220.6 221.1 L230.6 219.4 L240.5 217.8 L250.4 216.1 L260.3 214.5 L270.2 212.8 L280.1 211.2 L290.0 209.5 L300.0 207.9 L309.9 206.3 L319.8 204.6 L329.7 203.0 L339.6 201.3 L349.5 199.7 L359.4 199.6 L369.4 199.6 L379.3 199.6 L389.2 199.5 L399.1 199.5 L409.0 199.4 L418.9 199.4 L428.9 199.4 L438.8 199.3 L448.7 199.3 L458.6 199.3 L468.5 199.2 L478.4 199.2 L488.3 199.1 L498.3 199.1 L508.2 199.1 L518.1 199.0 L528.0 199.0" class="tl" stroke-width="1.9" fill="none" stroke-dasharray="5 3"/>
+  <text x="534.0" y="30.1" class="lblb">transistors</text>
+  <text x="534.0" y="132.3" class="lblb" opacity="0.75">1-thread speed</text>
+  <text x="534.0" y="176.3" class="lblb" fill="var(--copper)">clock</text>
+  <text x="534.0" y="203.0" class="lblb" fill="var(--teal)">power</text>
+  <line x1="349.5" y1="40.0" x2="349.5" y2="236.0" class="grid" stroke-dasharray="4 3" opacity="0.6"/>
+  <text x="342.5" y="56.0" class="lbl" text-anchor="end" fill="var(--copper)">Dennard scaling ends</text>
+  <text x="356.5" y="56.0" class="lbl">parallelism + specialisation</text>
+  <text x="295.0" y="272.0" class="lbl" text-anchor="middle">year</text>
+  <text x="18.0" y="138.0" class="lbl" text-anchor="middle" transform="rotate(-90 18.0 138.0)">relative, log scale</text>
+  <text x="62.0" y="26.0" class="lbl">schematic reconstruction of the standard microprocessor trend curves</text>
+  <text x="62.0" y="284.0" class="lblb">Transistors kept doubling. Clock speed did not.</text>
+</svg>

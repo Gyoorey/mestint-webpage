@@ -1,0 +1,15 @@
+[
+ {"file": "nucleo-board.jpg", "subject": "STM32 Nucleo microcontroller development board", "titles": ["File:Nucleo-board.jpg", "File:STM32 Nucleo-64 board.jpg"], "search": "STM32 Nucleo board"},
+ {"file": "esp32-module.jpg", "subject": "ESP32 Wi-Fi/Bluetooth microcontroller module", "titles": ["File:ESP32 (30258172944).jpg", "File:Espressif ESP-WROOM-32 Wi-Fi & Bluetooth Module.jpg"], "search": "ESP32 module Espressif"},
+ {"file": "arduino-nano.jpg", "subject": "Arduino Nano format board", "titles": ["File:Arduino nano.jpg", "File:Arduino Nano.jpg"], "search": "Arduino Nano board"},
+ {"file": "raspberry-pi-4.jpg", "subject": "Raspberry Pi 4 Model B single-board computer", "titles": ["File:Raspberry Pi 4 Model B - Side.jpg", "File:Raspberry Pi 4 Model B - Top.jpg"], "search": "Raspberry Pi 4 Model B"},
+ {"file": "mems-accelerometer.jpg", "subject": "MEMS 3-axis accelerometer breakout board", "titles": ["File:FreescaleSemiconductor 3-Axis-MEMS-Accelerometer MMA8452Q 10953-01b.jpg"], "search": "MEMS accelerometer breakout board"},
+ {"file": "mpu6050.jpg", "subject": "MPU-6050 6-axis IMU module", "titles": ["File:Mpu6050-HD.jpg", "File:MPU-6050.jpg"], "search": "MPU-6050 module"},
+ {"file": "electret-microphone.svg", "subject": "Electret condenser microphone schematic", "titles": ["File:Electret condenser microphone schematic.svg"], "search": "electret condenser microphone schematic svg", "original": true},
+ {"file": "stm32-chip.jpg", "subject": "STM32 Cortex-M microcontroller package", "titles": ["File:STM32F100C4T6B-HD.jpg", "File:STM32F103C8T6.jpg"], "search": "STM32 microcontroller chip"},
+ {"file": "bcm2711.jpg", "subject": "Broadcom BCM2711 SoC of the Raspberry Pi 4", "titles": ["File:BCM2711 Rpi4.jpg"], "search": "BCM2711"},
+ {"file": "jetson-nano.jpg", "subject": "NVIDIA Jetson Nano developer kit", "titles": ["File:NVIDIA Jetson Nano Developer Kit (47616885631) (cropped).jpg", "File:NVIDIA Jetson Nano Developer Kit (47616885631).jpg"], "search": "NVIDIA Jetson Nano Developer Kit"},
+ {"file": "gpu-die.jpg", "subject": "GPU die photograph", "titles": ["File:NVidia GK107-860-A2.jpg"], "search": "GPU die shot NVIDIA"},
+ {"file": "fpga-die.jpg", "subject": "FPGA die photograph", "titles": ["File:Xilinx Spartan FPGA die shot.jpg"], "search": "FPGA die Xilinx"},
+ {"file": "fpga-board.jpg", "subject": "Small FPGA development board", "titles": ["File:TEI0001 Altera MAX 10 FPGA MAX1000 IoT Maker Board top view.jpg"], "search": "FPGA development board"}
+]

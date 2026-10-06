@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Expected energy per window of a two-stage cascade against the first stage&#x27;s pass rate, showing that a second stage a hundred times more expensive adds little when it runs rarely"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="70.0" y1="224.0" x2="500.0" y2="224.0" class="ax"/>
+  <line x1="70.0" y1="36.0" x2="70.0" y2="224.0" class="ax"/>
+  <line x1="70.0" y1="36.0" x2="70.0" y2="224.0" class="grid"/>
+  <line x1="70.0" y1="224.0" x2="70.0" y2="228.0" class="ax"/>
+  <text x="70.0" y="241.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="156.0" y1="36.0" x2="156.0" y2="224.0" class="grid"/>
+  <line x1="156.0" y1="224.0" x2="156.0" y2="228.0" class="ax"/>
+  <text x="156.0" y="241.0" class="lbl" text-anchor="middle">20 %</text>
+  <line x1="242.0" y1="36.0" x2="242.0" y2="224.0" class="grid"/>
+  <line x1="242.0" y1="224.0" x2="242.0" y2="228.0" class="ax"/>
+  <text x="242.0" y="241.0" class="lbl" text-anchor="middle">40 %</text>
+  <line x1="328.0" y1="36.0" x2="328.0" y2="224.0" class="grid"/>
+  <line x1="328.0" y1="224.0" x2="328.0" y2="228.0" class="ax"/>
+  <text x="328.0" y="241.0" class="lbl" text-anchor="middle">60 %</text>
+  <line x1="414.0" y1="36.0" x2="414.0" y2="224.0" class="grid"/>
+  <line x1="414.0" y1="224.0" x2="414.0" y2="228.0" class="ax"/>
+  <text x="414.0" y="241.0" class="lbl" text-anchor="middle">80 %</text>
+  <line x1="500.0" y1="36.0" x2="500.0" y2="224.0" class="grid"/>
+  <line x1="500.0" y1="224.0" x2="500.0" y2="228.0" class="ax"/>
+  <text x="500.0" y="241.0" class="lbl" text-anchor="middle">100 %</text>
+  <line x1="70.0" y1="224.0" x2="500.0" y2="224.0" class="grid"/>
+  <line x1="66.0" y1="224.0" x2="70.0" y2="224.0" class="ax"/>
+  <text x="62.0" y="227.6" class="lbl" text-anchor="end">0</text>
+  <line x1="70.0" y1="181.3" x2="500.0" y2="181.3" class="grid"/>
+  <line x1="66.0" y1="181.3" x2="70.0" y2="181.3" class="ax"/>
+  <text x="62.0" y="184.9" class="lbl" text-anchor="end">25×</text>
+  <line x1="70.0" y1="138.5" x2="500.0" y2="138.5" class="grid"/>
+  <line x1="66.0" y1="138.5" x2="70.0" y2="138.5" class="ax"/>
+  <text x="62.0" y="142.1" class="lbl" text-anchor="end">50×</text>
+  <line x1="70.0" y1="95.8" x2="500.0" y2="95.8" class="grid"/>
+  <line x1="66.0" y1="95.8" x2="70.0" y2="95.8" class="ax"/>
+  <text x="62.0" y="99.4" class="lbl" text-anchor="end">75×</text>
+  <line x1="70.0" y1="53.1" x2="500.0" y2="53.1" class="grid"/>
+  <line x1="66.0" y1="53.1" x2="70.0" y2="53.1" class="ax"/>
+  <text x="62.0" y="56.7" class="lbl" text-anchor="end">100×</text>
+  <path d="M70.0 222.3 L81.0 217.9 L92.1 213.5 L103.1 209.1 L114.1 204.8 L125.1 200.4 L136.2 196.0 L147.2 191.6 L158.2 187.2 L169.2 182.9 L180.3 178.5 L191.3 174.1 L202.3 169.7 L213.3 165.3 L224.4 160.9 L235.4 156.6 L246.4 152.2 L257.4 147.8 L268.5 143.4 L279.5 139.0 L290.5 134.6 L301.5 130.3 L312.6 125.9 L323.6 121.5 L334.6 117.1 L345.6 112.7 L356.7 108.4 L367.7 104.0 L378.7 99.6 L389.7 95.2 L400.8 90.8 L411.8 86.4 L422.8 82.1 L433.8 77.7 L444.9 73.3 L455.9 68.9 L466.9 64.5 L477.9 60.1 L489.0 55.8 L500.0 51.4" class="ser" opacity="1.0"/>
+  <text x="506.0" y="55.4" class="lblb" opacity="1.0">E₂ = 100×</text>
+  <path d="M70.0 222.3 L81.0 221.0 L92.1 219.7 L103.1 218.3 L114.1 217.0 L125.1 215.7 L136.2 214.4 L147.2 213.1 L158.2 211.8 L169.2 210.5 L180.3 209.1 L191.3 207.8 L202.3 206.5 L213.3 205.2 L224.4 203.9 L235.4 202.6 L246.4 201.3 L257.4 199.9 L268.5 198.6 L279.5 197.3 L290.5 196.0 L301.5 194.7 L312.6 193.4 L323.6 192.1 L334.6 190.7 L345.6 189.4 L356.7 188.1 L367.7 186.8 L378.7 185.5 L389.7 184.2 L400.8 182.9 L411.8 181.5 L422.8 180.2 L433.8 178.9 L444.9 177.6 L455.9 176.3 L466.9 175.0 L477.9 173.6 L489.0 172.3 L500.0 171.0" class="ser" opacity="0.55"/>
+  <text x="506.0" y="175.0" class="lblb" opacity="0.55">E₂ = 30×</text>
+  <path d="M70.0 222.3 L81.0 221.9 L92.1 221.4 L103.1 221.0 L114.1 220.5 L125.1 220.1 L136.2 219.7 L147.2 219.2 L158.2 218.8 L169.2 218.3 L180.3 217.9 L191.3 217.5 L202.3 217.0 L213.3 216.6 L224.4 216.2 L235.4 215.7 L246.4 215.3 L257.4 214.8 L268.5 214.4 L279.5 214.0 L290.5 213.5 L301.5 213.1 L312.6 212.6 L323.6 212.2 L334.6 211.8 L345.6 211.3 L356.7 210.9 L367.7 210.5 L378.7 210.0 L389.7 209.6 L400.8 209.1 L411.8 208.7 L422.8 208.3 L433.8 207.8 L444.9 207.4 L455.9 207.0 L466.9 206.5 L477.9 206.1 L489.0 205.6 L500.0 205.2" class="ser" opacity="0.4"/>
+  <text x="506.0" y="209.2" class="lblb" opacity="0.4">E₂ = 10×</text>
+  <circle cx="78.6" cy="218.9" r="5.5" class="accf"/>
+  <line x1="78.6" y1="218.9" x2="181.8" y2="145.4" class="acc" stroke-dasharray="3 3"/>
+  <text x="186.1" y="149.4" class="lblb" fill="var(--copper)">p₁ = 2 %  →  total = 3×</text>
+  <text x="285.0" y="260.0" class="lbl" text-anchor="middle">p₁ — share of windows passed to stage 2</text>
+  <text x="26.0" y="130.0" class="lbl" text-anchor="middle" transform="rotate(-90 26.0 130.0)">energy, in units of stage 1</text>
+  <text x="70.0" y="26.0" class="lblb">E[total] = E₁ + p₁·E₂</text>
+  <text x="70.0" y="286.0" class="lblb">Rare invocation makes an expensive stage almost free.</text>
+</svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" role="img" aria-label="Schematics of three memory cells side by side: a six-transistor SRAM cell, a one-transistor one-capacitor DRAM cell and a floating-gate flash cell, each annotated with the properties that follow from its structure"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <defs><marker id="arG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+  <rect x="36.0" y="40.0" width="190.0" height="128.0" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <text x="36.0" y="30.0" class="lblb" fill="var(--teal)">SRAM · 6T</text>
+  <text x="36.0" y="190.0" class="lbl">· volatile — needs power</text>
+  <text x="36.0" y="207.0" class="lbl">· fast: 1 cycle</text>
+  <text x="36.0" y="224.0" class="lbl">· large: 6 transistors/bit</text>
+  <text x="36.0" y="241.0" class="lbl">· no wear</text>
+  <rect x="268.0" y="40.0" width="190.0" height="128.0" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <text x="268.0" y="30.0" class="lblb">DRAM · 1T1C</text>
+  <text x="268.0" y="190.0" class="lbl">· volatile — needs refresh</text>
+  <text x="268.0" y="207.0" class="lbl">· slow: ~100+ cycles</text>
+  <text x="268.0" y="224.0" class="lbl">· dense: 1T + 1 capacitor</text>
+  <text x="268.0" y="241.0" class="lbl">· no wear</text>
+  <rect x="500.0" y="40.0" width="190.0" height="128.0" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <text x="500.0" y="30.0" class="lblb" fill="var(--copper)">FLASH · floating gate</text>
+  <text x="500.0" y="190.0" class="lbl">· non-volatile</text>
+  <text x="500.0" y="207.0" class="lbl">· read slow, write very slow</text>
+  <text x="500.0" y="224.0" class="lbl">· densest of the three</text>
+  <text x="500.0" y="241.0" class="lbl">· wears out: ~10⁴–10⁵ writes</text>
+  <polygon points="80,80 80,112 108,96" fill="none" stroke="currentColor" stroke-width="1.3"/>
+  <polygon points="168,112 168,80 140,96" fill="none" stroke="currentColor" stroke-width="1.3"/>
+  <line x1="108.0" y1="96.0" x2="124.0" y2="96.0" class="ax"/>
+  <line x1="124.0" y1="96.0" x2="124.0" y2="68.0" class="ax"/>
+  <line x1="124.0" y1="68.0" x2="168.0" y2="68.0" class="ax"/>
+  <line x1="168.0" y1="68.0" x2="168.0" y2="80.0" class="ax"/>
+  <line x1="140.0" y1="96.0" x2="124.0" y2="96.0" class="ax"/>
+  <line x1="80.0" y1="80.0" x2="80.0" y2="60.0" class="ax"/>
+  <line x1="80.0" y1="60.0" x2="62.0" y2="60.0" class="ax"/>
+  <text x="58.0" y="64.0" class="lbl" text-anchor="end">bit</text>
+  <text x="172.0" y="64.0" class="lbl">bit</text>
+  <line x1="168.0" y1="112.0" x2="168.0" y2="132.0" class="ax"/>
+  <line x1="168.0" y1="132.0" x2="186.0" y2="132.0" class="ax"/>
+  <text x="124.0" y="150.0" class="lbl" text-anchor="middle">two cross-coupled inverters</text>
+  <text x="124.0" y="134.0" class="lbl" text-anchor="middle">hold the bit as long as Vdd is on</text>
+  <line x1="300.0" y1="70.0" x2="300.0" y2="120.0" class="ax"/>
+  <line x1="294.0" y1="82.0" x2="294.0" y2="108.0" class="ax"/>
+  <line x1="286.0" y1="95.0" x2="294.0" y2="95.0" class="ax"/>
+  <text x="282.0" y="99.0" class="lbl" text-anchor="end">WL</text>
+  <line x1="300.0" y1="70.0" x2="300.0" y2="62.0" class="ax"/>
+  <text x="300.0" y="56.0" class="lbl" text-anchor="middle">bitline</text>
+  <line x1="300.0" y1="120.0" x2="300.0" y2="132.0" class="ax"/>
+  <line x1="284.0" y1="132.0" x2="316.0" y2="132.0" class="ax"/>
+  <line x1="284.0" y1="140.0" x2="316.0" y2="140.0" class="ax"/>
+  <line x1="300.0" y1="140.0" x2="300.0" y2="150.0" class="ax"/>
+  <line x1="292.0" y1="150.0" x2="308.0" y2="150.0" class="ax"/>
+  <text x="330.0" y="128.0" class="lbl">charge on the cap</text>
+  <text x="330.0" y="144.0" class="lbl" fill="var(--copper)">leaks away in ms</text>
+  <text x="363.0" y="164.0" class="lbl" text-anchor="middle">→ periodic refresh</text>
+  <line x1="548.0" y1="76.0" x2="548.0" y2="128.0" class="ax"/>
+  <line x1="540.0" y1="88.0" x2="540.0" y2="116.0" class="ax"/>
+  <text x="534.0" y="106.0" class="lbl" text-anchor="end">control</text>
+  <line x1="556.0" y1="92.0" x2="578.0" y2="92.0" class="ax"/>
+  <line x1="556.0" y1="104.0" x2="578.0" y2="104.0" class="ax"/>
+  <rect x="556.0" y="92.0" width="22.0" height="12.0" class="accf" opacity="0.4" stroke="currentColor" stroke-width="1"/>
+  <text x="584.0" y="100.0" class="lbl" fill="var(--copper)">floating gate</text>
+  <text x="584.0" y="116.0" class="lbl">traps electrons</text>
+  <text x="584.0" y="132.0" class="lbl">with no supply</text>
+  <text x="500.0" y="152.0" class="lbl">writes wear the oxide</text>
+  <text x="36.0" y="274.0" class="lbl">Weights live in flash because they are read-only and must survive power-off. Activations live in SRAM</text>
+  <text x="36.0" y="290.0" class="lbl">because they change every inference and must be fast. That division is not a convention — it falls out</text>
+  <text x="36.0" y="306.0" class="lbl">of these three pictures.</text>
+  <text x="36.0" y="326.0" class="lblb" fill="var(--copper)">Structure decides role. Read the cell, and the system design writes itself.</text>
+</svg>

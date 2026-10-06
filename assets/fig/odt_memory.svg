@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 290" role="img" aria-label="Stacked bars comparing memory during inference, full backpropagation, and three sparse update schemes, showing that activations rather than weights dominate training memory"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="96.0" y1="200.0" x2="560.0" y2="200.0" class="ax"/>
+  <line x1="96.0" y1="44.0" x2="96.0" y2="200.0" class="ax"/>
+  <line x1="96.0" y1="200.0" x2="560.0" y2="200.0" class="grid"/>
+  <line x1="92.0" y1="200.0" x2="96.0" y2="200.0" class="ax"/>
+  <text x="88.0" y="203.6" class="lbl" text-anchor="end">0</text>
+  <line x1="96.0" y1="161.0" x2="560.0" y2="161.0" class="grid"/>
+  <line x1="92.0" y1="161.0" x2="96.0" y2="161.0" class="ax"/>
+  <text x="88.0" y="164.6" class="lbl" text-anchor="end">250 kB</text>
+  <line x1="96.0" y1="122.0" x2="560.0" y2="122.0" class="grid"/>
+  <line x1="92.0" y1="122.0" x2="96.0" y2="122.0" class="ax"/>
+  <text x="88.0" y="125.6" class="lbl" text-anchor="end">500 kB</text>
+  <line x1="96.0" y1="83.0" x2="560.0" y2="83.0" class="grid"/>
+  <line x1="92.0" y1="83.0" x2="96.0" y2="83.0" class="ax"/>
+  <text x="88.0" y="86.6" class="lbl" text-anchor="end">750 kB</text>
+  <line x1="96.0" y1="44.0" x2="560.0" y2="44.0" class="grid"/>
+  <line x1="92.0" y1="44.0" x2="96.0" y2="44.0" class="ax"/>
+  <text x="88.0" y="47.6" class="lbl" text-anchor="end">1 MB</text>
+  <rect x="122.5" y="180.0" width="54.0" height="20.0" class="tlf" opacity="0.55"/>
+  <text x="149.5" y="172.0" class="lblb" text-anchor="middle">128 kB</text>
+  <text x="149.5" y="216.0" class="lbl" text-anchor="middle">inference</text>
+  <rect x="211.8" y="180.0" width="54.0" height="20.0" class="tlf" opacity="0.55"/>
+  <rect x="211.8" y="61.5" width="54.0" height="118.6" class="accf" opacity="0.75"/>
+  <rect x="211.8" y="41.5" width="54.0" height="20.0" fill="currentColor" opacity="0.4"/>
+  <text x="238.8" y="33.5" class="lblb" text-anchor="middle">1016 kB</text>
+  <text x="238.8" y="216.0" class="lbl" text-anchor="middle">full backprop</text>
+  <rect x="301.0" y="180.0" width="54.0" height="20.0" class="tlf" opacity="0.55"/>
+  <rect x="301.0" y="173.8" width="54.0" height="6.2" class="accf" opacity="0.75"/>
+  <rect x="301.0" y="172.5" width="54.0" height="1.2" fill="currentColor" opacity="0.4"/>
+  <text x="328.0" y="164.5" class="lblb" text-anchor="middle">176 kB</text>
+  <text x="328.0" y="216.0" class="lbl" text-anchor="middle">last layer</text>
+  <rect x="390.2" y="180.0" width="54.0" height="20.0" class="tlf" opacity="0.55"/>
+  <rect x="390.2" y="165.1" width="54.0" height="15.0" class="accf" opacity="0.75"/>
+  <rect x="390.2" y="163.2" width="54.0" height="1.9" fill="currentColor" opacity="0.4"/>
+  <text x="417.2" y="155.2" class="lblb" text-anchor="middle">236 kB</text>
+  <text x="417.2" y="216.0" class="lbl" text-anchor="middle">bias + BN</text>
+  <rect x="479.5" y="180.0" width="54.0" height="20.0" class="tlf" opacity="0.55"/>
+  <rect x="479.5" y="147.3" width="54.0" height="32.8" class="accf" opacity="0.75"/>
+  <rect x="479.5" y="142.0" width="54.0" height="5.3" fill="currentColor" opacity="0.4"/>
+  <text x="506.5" y="134.0" class="lblb" text-anchor="middle">372 kB</text>
+  <text x="506.5" y="216.0" class="lbl" text-anchor="middle">sparse update</text>
+  <line x1="96.0" y1="160.1" x2="560.0" y2="160.1" class="acc" stroke-width="1.8" stroke-dasharray="5 3"/>
+  <text x="566.0" y="164.1" class="lblb" fill="var(--copper)">256 kB SRAM</text>
+  <rect x="566.0" y="60.0" width="12.0" height="12.0" class="tlf" opacity="0.55"/>
+  <text x="584.0" y="70.0" class="lbl">weights</text>
+  <rect x="566.0" y="82.0" width="12.0" height="12.0" class="accf" opacity="0.75"/>
+  <text x="584.0" y="92.0" class="lbl">stored activations</text>
+  <rect x="566.0" y="104.0" width="12.0" height="12.0" fill="currentColor" opacity="0.4"/>
+  <text x="584.0" y="114.0" class="lbl">gradients</text>
+  <text x="96.0" y="250.0" class="lbl">Backpropagation must keep every forward activation until its gradient is used —</text>
+  <text x="96.0" y="268.0" class="lbl">so training memory is set by the activations, not by the parameter count.</text>
+  <text x="96.0" y="288.0" class="lblb" fill="var(--copper)">Every practical on-device-training method is a way of storing fewer activations.</text>
+</svg>

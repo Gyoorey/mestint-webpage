@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-label="A weight histogram with a long tail, showing how a min-max clipping range wastes most of the integer levels on empty space while a percentile range keeps resolution where the weights actually are"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="62.0" y1="214.0" x2="560.0" y2="214.0" class="ax"/>
+  <line x1="62.0" y1="44.0" x2="62.0" y2="214.0" class="ax"/>
+  <line x1="84.6" y1="44.0" x2="84.6" y2="214.0" class="grid"/>
+  <line x1="84.6" y1="214.0" x2="84.6" y2="218.0" class="ax"/>
+  <text x="84.6" y="231.0" class="lbl" text-anchor="middle">-1</text>
+  <line x1="197.8" y1="44.0" x2="197.8" y2="214.0" class="grid"/>
+  <line x1="197.8" y1="214.0" x2="197.8" y2="218.0" class="ax"/>
+  <text x="197.8" y="231.0" class="lbl" text-anchor="middle">-0.5</text>
+  <line x1="311.0" y1="44.0" x2="311.0" y2="214.0" class="grid"/>
+  <line x1="311.0" y1="214.0" x2="311.0" y2="218.0" class="ax"/>
+  <text x="311.0" y="231.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="424.2" y1="44.0" x2="424.2" y2="214.0" class="grid"/>
+  <line x1="424.2" y1="214.0" x2="424.2" y2="218.0" class="ax"/>
+  <text x="424.2" y="231.0" class="lbl" text-anchor="middle">0.5</text>
+  <line x1="537.4" y1="44.0" x2="537.4" y2="214.0" class="grid"/>
+  <line x1="537.4" y1="214.0" x2="537.4" y2="218.0" class="ax"/>
+  <text x="537.4" y="231.0" class="lbl" text-anchor="middle">1</text>
+  <rect x="101.1" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="122.5" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="133.1" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="147.4" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="150.9" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="158.0" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="161.6" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="165.2" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="168.7" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="172.3" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="175.8" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="179.4" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="182.9" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="186.5" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="190.1" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="193.6" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="197.2" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="200.7" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="204.3" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="207.8" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="211.4" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="215.0" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="218.5" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="222.1" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="225.6" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="229.2" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="232.7" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="236.3" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="239.9" y="210.2" width="3.6" height="3.8" fill="currentColor" opacity="0.32"/>
+  <rect x="243.4" y="208.8" width="3.6" height="5.2" fill="currentColor" opacity="0.32"/>
+  <rect x="247.0" y="205.4" width="3.6" height="8.6" fill="currentColor" opacity="0.32"/>
+  <rect x="250.5" y="204.5" width="3.6" height="9.5" fill="currentColor" opacity="0.32"/>
+  <rect x="254.1" y="205.4" width="3.6" height="8.6" fill="currentColor" opacity="0.32"/>
+  <rect x="257.6" y="203.0" width="3.6" height="11.0" fill="currentColor" opacity="0.32"/>
+  <rect x="261.2" y="196.4" width="3.6" height="17.6" fill="currentColor" opacity="0.32"/>
+  <rect x="264.8" y="192.6" width="3.6" height="21.4" fill="currentColor" opacity="0.32"/>
+  <rect x="268.3" y="179.7" width="3.6" height="34.3" fill="currentColor" opacity="0.32"/>
+  <rect x="271.9" y="175.9" width="3.6" height="38.1" fill="currentColor" opacity="0.32"/>
+  <rect x="275.4" y="148.3" width="3.6" height="65.7" fill="currentColor" opacity="0.32"/>
+  <rect x="279.0" y="151.1" width="3.6" height="62.9" fill="currentColor" opacity="0.32"/>
+  <rect x="282.5" y="138.8" width="3.6" height="75.2" fill="currentColor" opacity="0.32"/>
+  <rect x="286.1" y="120.2" width="3.6" height="93.8" fill="currentColor" opacity="0.32"/>
+  <rect x="289.7" y="124.0" width="3.6" height="90.0" fill="currentColor" opacity="0.32"/>
+  <rect x="293.2" y="103.5" width="3.6" height="110.5" fill="currentColor" opacity="0.32"/>
+  <rect x="296.8" y="92.6" width="3.6" height="121.4" fill="currentColor" opacity="0.32"/>
+  <rect x="300.3" y="67.8" width="3.6" height="146.2" fill="currentColor" opacity="0.32"/>
+  <rect x="303.9" y="66.9" width="3.6" height="147.1" fill="currentColor" opacity="0.32"/>
+  <rect x="307.4" y="52.1" width="3.6" height="161.9" fill="currentColor" opacity="0.32"/>
+  <rect x="311.0" y="68.8" width="3.6" height="145.2" fill="currentColor" opacity="0.32"/>
+  <rect x="314.6" y="54.5" width="3.6" height="159.5" fill="currentColor" opacity="0.32"/>
+  <rect x="318.1" y="54.0" width="3.6" height="160.0" fill="currentColor" opacity="0.32"/>
+  <rect x="321.7" y="84.0" width="3.6" height="130.0" fill="currentColor" opacity="0.32"/>
+  <rect x="325.2" y="93.5" width="3.6" height="120.5" fill="currentColor" opacity="0.32"/>
+  <rect x="328.8" y="111.1" width="3.6" height="102.9" fill="currentColor" opacity="0.32"/>
+  <rect x="332.3" y="122.6" width="3.6" height="91.4" fill="currentColor" opacity="0.32"/>
+  <rect x="335.9" y="136.4" width="3.6" height="77.6" fill="currentColor" opacity="0.32"/>
+  <rect x="339.5" y="140.2" width="3.6" height="73.8" fill="currentColor" opacity="0.32"/>
+  <rect x="343.0" y="165.0" width="3.6" height="49.0" fill="currentColor" opacity="0.32"/>
+  <rect x="346.6" y="171.1" width="3.6" height="42.9" fill="currentColor" opacity="0.32"/>
+  <rect x="350.1" y="184.5" width="3.6" height="29.5" fill="currentColor" opacity="0.32"/>
+  <rect x="353.7" y="191.1" width="3.6" height="22.9" fill="currentColor" opacity="0.32"/>
+  <rect x="357.2" y="202.1" width="3.6" height="11.9" fill="currentColor" opacity="0.32"/>
+  <rect x="360.8" y="201.6" width="3.6" height="12.4" fill="currentColor" opacity="0.32"/>
+  <rect x="364.4" y="202.1" width="3.6" height="11.9" fill="currentColor" opacity="0.32"/>
+  <rect x="367.9" y="207.8" width="3.6" height="6.2" fill="currentColor" opacity="0.32"/>
+  <rect x="371.5" y="208.3" width="3.6" height="5.7" fill="currentColor" opacity="0.32"/>
+  <rect x="375.0" y="205.9" width="3.6" height="8.1" fill="currentColor" opacity="0.32"/>
+  <rect x="378.6" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="382.1" y="210.7" width="3.6" height="3.3" fill="currentColor" opacity="0.32"/>
+  <rect x="385.7" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="392.8" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="396.4" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="399.9" y="210.7" width="3.6" height="3.3" fill="currentColor" opacity="0.32"/>
+  <rect x="403.5" y="211.1" width="3.6" height="2.9" fill="currentColor" opacity="0.32"/>
+  <rect x="407.0" y="211.6" width="3.6" height="2.4" fill="currentColor" opacity="0.32"/>
+  <rect x="410.6" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="414.2" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="417.7" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="421.3" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="424.8" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="428.4" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="431.9" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="435.5" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="439.1" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="442.6" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="446.2" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="456.8" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="460.4" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="464.0" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="474.6" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="488.9" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="492.4" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="503.1" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="506.6" y="212.6" width="3.6" height="1.4" fill="currentColor" opacity="0.32"/>
+  <rect x="510.2" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="513.8" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="517.3" y="210.2" width="3.6" height="3.8" fill="currentColor" opacity="0.32"/>
+  <rect x="520.9" y="212.1" width="3.6" height="1.9" fill="currentColor" opacity="0.32"/>
+  <rect x="528.0" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="531.5" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <rect x="535.1" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="538.7" y="213.0" width="3.6" height="1.0" fill="currentColor" opacity="0.32"/>
+  <rect x="545.8" y="213.5" width="3.6" height="0.5" fill="currentColor" opacity="0.32"/>
+  <line x1="84.6" y1="44.0" x2="84.6" y2="214.0" class="acc" stroke-width="1.8" stroke-dasharray="5 3"/>
+  <line x1="537.4" y1="44.0" x2="537.4" y2="214.0" class="acc" stroke-width="1.8" stroke-dasharray="5 3"/>
+  <line x1="115.1" y1="44.0" x2="115.1" y2="214.0" class="tl" stroke-width="1.8"/>
+  <line x1="556.7" y1="44.0" x2="556.7" y2="214.0" class="tl" stroke-width="1.8"/>
+  <text x="89.6" y="38.0" class="lblb" fill="var(--copper)">min–max range</text>
+  <text x="551.7" y="38.0" class="lblb" text-anchor="end" fill="var(--teal)">99.99th percentile</text>
+  <line x1="84.6" y1="222.0" x2="84.6" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="112.9" y1="222.0" x2="112.9" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="141.2" y1="222.0" x2="141.2" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="169.5" y1="222.0" x2="169.5" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="197.8" y1="222.0" x2="197.8" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="226.1" y1="222.0" x2="226.1" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="254.4" y1="222.0" x2="254.4" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="282.7" y1="222.0" x2="282.7" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="311.0" y1="222.0" x2="311.0" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="339.3" y1="222.0" x2="339.3" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="367.6" y1="222.0" x2="367.6" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="395.9" y1="222.0" x2="395.9" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="424.2" y1="222.0" x2="424.2" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="452.5" y1="222.0" x2="452.5" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="480.8" y1="222.0" x2="480.8" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="509.1" y1="222.0" x2="509.1" y2="232.0" class="acc" opacity="0.8"/>
+  <line x1="537.4" y1="222.0" x2="537.4" y2="232.0" class="acc" opacity="0.8"/>
+  <text x="566.0" y="226.0" class="lbl" fill="var(--copper)">16 of 256 levels</text>
+  <text x="566.0" y="242.0" class="lbl" fill="var(--copper)">shown, min–max</text>
+  <text x="62.0" y="260.0" class="lbl">25 outlier weights near 0.9 stretch the min–max range by 3×,</text>
+  <text x="62.0" y="278.0" class="lbl">so the 5 000 weights near zero get a third of the resolution they could have had.</text>
+  <text x="62.0" y="302.0" class="lblb" fill="var(--copper)">Clipping those 25 costs 25 large errors. Not clipping them costs a small error on all 5 425.</text>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-label="Tree diagram of machine learning paradigms: supervised learning with classification and regression, unsupervised learning with clustering, dimensionality reduction and anomaly detection, self-supervised learning, and reinforcement learning, each with an embedded example"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <rect x="285.0" y="14.0" width="150.0" height="34.0" class="ax" fill="none"/>
+  <text x="360.0" y="35.0" class="lblb" text-anchor="middle">Machine learning</text>
+  <line x1="360.0" y1="48.0" x2="93.0" y2="74.0" class="grid"/>
+  <rect x="8.0" y="74.0" width="170.0" height="42.0" class="fillsoft"/>
+  <rect x="8.0" y="74.0" width="170.0" height="42.0" class="ax" fill="none"/>
+  <text x="93.0" y="91.5" class="lblb" text-anchor="middle">Supervised</text>
+  <text x="93.0" y="106.5" class="lbl" text-anchor="middle">labelled pairs (x, y)</text>
+  <line x1="360.0" y1="48.0" x2="271.0" y2="74.0" class="grid"/>
+  <rect x="186.0" y="74.0" width="170.0" height="42.0" class="fillsoft"/>
+  <rect x="186.0" y="74.0" width="170.0" height="42.0" class="ax" fill="none"/>
+  <text x="271.0" y="91.5" class="lblb" text-anchor="middle">Unsupervised</text>
+  <text x="271.0" y="106.5" class="lbl" text-anchor="middle">x only</text>
+  <line x1="360.0" y1="48.0" x2="449.0" y2="74.0" class="grid"/>
+  <rect x="364.0" y="74.0" width="170.0" height="42.0" class="fillsoft"/>
+  <rect x="364.0" y="74.0" width="170.0" height="42.0" class="ax" fill="none"/>
+  <text x="449.0" y="91.5" class="lblb" text-anchor="middle">Self-supervised</text>
+  <text x="449.0" y="106.5" class="lbl" text-anchor="middle">labels made from x</text>
+  <line x1="360.0" y1="48.0" x2="627.0" y2="74.0" class="grid"/>
+  <rect x="542.0" y="74.0" width="170.0" height="42.0" class="fillsoft"/>
+  <rect x="542.0" y="74.0" width="170.0" height="42.0" class="ax" fill="none"/>
+  <text x="627.0" y="91.5" class="lblb" text-anchor="middle">Reinforcement</text>
+  <text x="627.0" y="106.5" class="lbl" text-anchor="middle">reward from actions</text>
+  <line x1="93.0" y1="116.0" x2="93.0" y2="134.0" class="grid"/>
+  <rect x="14.0" y="134.0" width="158.0" height="42.0" class="ax" fill="none"/>
+  <text x="93.0" y="151.0" class="lblb" text-anchor="middle">classification</text>
+  <text x="93.0" y="167.0" class="lbl" text-anchor="middle">keywords, falls, ECG</text>
+  <line x1="93.0" y1="116.0" x2="93.0" y2="186.0" class="grid"/>
+  <rect x="14.0" y="186.0" width="158.0" height="42.0" class="ax" fill="none"/>
+  <text x="93.0" y="203.0" class="lblb" text-anchor="middle">regression</text>
+  <text x="93.0" y="219.0" class="lbl" text-anchor="middle">battery life left</text>
+  <line x1="271.0" y1="116.0" x2="271.0" y2="134.0" class="grid"/>
+  <rect x="192.0" y="134.0" width="158.0" height="42.0" class="ax" fill="none"/>
+  <text x="271.0" y="151.0" class="lblb" text-anchor="middle">clustering</text>
+  <text x="271.0" y="167.0" class="lbl" text-anchor="middle">group machine states</text>
+  <line x1="271.0" y1="116.0" x2="271.0" y2="186.0" class="grid"/>
+  <rect x="192.0" y="186.0" width="158.0" height="42.0" class="ax" fill="none"/>
+  <text x="271.0" y="203.0" class="lblb" text-anchor="middle">dim. reduction</text>
+  <text x="271.0" y="219.0" class="lbl" text-anchor="middle">PCA before a tiny MLP</text>
+  <line x1="271.0" y1="116.0" x2="271.0" y2="238.0" class="grid"/>
+  <rect x="192.0" y="238.0" width="158.0" height="42.0" class="ax" fill="none"/>
+  <text x="271.0" y="255.0" class="lblb" text-anchor="middle">anomaly detection</text>
+  <text x="271.0" y="271.0" class="lbl" text-anchor="middle">AE on vibration</text>
+  <line x1="449.0" y1="116.0" x2="449.0" y2="134.0" class="grid"/>
+  <rect x="370.0" y="134.0" width="158.0" height="42.0" class="ax" fill="none"/>
+  <text x="449.0" y="151.0" class="lblb" text-anchor="middle">pre-training</text>
+  <text x="449.0" y="167.0" class="lbl" text-anchor="middle">masked / contrastive</text>
+  <line x1="449.0" y1="116.0" x2="449.0" y2="186.0" class="grid"/>
+  <rect x="370.0" y="186.0" width="158.0" height="42.0" class="ax" fill="none"/>
+  <text x="449.0" y="203.0" class="lblb" text-anchor="middle">then fine-tune</text>
+  <text x="449.0" y="219.0" class="lbl" text-anchor="middle">few labels needed</text>
+  <line x1="627.0" y1="116.0" x2="627.0" y2="134.0" class="grid"/>
+  <rect x="548.0" y="134.0" width="158.0" height="42.0" class="ax" fill="none"/>
+  <text x="627.0" y="151.0" class="lblb" text-anchor="middle">control policies</text>
+  <text x="627.0" y="167.0" class="lbl" text-anchor="middle">drone, HVAC, motor</text>
+  <line x1="627.0" y1="116.0" x2="627.0" y2="186.0" class="grid"/>
+  <rect x="548.0" y="186.0" width="158.0" height="42.0" class="ax" fill="none"/>
+  <text x="627.0" y="203.0" class="lblb" text-anchor="middle">on-device: rare</text>
+  <text x="627.0" y="219.0" class="lbl" text-anchor="middle">sample-hungry, risky</text>
+  <text x="8.0" y="298.0" class="lbl">Almost every deployed embedded model today is supervised classification;</text>
+  <text x="8.0" y="313.0" class="lbl">anomaly detection is the main unsupervised exception.</text>
+</svg>

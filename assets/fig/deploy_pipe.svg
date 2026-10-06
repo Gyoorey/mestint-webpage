@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Deployment pipeline from trained model through export, graph optimization, quantization, memory planning, kernel selection, linking and flashing to on-device profiling, with the characteristic failure mode of each stage listed beneath it and a feedback arrow from profiling back to the model"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <defs>
+    <marker id="ar14" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="11" fill="currentColor">
+    <g stroke="currentColor" stroke-width="1.2" fill="none">
+      <rect x="6" y="46" width="82" height="40"/><rect x="102" y="46" width="82" height="40"/>
+      <rect x="198" y="46" width="82" height="40"/><rect x="294" y="46" width="82" height="40"/>
+      <rect x="390" y="46" width="82" height="40"/><rect x="486" y="46" width="82" height="40"/>
+      <rect x="582" y="46" width="82" height="40"/>
+    </g>
+    <g text-anchor="middle" font-weight="600">
+      <text x="47" y="63">trained</text><text x="47" y="77">graph</text>
+      <text x="143" y="63">export</text><text x="143" y="77">ONNX / TFLite</text>
+      <text x="239" y="63">graph opt</text><text x="239" y="77">fold · fuse</text>
+      <text x="335" y="63">quantize</text><text x="335" y="77">PTQ / QAT</text>
+      <text x="431" y="63">memory</text><text x="431" y="77">plan arena</text>
+      <text x="527" y="63">kernels +</text><text x="527" y="77">codegen</text>
+      <text x="623" y="63">flash &amp;</text><text x="623" y="77">profile</text>
+    </g>
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar14)">
+      <line x1="88" y1="66" x2="98" y2="66"/><line x1="184" y1="66" x2="194" y2="66"/>
+      <line x1="280" y1="66" x2="290" y2="66"/><line x1="376" y1="66" x2="386" y2="66"/>
+      <line x1="472" y1="66" x2="482" y2="66"/><line x1="568" y1="66" x2="578" y2="66"/>
+    </g>
+    <g font-family="IBM Plex Mono, monospace" font-size="10" class="accf" text-anchor="middle">
+      <text x="47" y="112">training-only</text><text x="47" y="124">ops left in</text>
+      <text x="143" y="112">opset version</text><text x="143" y="124">mismatch</text>
+      <text x="239" y="112">fusion changes</text><text x="239" y="124">numerics</text>
+      <text x="335" y="112" font-size="9.71">unrepresentative</text><text x="335" y="124" font-size="9.36">calibration set</text>
+      <text x="431" y="112" font-size="9.71">arena too small</text><text x="431" y="124" font-size="9.36">→ silent overflow</text>
+      <text x="527" y="112">unsupported op</text><text x="527" y="124" font-size="9.66">→ CPU fallback</text>
+      <text x="623" y="112">measured on the</text><text x="623" y="124">wrong clock</text>
+    </g>
+    <text x="360" y="150" text-anchor="middle" font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" font-weight="600" class="accf">the characteristic failure of each stage — almost all are silent</text>
+    <g stroke="currentColor" stroke-width="1.3" marker-end="url(#ar14)" stroke-dasharray="5 3">
+      <path d="M623 86 L623 178 L47 178 L47 90" fill="none"/>
+    </g>
+    <text x="335" y="196" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.82">profile → redesign: the loop that most projects run only once, and should run every week</text>
+
+    <line x1="20" y1="216" x2="700" y2="216" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+    <text x="8" y="238" font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" font-weight="600">Parity test at every arrow: run the same input through both sides and compare per-tensor.</text>
+    <text x="8" y="258" font-family="IBM Plex Mono, monospace" opacity="0.82" font-size="10.14">float reference → exported graph → quantized graph → on-device run. The first arrow where SQNR collapses is the bug.</text>
+    <text x="8" y="278" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.82">Without this, a 4-point accuracy drop is a week of guessing; with it, it is twenty minutes.</text>
+  </g>
+</svg>

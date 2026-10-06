@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" role="img" aria-label="Memory arena allocation drawn as rectangles packed in time and space: each tensor occupies an offset range for the interval during which it is live, with a residual skip tensor spanning many operators and setting the peak"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="11.5" fill="currentColor">
+    <line x1="58" y1="196" x2="700" y2="196" stroke="currentColor" stroke-width="1.1"/>
+    <line x1="58" y1="30" x2="58" y2="196" stroke="currentColor" stroke-width="1.1"/>
+    <text x="380" y="222" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">operator index (time) →</text>
+    <text x="24" y="112" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78" transform="rotate(-90 24 112)">arena offset</text>
+    <g opacity="0.34" fill="currentColor">
+      <rect x="62" y="120" width="96" height="76"/>
+      <rect x="162" y="140" width="96" height="56"/>
+      <rect x="262" y="152" width="140" height="44"/>
+      <rect x="406" y="158" width="96" height="38"/>
+      <rect x="506" y="164" width="96" height="32"/>
+      <rect x="606" y="168" width="90" height="28"/>
+    </g>
+    <rect x="162" y="60" width="440" height="56" class="accf" opacity="0.45"/>
+    <text x="382" y="92" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">residual skip tensor — live across seven operators</text>
+    <line x1="58" y1="56" x2="700" y2="56" stroke="currentColor" stroke-width="1.6" stroke-dasharray="6 4"/>
+    <text x="700" y="48" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11">arena size = peak of this packing</text>
+    <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity="0.8" text-anchor="middle">
+      <text x="110" y="163">conv1 out</text><text x="210" y="173">conv2 out</text><text x="332" y="178">conv3 out</text>
+      <text x="454" y="181">conv4</text><text x="554" y="184">conv5</text><text x="651" y="186">fc</text>
+    </g>
+    <text x="8" y="18" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">tensors as boxes: height = bytes, width = liveness interval</text>
+    <text x="380" y="242" text-anchor="middle" font-family="IBM Plex Sans Condensed, sans-serif" font-weight="600" font-size="11.92">A long-lived skip tensor raises the arena for the entire network — which is why residual topology is a memory decision.</text>
+  </g>
+</svg>

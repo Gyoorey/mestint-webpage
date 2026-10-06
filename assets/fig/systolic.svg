@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" role="img" aria-label="A three by three systolic array with weights held stationary in each cell, activations streaming in from the left and partial sums flowing downward, with a cycle-by-cycle schedule beneath"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <defs>
+    <marker id="ar7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <text x="8" y="18" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">weight-stationary systolic array — each cell holds one weight for the whole tile</text>
+    <!-- cells -->
+    <g stroke="currentColor" stroke-width="1.2" fill="none">
+      <rect x="150" y="42" width="66" height="52"/><rect x="230" y="42" width="66" height="52"/><rect x="310" y="42" width="66" height="52"/>
+      <rect x="150" y="110" width="66" height="52"/><rect x="230" y="110" width="66" height="52"/><rect x="310" y="110" width="66" height="52"/>
+      <rect x="150" y="178" width="66" height="52"/><rect x="230" y="178" width="66" height="52"/><rect x="310" y="178" width="66" height="52"/>
+    </g>
+    <g text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" class="accf">
+      <text x="183" y="64">w₁₁</text><text x="263" y="64">w₁₂</text><text x="343" y="64">w₁₃</text>
+      <text x="183" y="132">w₂₁</text><text x="263" y="132">w₂₂</text><text x="343" y="132">w₂₃</text>
+      <text x="183" y="200">w₃₁</text><text x="263" y="200">w₃₂</text><text x="343" y="200">w₃₃</text>
+    </g>
+    <g text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" opacity="0.72">
+      <text x="183" y="82">·+</text><text x="263" y="82">·+</text><text x="343" y="82">·+</text>
+      <text x="183" y="150">·+</text><text x="263" y="150">·+</text><text x="343" y="150">·+</text>
+      <text x="183" y="218">·+</text><text x="263" y="218">·+</text><text x="343" y="218">·+</text>
+    </g>
+    <!-- activation inflow -->
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar7)">
+      <line x1="96" y1="68" x2="146" y2="68"/><line x1="96" y1="136" x2="146" y2="136"/><line x1="96" y1="204" x2="146" y2="204"/>
+      <line x1="216" y1="68" x2="226" y2="68"/><line x1="296" y1="68" x2="306" y2="68"/>
+      <line x1="216" y1="136" x2="226" y2="136"/><line x1="296" y1="136" x2="306" y2="136"/>
+      <line x1="216" y1="204" x2="226" y2="204"/><line x1="296" y1="204" x2="306" y2="204"/>
+    </g>
+    <g text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11">
+      <text x="92" y="72">a₁ →</text><text x="92" y="140">a₂ →</text><text x="92" y="208">a₃ →</text>
+    </g>
+    <!-- psum downflow -->
+    <g class="tl" stroke-width="1.4" marker-end="url(#ar7)">
+      <line x1="183" y1="94" x2="183" y2="106"/><line x1="263" y1="94" x2="263" y2="106"/><line x1="343" y1="94" x2="343" y2="106"/>
+      <line x1="183" y1="162" x2="183" y2="174"/><line x1="263" y1="162" x2="263" y2="174"/><line x1="343" y1="162" x2="343" y2="174"/>
+      <line x1="183" y1="230" x2="183" y2="256"/><line x1="263" y1="230" x2="263" y2="256"/><line x1="343" y1="230" x2="343" y2="256"/>
+    </g>
+    <g text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="tlf">
+      <text x="183" y="272">y₁</text><text x="263" y="272">y₂</text><text x="343" y="272">y₃</text>
+    </g>
+    <text x="263" y="300" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">partial sums accumulate downward; results emerge after pipeline fill</text>
+
+    <!-- side explanation -->
+    <g font-family="IBM Plex Mono, monospace" font-size="11">
+      <text x="420" y="52" font-weight="600">per cycle, every cell:</text>
+      <text x="420" y="72" opacity="0.85">1. take activation from the west</text>
+      <text x="420" y="90" opacity="0.85">2. take partial sum from the north</text>
+      <text x="420" y="108" opacity="0.85">3. psum += w · a</text>
+      <text x="420" y="126" opacity="0.85">4. pass activation east, psum south</text>
+      <text x="420" y="158" font-weight="600" class="accf">the weight never moves</text>
+      <text x="420" y="180" opacity="0.85">N×N cells do N² MACs per cycle</text>
+      <text x="420" y="198" opacity="0.85">while reading only 2N operands</text>
+      <text x="420" y="216" opacity="0.85">from the array edge</text>
+      <text x="420" y="248" font-weight="600">→ arithmetic intensity scales with N</text>
+      <text x="420" y="270" opacity="0.72">external memory traffic falls by N,</text>
+      <text x="420" y="286" opacity="0.72">which is the whole point of the design</text>
+    </g>
+  </g>
+</svg>

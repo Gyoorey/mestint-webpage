@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Course roadmap: four 90-minute lecture sessions following the embedded ML pipeline, from the embedded system and its budgets through data and features, models and compression, to hardware and deployment, followed by a fifth session of student paper presentations"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <rect x="8.0" y="40.0" width="170.0" height="168.0" class="ax" fill="none"/>
+  <rect x="8.0" y="40.0" width="170.0" height="28.0" class="fillsoft"/>
+  <text x="18.0" y="59.0" class="lbl accf">SESSION 1</text>
+  <text x="18.0" y="88.0" class="lblb">Embedded systems &amp;</text>
+  <text x="18.0" y="104.0" class="lblb">the case for edge ML</text>
+  <text x="20.0" y="130.0" class="lbl">· budgets, constraints</text>
+  <text x="20.0" y="148.0" class="lbl">· cost of data movement</text>
+  <text x="20.0" y="166.0" class="lbl">· apps &amp; workloads</text>
+  <text x="20.0" y="184.0" class="lbl">· the ML workflow</text>
+  <line x1="180.0" y1="124.0" x2="192.0" y2="124.0" class="ax"/>
+  <path d="M192.0 124.0 L185.8 127.2 L185.8 120.8 Z" fill="currentColor"/>
+  <rect x="186.0" y="40.0" width="170.0" height="168.0" class="ax" fill="none"/>
+  <rect x="186.0" y="40.0" width="170.0" height="28.0" class="fillsoft"/>
+  <text x="196.0" y="59.0" class="lbl accf">SESSION 2</text>
+  <text x="196.0" y="88.0" class="lblb">Data, preprocessing</text>
+  <text x="196.0" y="104.0" class="lblb">&amp; features</text>
+  <text x="198.0" y="130.0" class="lbl">· sensors, sampling, ADC</text>
+  <text x="198.0" y="148.0" class="lbl">· filtering, normalising</text>
+  <text x="198.0" y="166.0" class="lbl">· STFT, mel, MFCC, IMU</text>
+  <text x="198.0" y="184.0" class="lbl">· select &amp; reduce</text>
+  <line x1="358.0" y1="124.0" x2="370.0" y2="124.0" class="ax"/>
+  <path d="M370.0 124.0 L363.8 127.2 L363.8 120.8 Z" fill="currentColor"/>
+  <rect x="364.0" y="40.0" width="170.0" height="168.0" class="ax" fill="none"/>
+  <rect x="364.0" y="40.0" width="170.0" height="28.0" class="fillsoft"/>
+  <text x="374.0" y="59.0" class="lbl accf">SESSION 3</text>
+  <text x="374.0" y="88.0" class="lblb">Classical vs deep</text>
+  <text x="374.0" y="104.0" class="lblb">models &amp; compression</text>
+  <text x="376.0" y="130.0" class="lbl">· ML &amp; NN primer</text>
+  <text x="376.0" y="148.0" class="lbl">· classical cost models</text>
+  <text x="376.0" y="166.0" class="lbl">· efficient archs, NAS</text>
+  <text x="376.0" y="184.0" class="lbl">· quantise, prune, KD</text>
+  <line x1="536.0" y1="124.0" x2="548.0" y2="124.0" class="ax"/>
+  <path d="M548.0 124.0 L541.8 127.2 L541.8 120.8 Z" fill="currentColor"/>
+  <rect x="542.0" y="40.0" width="170.0" height="168.0" class="ax" fill="none"/>
+  <rect x="542.0" y="40.0" width="170.0" height="28.0" class="fillsoft"/>
+  <text x="552.0" y="59.0" class="lbl accf">SESSION 4</text>
+  <text x="552.0" y="88.0" class="lblb">Hardware platforms</text>
+  <text x="552.0" y="104.0" class="lblb">&amp; deployment</text>
+  <text x="554.0" y="130.0" class="lbl">· CPU, memory, roofline</text>
+  <text x="554.0" y="148.0" class="lbl">· MCU · DSP · GPU · NPU</text>
+  <text x="554.0" y="166.0" class="lbl">· FPGA · analog · neuro</text>
+  <text x="554.0" y="184.0" class="lbl">· toolchains, MLOps</text>
+  <text x="8.0" y="26.0" class="lbl">four lectures × 90 min — the order follows the pipeline from sensor to silicon</text>
+  <rect x="8.0" y="228.0" width="704.0" height="40.0" class="acc" fill="none" stroke-width="1.4"/>
+  <text x="360.0" y="247.0" class="lblb" text-anchor="middle">Session 5 — student presentations: one landmark paper each, four topic areas</text>
+  <text x="360.0" y="262.0" class="lbl" text-anchor="middle">quantization · pruning &amp; distillation · efficient architectures &amp; NAS · TinyML systems &amp; hardware</text>
+  <line x1="93.0" y1="208.0" x2="93.0" y2="228.0" class="grid" stroke-dasharray="3 3"/>
+  <line x1="271.0" y1="208.0" x2="271.0" y2="228.0" class="grid" stroke-dasharray="3 3"/>
+  <line x1="449.0" y1="208.0" x2="449.0" y2="228.0" class="grid" stroke-dasharray="3 3"/>
+  <line x1="627.0" y1="208.0" x2="627.0" y2="228.0" class="grid" stroke-dasharray="3 3"/>
+  <text x="8.0" y="292.0" class="lbl">every session is priced against the same five budgets: flash · SRAM · MACs · latency · energy per inference</text>
+</svg>

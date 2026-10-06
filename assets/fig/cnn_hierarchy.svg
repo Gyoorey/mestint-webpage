@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" role="img" aria-label="A small convolutional network for 96 by 96 grayscale images drawn as feature-map blocks that shrink spatially and deepen in channels, with bar charts below showing that activation memory is concentrated in the first layers and parameters in the last"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <path d="M16.0 69.9 L22.0 66.9 L77.1 66.9 L71.1 69.9 Z" class="ax" fill="none"/>
+  <rect x="16.0" y="69.9" width="55.1" height="100.2" class="tlf" opacity="0.25"/>
+  <rect x="16.0" y="69.9" width="55.1" height="100.2" class="ax" fill="none"/>
+  <path d="M71.1 69.9 L77.1 66.9 L77.1 167.1 L71.1 170.1 Z" class="ax" fill="none"/>
+  <text x="46.0" y="206.0" class="lblb" text-anchor="middle">input</text>
+  <text x="46.0" y="222.0" class="lbl" text-anchor="middle">96×96×1</text>
+  <path d="M134.0 82.8 L155.0 72.3 L195.9 72.3 L174.9 82.8 Z" class="ax" fill="none"/>
+  <rect x="134.0" y="82.8" width="40.9" height="74.4" class="tlf" opacity="0.25"/>
+  <rect x="134.0" y="82.8" width="40.9" height="74.4" class="ax" fill="none"/>
+  <path d="M174.9 82.8 L195.9 72.3 L195.9 146.7 L174.9 157.2 Z" class="ax" fill="none"/>
+  <text x="164.0" y="206.0" class="lblb" text-anchor="middle">conv1</text>
+  <text x="164.0" y="222.0" class="lbl" text-anchor="middle">48×48×8</text>
+  <path d="M252.0 92.0 L278.0 79.0 L308.8 79.0 L282.8 92.0 Z" class="ax" fill="none"/>
+  <rect x="252.0" y="92.0" width="30.8" height="56.1" class="tlf" opacity="0.25"/>
+  <rect x="252.0" y="92.0" width="30.8" height="56.1" class="ax" fill="none"/>
+  <path d="M282.8 92.0 L308.8 79.0 L308.8 135.0 L282.8 148.0 Z" class="ax" fill="none"/>
+  <text x="282.0" y="206.0" class="lblb" text-anchor="middle">conv2</text>
+  <text x="282.0" y="222.0" class="lbl" text-anchor="middle">24×24×16</text>
+  <path d="M370.0 98.4 L401.0 82.9 L424.7 82.9 L393.7 98.4 Z" class="ax" fill="none"/>
+  <rect x="370.0" y="98.4" width="23.7" height="43.2" class="tlf" opacity="0.25"/>
+  <rect x="370.0" y="98.4" width="23.7" height="43.2" class="ax" fill="none"/>
+  <path d="M393.7 98.4 L424.7 82.9 L424.7 126.1 L393.7 141.6 Z" class="ax" fill="none"/>
+  <text x="400.0" y="206.0" class="lblb" text-anchor="middle">conv3</text>
+  <text x="400.0" y="222.0" class="lbl" text-anchor="middle">12×12×32</text>
+  <path d="M488.0 103.0 L524.0 85.0 L542.7 85.0 L506.7 103.0 Z" class="ax" fill="none"/>
+  <rect x="488.0" y="103.0" width="18.7" height="34.0" class="tlf" opacity="0.25"/>
+  <rect x="488.0" y="103.0" width="18.7" height="34.0" class="ax" fill="none"/>
+  <path d="M506.7 103.0 L542.7 85.0 L542.7 119.0 L506.7 137.0 Z" class="ax" fill="none"/>
+  <text x="518.0" y="206.0" class="lblb" text-anchor="middle">conv4</text>
+  <text x="518.0" y="222.0" class="lbl" text-anchor="middle">6×6×64</text>
+  <path d="M606.0 109.5 L642.0 91.5 L653.5 91.5 L617.5 109.5 Z" class="ax" fill="none"/>
+  <rect x="606.0" y="109.5" width="11.6" height="21.0" class="tlf" opacity="0.25"/>
+  <rect x="606.0" y="109.5" width="11.6" height="21.0" class="ax" fill="none"/>
+  <path d="M617.5 109.5 L653.5 91.5 L653.5 112.5 L617.5 130.5 Z" class="ax" fill="none"/>
+  <text x="636.0" y="206.0" class="lblb" text-anchor="middle">GAP+FC</text>
+  <text x="636.0" y="222.0" class="lbl" text-anchor="middle">1×1×64</text>
+  <text x="16.0" y="22.0" class="lblb">stride-2 3×3 convolutions: space shrinks 2× per stage, channels double</text>
+  <rect x="18.0" y="275.0" width="22.0" height="25.0" class="accf"/>
+  <rect x="54.0" y="300.0" width="22.0" height="0.0" class="tlf"/>
+  <text x="29.0" y="271.0" class="lbl" text-anchor="middle" font-size="9">9.0k</text>
+  <text x="65.0" y="296.0" class="lbl" text-anchor="middle" font-size="9">0</text>
+  <rect x="136.0" y="250.0" width="22.0" height="50.0" class="accf"/>
+  <rect x="172.0" y="299.8" width="22.0" height="0.2" class="tlf"/>
+  <text x="147.0" y="246.0" class="lbl" text-anchor="middle" font-size="9">18.0k</text>
+  <text x="183.0" y="295.8" class="lbl" text-anchor="middle" font-size="9">72</text>
+  <rect x="254.0" y="275.0" width="22.0" height="25.0" class="accf"/>
+  <rect x="290.0" y="296.9" width="22.0" height="3.1" class="tlf"/>
+  <text x="265.0" y="271.0" class="lbl" text-anchor="middle" font-size="9">9.0k</text>
+  <text x="301.0" y="292.9" class="lbl" text-anchor="middle" font-size="9">1.1k</text>
+  <rect x="372.0" y="287.5" width="22.0" height="12.5" class="accf"/>
+  <rect x="408.0" y="287.5" width="22.0" height="12.5" class="tlf"/>
+  <text x="383.0" y="283.5" class="lbl" text-anchor="middle" font-size="9">4.5k</text>
+  <text x="419.0" y="283.5" class="lbl" text-anchor="middle" font-size="9">4.5k</text>
+  <rect x="490.0" y="293.8" width="22.0" height="6.2" class="accf"/>
+  <rect x="526.0" y="250.0" width="22.0" height="50.0" class="tlf"/>
+  <text x="501.0" y="289.8" class="lbl" text-anchor="middle" font-size="9">2.2k</text>
+  <text x="537.0" y="246.0" class="lbl" text-anchor="middle" font-size="9">18.0k</text>
+  <rect x="608.0" y="299.8" width="22.0" height="0.2" class="accf"/>
+  <rect x="644.0" y="298.3" width="22.0" height="1.7" class="tlf"/>
+  <text x="619.0" y="295.8" class="lbl" text-anchor="middle" font-size="9">64</text>
+  <text x="655.0" y="294.3" class="lbl" text-anchor="middle" font-size="9">640</text>
+  <line x1="16.0" y1="300.0" x2="704.0" y2="300.0" class="ax"/>
+  <rect x="470.0" y="30.0" width="10.0" height="10.0" class="accf"/>
+  <text x="486.0" y="39.0" class="lbl">output activation bytes (int8)</text>
+  <rect x="470.0" y="46.0" width="10.0" height="10.0" class="tlf"/>
+  <text x="486.0" y="55.0" class="lbl">parameters (= weight bytes, int8)</text>
+  <text x="16.0" y="320.0" class="lbl">activations peak at the front, parameters at the back — the asymmetry that decides SRAM versus flash</text>
+</svg>

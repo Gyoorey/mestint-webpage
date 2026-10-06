@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 240" role="img" aria-label="Per-channel weight ranges in a depthwise layer shown as bars of very different lengths, with a single per-tensor scale sized for the largest channel leaving small channels with almost no levels, contrasted with per-channel scales"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <text x="8" y="18" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">per-channel weight ranges after batch-norm folding, depthwise layer</text>
+    <g>
+      <rect x="120" y="34" width="440" height="16" fill="currentColor" opacity="0.35"/>
+      <rect x="120" y="58" width="52" height="16" fill="currentColor" opacity="0.35"/>
+      <rect x="120" y="82" width="128" height="16" fill="currentColor" opacity="0.35"/>
+      <rect x="120" y="106" width="24" height="16" fill="currentColor" opacity="0.35"/>
+      <rect x="120" y="130" width="212" height="16" fill="currentColor" opacity="0.35"/>
+    </g>
+    <g text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.8">
+      <text x="112" y="47">ch 0</text><text x="112" y="71">ch 1</text><text x="112" y="95">ch 2</text>
+      <text x="112" y="119">ch 3</text><text x="112" y="143">ch 4</text>
+    </g>
+    <line x1="560" y1="28" x2="560" y2="152" class="acc" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <text x="568" y="42" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">one per-tensor scale</text>
+    <text x="568" y="58" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">sized for ch 0</text>
+    <g font-family="IBM Plex Mono, monospace" font-size="10.5" class="accf">
+      <text x="180" y="71">≈ 30 of 256 levels used</text>
+      <text x="152" y="119">≈ 14 levels — near-total collapse</text>
+    </g>
+    <line x1="20" y1="172" x2="700" y2="172" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+    <text x="8" y="196" font-family="IBM Plex Sans Condensed, sans-serif" font-size="12.5" font-weight="600">Per-channel scales: one s per output channel, so every channel uses the full integer grid.</text>
+    <text x="8" y="216" font-family="IBM Plex Mono, monospace" opacity="0.8" font-size="9.19">Cost: a vector of requantization multipliers instead of one scalar — a few hundred bytes, no extra arithmetic in the inner loop.</text>
+    <text x="8" y="234" font-family="IBM Plex Mono, monospace" opacity="0.8" font-size="8.4">Activations stay per-tensor: their scale must be known before the sum, so a per-channel activation scale would break the shared accumulator.</text>
+  </g>
+</svg>

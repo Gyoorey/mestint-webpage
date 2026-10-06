@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" role="img" aria-label="The embedded ML workflow as a loop: define the problem and budgets, collect and label data, preprocess and extract features, train, compress and optimise, convert and compile, test on the device, deploy and monitor, with drift feeding back to data collection"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <rect x="8.0" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="47.0" y="94.0" class="lblb" text-anchor="middle">Define task</text>
+  <text x="47.0" y="110.0" class="lbl" text-anchor="middle">&amp; budgets</text>
+  <text x="47.0" y="144.0" class="lbl accf" text-anchor="middle">S1</text>
+  <line x1="87.0" y1="99.0" x2="95.5" y2="99.0" class="ax"/>
+  <path d="M95.5 99.0 L91.0 101.3 L91.0 96.7 Z" fill="currentColor"/>
+  <rect x="96.5" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="135.5" y="94.0" class="lblb" text-anchor="middle">Collect &amp;</text>
+  <text x="135.5" y="110.0" class="lbl" text-anchor="middle">label data</text>
+  <text x="135.5" y="144.0" class="lbl accf" text-anchor="middle">S2</text>
+  <line x1="175.5" y1="99.0" x2="184.0" y2="99.0" class="ax"/>
+  <path d="M184.0 99.0 L179.5 101.3 L179.5 96.7 Z" fill="currentColor"/>
+  <rect x="185.0" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="224.0" y="94.0" class="lblb" text-anchor="middle">Preprocess,</text>
+  <text x="224.0" y="110.0" class="lbl" text-anchor="middle">features</text>
+  <text x="224.0" y="144.0" class="lbl accf" text-anchor="middle">S2</text>
+  <line x1="264.0" y1="99.0" x2="272.5" y2="99.0" class="ax"/>
+  <path d="M272.5 99.0 L268.0 101.3 L268.0 96.7 Z" fill="currentColor"/>
+  <rect x="273.5" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="312.5" y="94.0" class="lblb" text-anchor="middle">Train</text>
+  <text x="312.5" y="110.0" class="lbl" text-anchor="middle">model</text>
+  <text x="312.5" y="144.0" class="lbl accf" text-anchor="middle">S3</text>
+  <line x1="352.5" y1="99.0" x2="361.0" y2="99.0" class="ax"/>
+  <path d="M361.0 99.0 L356.5 101.3 L356.5 96.7 Z" fill="currentColor"/>
+  <rect x="362.0" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="401.0" y="94.0" class="lblb" text-anchor="middle">Compress</text>
+  <text x="401.0" y="110.0" class="lbl" text-anchor="middle">quantise</text>
+  <text x="401.0" y="144.0" class="lbl accf" text-anchor="middle">S3</text>
+  <line x1="441.0" y1="99.0" x2="449.5" y2="99.0" class="ax"/>
+  <path d="M449.5 99.0 L445.0 101.3 L445.0 96.7 Z" fill="currentColor"/>
+  <rect x="450.5" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="489.5" y="94.0" class="lblb" text-anchor="middle">Convert &amp;</text>
+  <text x="489.5" y="110.0" class="lbl" text-anchor="middle">compile</text>
+  <text x="489.5" y="144.0" class="lbl accf" text-anchor="middle">S4</text>
+  <line x1="529.5" y1="99.0" x2="538.0" y2="99.0" class="ax"/>
+  <path d="M538.0 99.0 L533.5 101.3 L533.5 96.7 Z" fill="currentColor"/>
+  <rect x="539.0" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="578.0" y="94.0" class="lblb" text-anchor="middle">Test on</text>
+  <text x="578.0" y="110.0" class="lbl" text-anchor="middle">device</text>
+  <text x="578.0" y="144.0" class="lbl accf" text-anchor="middle">S4</text>
+  <line x1="618.0" y1="99.0" x2="626.5" y2="99.0" class="ax"/>
+  <path d="M626.5 99.0 L622.0 101.3 L622.0 96.7 Z" fill="currentColor"/>
+  <rect x="627.5" y="70.0" width="78.0" height="58.0" class="ax" fill="none"/>
+  <text x="666.5" y="94.0" class="lblb" text-anchor="middle">Deploy &amp;</text>
+  <text x="666.5" y="110.0" class="lbl" text-anchor="middle">monitor</text>
+  <text x="666.5" y="144.0" class="lbl accf" text-anchor="middle">S4</text>
+  <path d="M666.5 150 L666.5 180 L135.5 180 L135.5 154" class="acc" stroke-width="1.4"/>
+  <line x1="135.5" y1="160.0" x2="135.5" y2="152.0" class="acc"/>
+  <path d="M135.5 152.0 L138.2 157.3 L132.8 157.3 Z" class="accf"/>
+  <text x="360.0" y="198.0" class="lbl" text-anchor="middle">drift, new failure cases and field data flow back into the dataset</text>
+  <path d="M578.0 66 L578.0 40 L312.5 40 L312.5 62" class="tl" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <line x1="312.5" y1="52.0" x2="312.5" y2="64.0" class="tl"/>
+  <path d="M312.5 64.0 L309.8 58.7 L315.2 58.7 Z" class="tlf"/>
+  <text x="445.2" y="33.0" class="lbl" text-anchor="middle">inner loop: does it fit, is it fast enough, is it still accurate?</text>
+  <text x="8.0" y="232.0" class="lblb">Most of the effort in an embedded project sits in the two loops, not in the single "train" box.</text>
+  <text x="8.0" y="250.0" class="lbl">S1–S4 mark the session in which each step is treated.</text>
+</svg>

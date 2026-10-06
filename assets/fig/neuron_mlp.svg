@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Left: a single artificial neuron computing a weighted sum of three inputs plus a bias followed by an activation function. Right: a multilayer perceptron with four inputs, two hidden layers of five and four units, and three outputs, with its parameter count"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <circle cx="40.0" cy="70.0" r="16.0" class="ax" fill="none"/>
+  <text x="40.0" y="75.0" class="lblb" text-anchor="middle">x₁</text>
+  <line x1="56.0" y1="70.0" x2="160.0" y2="122.5" class="ax"/>
+  <path d="M160.0 122.5 L154.0 122.5 L156.5 117.7 Z" fill="currentColor"/>
+  <text x="104.0" y="90.2" class="lbl accf">w₁</text>
+  <circle cx="40.0" cy="140.0" r="16.0" class="ax" fill="none"/>
+  <text x="40.0" y="145.0" class="lblb" text-anchor="middle">x₂</text>
+  <line x1="56.0" y1="140.0" x2="160.0" y2="140.0" class="ax"/>
+  <path d="M160.0 140.0 L154.7 142.7 L154.7 137.3 Z" fill="currentColor"/>
+  <text x="104.0" y="134.0" class="lbl accf">w₂</text>
+  <circle cx="40.0" cy="210.0" r="16.0" class="ax" fill="none"/>
+  <text x="40.0" y="215.0" class="lblb" text-anchor="middle">x₃</text>
+  <line x1="56.0" y1="210.0" x2="160.0" y2="157.5" class="ax"/>
+  <path d="M160.0 157.5 L156.5 162.3 L154.0 157.5 Z" fill="currentColor"/>
+  <text x="104.0" y="177.8" class="lbl accf">w₃</text>
+  <circle cx="182.0" cy="140.0" r="24.0" class="ax" fill="none" stroke-width="1.5"/>
+  <text x="182.0" y="146.0" class="lblb" text-anchor="middle" font-size="18">Σ</text>
+  <text x="182.0" y="196.0" class="lbl" text-anchor="middle">+ b</text>
+  <line x1="182.0" y1="186.0" x2="182.0" y2="166.0" class="ax"/>
+  <path d="M182.0 166.0 L184.3 170.5 L179.7 170.5 Z" fill="currentColor"/>
+  <line x1="206.0" y1="140.0" x2="236.0" y2="140.0" class="ax"/>
+  <path d="M236.0 140.0 L230.7 142.7 L230.7 137.3 Z" fill="currentColor"/>
+  <rect x="238.0" y="118.0" width="50.0" height="44.0" class="ax" fill="none"/>
+  <path d="M244.0 154.0 L262.0 154.0 L282.0 124.0" class="acc" stroke-width="1.8"/>
+  <text x="263.0" y="178.0" class="lbl" text-anchor="middle">φ</text>
+  <line x1="288.0" y1="140.0" x2="316.0" y2="140.0" class="ax"/>
+  <path d="M316.0 140.0 L310.7 142.7 L310.7 137.3 Z" fill="currentColor"/>
+  <text x="322.0" y="144.0" class="lblb">y</text>
+  <text x="20.0" y="26.0" class="lblb">one neuron: y = φ(w·x + b)</text>
+  <text x="20.0" y="262.0" class="lbl">cost: n MACs + 1 add + 1 activation</text>
+  <text x="20.0" y="278.0" class="lbl">parameters: n weights + 1 bias</text>
+  <line x1="411.0" y1="77.0" x2="479.0" y2="56.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="77.0" x2="479.0" y2="98.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="77.0" x2="479.0" y2="140.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="77.0" x2="479.0" y2="182.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="77.0" x2="479.0" y2="224.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="119.0" x2="479.0" y2="56.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="119.0" x2="479.0" y2="98.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="119.0" x2="479.0" y2="140.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="119.0" x2="479.0" y2="182.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="119.0" x2="479.0" y2="224.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="161.0" x2="479.0" y2="56.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="161.0" x2="479.0" y2="98.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="161.0" x2="479.0" y2="140.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="161.0" x2="479.0" y2="182.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="161.0" x2="479.0" y2="224.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="203.0" x2="479.0" y2="56.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="203.0" x2="479.0" y2="98.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="203.0" x2="479.0" y2="140.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="203.0" x2="479.0" y2="182.0" class="grid" opacity="0.55"/>
+  <line x1="411.0" y1="203.0" x2="479.0" y2="224.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="56.0" x2="569.0" y2="77.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="56.0" x2="569.0" y2="119.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="56.0" x2="569.0" y2="161.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="56.0" x2="569.0" y2="203.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="98.0" x2="569.0" y2="77.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="98.0" x2="569.0" y2="119.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="98.0" x2="569.0" y2="161.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="98.0" x2="569.0" y2="203.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="140.0" x2="569.0" y2="77.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="140.0" x2="569.0" y2="119.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="140.0" x2="569.0" y2="161.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="140.0" x2="569.0" y2="203.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="182.0" x2="569.0" y2="77.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="182.0" x2="569.0" y2="119.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="182.0" x2="569.0" y2="161.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="182.0" x2="569.0" y2="203.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="224.0" x2="569.0" y2="77.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="224.0" x2="569.0" y2="119.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="224.0" x2="569.0" y2="161.0" class="grid" opacity="0.55"/>
+  <line x1="501.0" y1="224.0" x2="569.0" y2="203.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="77.0" x2="659.0" y2="98.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="77.0" x2="659.0" y2="140.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="77.0" x2="659.0" y2="182.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="119.0" x2="659.0" y2="98.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="119.0" x2="659.0" y2="140.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="119.0" x2="659.0" y2="182.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="161.0" x2="659.0" y2="98.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="161.0" x2="659.0" y2="140.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="161.0" x2="659.0" y2="182.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="203.0" x2="659.0" y2="98.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="203.0" x2="659.0" y2="140.0" class="grid" opacity="0.55"/>
+  <line x1="591.0" y1="203.0" x2="659.0" y2="182.0" class="grid" opacity="0.55"/>
+  <circle cx="400.0" cy="77.0" r="11.0" fill="none" stroke="currentColor"/>
+  <circle cx="400.0" cy="119.0" r="11.0" fill="none" stroke="currentColor"/>
+  <circle cx="400.0" cy="161.0" r="11.0" fill="none" stroke="currentColor"/>
+  <circle cx="400.0" cy="203.0" r="11.0" fill="none" stroke="currentColor"/>
+  <circle cx="490.0" cy="56.0" r="11.0" class="tlf" stroke="currentColor" opacity="0.9"/>
+  <circle cx="490.0" cy="98.0" r="11.0" class="tlf" stroke="currentColor" opacity="0.9"/>
+  <circle cx="490.0" cy="140.0" r="11.0" class="tlf" stroke="currentColor" opacity="0.9"/>
+  <circle cx="490.0" cy="182.0" r="11.0" class="tlf" stroke="currentColor" opacity="0.9"/>
+  <circle cx="490.0" cy="224.0" r="11.0" class="tlf" stroke="currentColor" opacity="0.9"/>
+  <circle cx="580.0" cy="77.0" r="11.0" class="tlf" stroke="currentColor" opacity="0.9"/>
+  <circle cx="580.0" cy="119.0" r="11.0" class="tlf" stroke="currentColor" opacity="0.9"/>
+  <circle cx="580.0" cy="161.0" r="11.0" class="tlf" stroke="currentColor" opacity="0.9"/>
+  <circle cx="580.0" cy="203.0" r="11.0" class="tlf" stroke="currentColor" opacity="0.9"/>
+  <circle cx="670.0" cy="98.0" r="11.0" fill="none" stroke="currentColor"/>
+  <circle cx="670.0" cy="140.0" r="11.0" fill="none" stroke="currentColor"/>
+  <circle cx="670.0" cy="182.0" r="11.0" fill="none" stroke="currentColor"/>
+  <text x="400.0" y="254.0" class="lbl" text-anchor="middle">input</text>
+  <text x="490.0" y="254.0" class="lbl" text-anchor="middle">hidden 1</text>
+  <text x="580.0" y="254.0" class="lbl" text-anchor="middle">hidden 2</text>
+  <text x="670.0" y="254.0" class="lbl" text-anchor="middle">output</text>
+  <text x="380.0" y="26.0" class="lblb">multilayer perceptron (fully connected)</text>
+  <text x="380.0" y="278.0" class="lbl">params = (4·5+5) + (5·4+4) + (4·3+3) = 64 · MACs = 52</text>
+</svg>

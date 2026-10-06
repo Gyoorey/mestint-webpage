@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="A linear support vector machine on two Gaussian classes: the decision boundary, the two margin lines, and the three support vectors that alone determine them"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="60.0" y1="244.0" x2="430.0" y2="244.0" class="ax"/>
+  <line x1="60.0" y1="34.0" x2="60.0" y2="244.0" class="ax"/>
+  <line x1="112.9" y1="34.0" x2="112.9" y2="244.0" class="grid"/>
+  <line x1="112.9" y1="244.0" x2="112.9" y2="248.0" class="ax"/>
+  <text x="112.9" y="261.0" class="lbl" text-anchor="middle">-3</text>
+  <line x1="245.0" y1="34.0" x2="245.0" y2="244.0" class="grid"/>
+  <line x1="245.0" y1="244.0" x2="245.0" y2="248.0" class="ax"/>
+  <text x="245.0" y="261.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="377.1" y1="34.0" x2="377.1" y2="244.0" class="grid"/>
+  <line x1="377.1" y1="244.0" x2="377.1" y2="248.0" class="ax"/>
+  <text x="377.1" y="261.0" class="lbl" text-anchor="middle">3</text>
+  <line x1="60.0" y1="226.5" x2="430.0" y2="226.5" class="grid"/>
+  <line x1="56.0" y1="226.5" x2="60.0" y2="226.5" class="ax"/>
+  <text x="52.0" y="230.1" class="lbl" text-anchor="end">-3</text>
+  <line x1="60.0" y1="139.0" x2="430.0" y2="139.0" class="grid"/>
+  <line x1="56.0" y1="139.0" x2="60.0" y2="139.0" class="ax"/>
+  <text x="52.0" y="142.6" class="lbl" text-anchor="end">0</text>
+  <line x1="60.0" y1="51.5" x2="430.0" y2="51.5" class="grid"/>
+  <line x1="56.0" y1="51.5" x2="60.0" y2="51.5" class="ax"/>
+  <text x="52.0" y="55.1" class="lbl" text-anchor="end">3</text>
+  <path d="M126.9 34.8 L128.8 36.5 L130.7 38.1 L132.5 39.8 L134.4 41.5 L136.2 43.1 L138.1 44.8 L139.9 46.5 L141.8 48.1 L143.7 49.8 L145.5 51.5 L147.4 53.2 L149.2 54.8 L151.1 56.5 L153.0 58.2 L154.8 59.8 L156.7 61.5 L158.5 63.2 L160.4 64.8 L162.3 66.5 L164.1 68.2 L166.0 69.8 L167.8 71.5 L169.7 73.2 L171.6 74.8 L173.4 76.5 L175.3 78.2 L177.1 79.8 L179.0 81.5 L180.9 83.2 L182.7 84.9 L184.6 86.5 L186.4 88.2 L188.3 89.9 L190.2 91.5 L192.0 93.2 L193.9 94.9 L195.7 96.5 L197.6 98.2 L199.4 99.9 L201.3 101.5 L203.2 103.2 L205.0 104.9 L206.9 106.5 L208.7 108.2 L210.6 109.9 L212.5 111.5 L214.3 113.2 L216.2 114.9 L218.0 116.5 L219.9 118.2 L221.8 119.9 L223.6 121.6 L225.5 123.2 L227.3 124.9 L229.2 126.6 L231.1 128.2 L232.9 129.9 L234.8 131.6 L236.6 133.2 L238.5 134.9 L240.4 136.6 L242.2 138.2 L244.1 139.9 L245.9 141.6 L247.8 143.2 L249.6 144.9 L251.5 146.6 L253.4 148.2 L255.2 149.9 L257.1 151.6 L258.9 153.2 L260.8 154.9 L262.7 156.6 L264.5 158.3 L266.4 159.9 L268.2 161.6 L270.1 163.3 L272.0 164.9 L273.8 166.6 L275.7 168.3 L277.5 169.9 L279.4 171.6 L281.3 173.3 L283.1 174.9 L285.0 176.6 L286.8 178.3 L288.7 179.9 L290.6 181.6 L292.4 183.3 L294.3 184.9 L296.1 186.6 L298.0 188.3 L299.8 190.0 L301.7 191.6 L303.6 193.3 L305.4 195.0 L307.3 196.6 L309.1 198.3 L311.0 200.0 L312.9 201.6 L314.7 203.3 L316.6 205.0 L318.4 206.6 L320.3 208.3 L322.2 210.0 L324.0 211.6 L325.9 213.3 L327.7 215.0 L329.6 216.6 L331.5 218.3 L333.3 220.0 L335.2 221.6 L337.0 223.3 L338.9 225.0 L340.8 226.7 L342.6 228.3 L344.5 230.0 L346.3 231.7 L348.2 233.3 L350.1 235.0 L351.9 236.7 L353.8 238.3 L355.6 240.0 L357.5 241.7 L359.3 243.3" class="acc" stroke-width="2.4"/>
+  <path d="M166.0 34.9 L167.8 36.5 L169.7 38.2 L171.6 39.9 L173.4 41.5 L175.3 43.2 L177.1 44.9 L179.0 46.5 L180.9 48.2 L182.7 49.9 L184.6 51.5 L186.4 53.2 L188.3 54.9 L190.2 56.6 L192.0 58.2 L193.9 59.9 L195.7 61.6 L197.6 63.2 L199.4 64.9 L201.3 66.6 L203.2 68.2 L205.0 69.9 L206.9 71.6 L208.7 73.2 L210.6 74.9 L212.5 76.6 L214.3 78.2 L216.2 79.9 L218.0 81.6 L219.9 83.2 L221.8 84.9 L223.6 86.6 L225.5 88.3 L227.3 89.9 L229.2 91.6 L231.1 93.3 L232.9 94.9 L234.8 96.6 L236.6 98.3 L238.5 99.9 L240.4 101.6 L242.2 103.3 L244.1 104.9 L245.9 106.6 L247.8 108.3 L249.6 109.9 L251.5 111.6 L253.4 113.3 L255.2 114.9 L257.1 116.6 L258.9 118.3 L260.8 119.9 L262.7 121.6 L264.5 123.3 L266.4 125.0 L268.2 126.6 L270.1 128.3 L272.0 130.0 L273.8 131.6 L275.7 133.3 L277.5 135.0 L279.4 136.6 L281.3 138.3 L283.1 140.0 L285.0 141.6 L286.8 143.3 L288.7 145.0 L290.6 146.6 L292.4 148.3 L294.3 150.0 L296.1 151.6 L298.0 153.3 L299.8 155.0 L301.7 156.6 L303.6 158.3 L305.4 160.0 L307.3 161.7 L309.1 163.3 L311.0 165.0 L312.9 166.7 L314.7 168.3 L316.6 170.0 L318.4 171.7 L320.3 173.3 L322.2 175.0 L324.0 176.7 L325.9 178.3 L327.7 180.0 L329.6 181.7 L331.5 183.3 L333.3 185.0 L335.2 186.7 L337.0 188.3 L338.9 190.0 L340.8 191.7 L342.6 193.4 L344.5 195.0 L346.3 196.7 L348.2 198.4 L350.1 200.0 L351.9 201.7 L353.8 203.4 L355.6 205.0 L357.5 206.7 L359.3 208.4 L361.2 210.0 L363.1 211.7 L364.9 213.4 L366.8 215.0 L368.6 216.7 L370.5 218.4 L372.4 220.0 L374.2 221.7 L376.1 223.4 L377.9 225.0 L379.8 226.7 L381.7 228.4 L383.5 230.1 L385.4 231.7 L387.2 233.4 L389.1 235.1 L391.0 236.7 L392.8 238.4 L394.7 240.1 L396.5 241.7 L398.4 243.4" class="acc" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.75"/>
+  <path d="M87.9 34.7 L89.7 36.4 L91.6 38.1 L93.5 39.7 L95.3 41.4 L97.2 43.1 L99.0 44.7 L100.9 46.4 L102.8 48.1 L104.6 49.8 L106.5 51.4 L108.3 53.1 L110.2 54.8 L112.1 56.4 L113.9 58.1 L115.8 59.8 L117.6 61.4 L119.5 63.1 L121.4 64.8 L123.2 66.4 L125.1 68.1 L126.9 69.8 L128.8 71.4 L130.7 73.1 L132.5 74.8 L134.4 76.4 L136.2 78.1 L138.1 79.8 L139.9 81.4 L141.8 83.1 L143.7 84.8 L145.5 86.5 L147.4 88.1 L149.2 89.8 L151.1 91.5 L153.0 93.1 L154.8 94.8 L156.7 96.5 L158.5 98.1 L160.4 99.8 L162.3 101.5 L164.1 103.1 L166.0 104.8 L167.8 106.5 L169.7 108.1 L171.6 109.8 L173.4 111.5 L175.3 113.1 L177.1 114.8 L179.0 116.5 L180.9 118.2 L182.7 119.8 L184.6 121.5 L186.4 123.2 L188.3 124.8 L190.2 126.5 L192.0 128.2 L193.9 129.8 L195.7 131.5 L197.6 133.2 L199.4 134.8 L201.3 136.5 L203.2 138.2 L205.0 139.8 L206.9 141.5 L208.7 143.2 L210.6 144.8 L212.5 146.5 L214.3 148.2 L216.2 149.8 L218.0 151.5 L219.9 153.2 L221.8 154.9 L223.6 156.5 L225.5 158.2 L227.3 159.9 L229.2 161.5 L231.1 163.2 L232.9 164.9 L234.8 166.5 L236.6 168.2 L238.5 169.9 L240.4 171.5 L242.2 173.2 L244.1 174.9 L245.9 176.5 L247.8 178.2 L249.6 179.9 L251.5 181.5 L253.4 183.2 L255.2 184.9 L257.1 186.5 L258.9 188.2 L260.8 189.9 L262.7 191.6 L264.5 193.2 L266.4 194.9 L268.2 196.6 L270.1 198.2 L272.0 199.9 L273.8 201.6 L275.7 203.2 L277.5 204.9 L279.4 206.6 L281.3 208.2 L283.1 209.9 L285.0 211.6 L286.8 213.2 L288.7 214.9 L290.6 216.6 L292.4 218.2 L294.3 219.9 L296.1 221.6 L298.0 223.3 L299.8 224.9 L301.7 226.6 L303.6 228.3 L305.4 229.9 L307.3 231.6 L309.1 233.3 L311.0 234.9 L312.9 236.6 L314.7 238.3 L316.6 239.9 L318.4 241.6 L320.3 243.3" class="acc" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.75"/>
+  <circle cx="239.3" cy="221.8" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="187.8" cy="180.1" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="160.2" cy="172.7" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="110.5" cy="173.0" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="147.1" cy="98.4" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="181.7" cy="175.6" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="165.6" cy="182.2" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="141.1" cy="176.4" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="189.8" cy="173.2" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="204.9" cy="172.4" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="175.3" cy="135.7" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="191.8" cy="178.8" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="168.7" cy="156.8" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="235.9" cy="173.8" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="166.8" cy="147.1" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="146.4" cy="174.3" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="202.5" cy="156.0" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="177.4" cy="154.1" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="84.8" cy="146.7" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="144.1" cy="203.2" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="183.3" cy="153.5" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="160.4" cy="190.8" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="175.4" cy="169.3" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="219.1" cy="152.5" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="180.7" cy="144.8" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="168.0" cy="187.6" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="193.0" cy="155.9" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="167.7" cy="184.6" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="181.8" cy="220.5" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="196.4" cy="157.8" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="122.5" cy="166.9" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="143.9" cy="152.3" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="110.0" cy="187.4" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="197.0" cy="143.9" r="3.4" fill="currentColor" opacity="0.35"/>
+  <circle cx="251.4" cy="111.5" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="330.3" cy="113.9" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="370.3" cy="126.1" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="331.1" cy="123.1" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="364.5" cy="101.5" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="308.1" cy="137.2" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="373.2" cy="85.3" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="343.8" cy="77.2" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="331.0" cy="114.5" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="294.5" cy="117.9" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="363.3" cy="131.8" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="301.0" cy="107.8" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="327.0" cy="89.0" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="280.3" cy="137.4" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="319.7" cy="75.6" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="343.9" cy="96.6" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="309.8" cy="94.9" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="312.2" cy="83.9" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="294.7" cy="98.3" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="316.4" cy="89.7" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="327.0" cy="47.5" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="367.4" cy="69.7" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="255.2" cy="108.2" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="300.6" cy="89.9" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="247.6" cy="76.4" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="353.7" cy="128.4" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="288.8" cy="117.9" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="321.3" cy="87.6" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="384.8" cy="105.2" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="344.2" cy="97.8" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="375.7" cy="85.5" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="363.3" cy="123.7" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="313.8" cy="118.2" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="367.6" cy="87.3" r="3.4" fill="currentColor" opacity="0.75"/>
+  <circle cx="219.1" cy="152.5" r="7.5" fill="none" stroke="var(--teal)" stroke-width="2.2"/>
+  <circle cx="251.4" cy="111.5" r="7.5" fill="none" stroke="var(--teal)" stroke-width="2.2"/>
+  <circle cx="280.3" cy="137.4" r="7.5" fill="none" stroke="var(--teal)" stroke-width="2.2"/>
+  <text x="60.0" y="24.0" class="lblb">linear SVM · 68 points · 3 support vectors</text>
+  <text x="444.0" y="70.0" class="lblb" fill="var(--copper)">margin = 2/‖w‖</text>
+  <text x="444.0" y="94.0" class="lbl">Only the circled points</text>
+  <text x="444.0" y="110.0" class="lbl">enter the solution. Delete</text>
+  <text x="444.0" y="126.0" class="lbl">any other point and the</text>
+  <text x="444.0" y="142.0" class="lbl">boundary does not move.</text>
+  <text x="444.0" y="172.0" class="lblb">Inference cost:</text>
+  <text x="444.0" y="190.0" class="lbl">linear kernel → D MACs</text>
+  <text x="444.0" y="206.0" class="lbl" fill="var(--copper)">RBF kernel → n_SV · D MACs</text>
+  <text x="444.0" y="230.0" class="lbl">and n_SV grows with the</text>
+  <text x="444.0" y="246.0" class="lbl">size of the training set.</text>
+</svg>

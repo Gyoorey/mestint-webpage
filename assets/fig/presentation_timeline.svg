@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" role="img" aria-label="Timeline of the ninety-minute presentation session: five minutes of introduction, four slots of fifteen minutes of talk and five minutes of discussion, and five minutes of wrap-up"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <rect x="21.0" y="50.0" width="35.8" height="40.0" class="fillsoft"/>
+  <text x="38.9" y="75.0" class="lbl" text-anchor="middle" font-size="9.5">intro</text>
+  <rect x="58.8" y="50.0" width="111.3" height="40.0" class="tlf" opacity="0.85"/>
+  <text x="114.4" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">talk A</text>
+  <rect x="172.1" y="50.0" width="35.8" height="40.0" class="accf" opacity="0.85"/>
+  <text x="190.0" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">Q&amp;A</text>
+  <rect x="209.9" y="50.0" width="111.3" height="40.0" class="tlf" opacity="0.85"/>
+  <text x="265.6" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">talk B</text>
+  <rect x="323.2" y="50.0" width="35.8" height="40.0" class="accf" opacity="0.85"/>
+  <text x="341.1" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">Q&amp;A</text>
+  <rect x="361.0" y="50.0" width="111.3" height="40.0" class="tlf" opacity="0.85"/>
+  <text x="416.7" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">talk C</text>
+  <rect x="474.3" y="50.0" width="35.8" height="40.0" class="accf" opacity="0.85"/>
+  <text x="492.2" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">Q&amp;A</text>
+  <rect x="512.1" y="50.0" width="111.3" height="40.0" class="tlf" opacity="0.85"/>
+  <text x="567.8" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">talk D</text>
+  <rect x="625.4" y="50.0" width="35.8" height="40.0" class="accf" opacity="0.85"/>
+  <text x="643.3" y="75.0" class="lbl" text-anchor="middle" fill="#fff" font-size="9.5">Q&amp;A</text>
+  <rect x="663.2" y="50.0" width="35.8" height="40.0" class="fillsoft"/>
+  <text x="681.1" y="75.0" class="lbl" text-anchor="middle" font-size="9.5">wrap</text>
+  <line x1="20.0" y1="90.0" x2="20.0" y2="96.0" class="ax"/>
+  <text x="20.0" y="110.0" class="lbl" text-anchor="middle">0′</text>
+  <line x1="133.3" y1="90.0" x2="133.3" y2="96.0" class="ax"/>
+  <text x="133.3" y="110.0" class="lbl" text-anchor="middle">15′</text>
+  <line x1="246.7" y1="90.0" x2="246.7" y2="96.0" class="ax"/>
+  <text x="246.7" y="110.0" class="lbl" text-anchor="middle">30′</text>
+  <line x1="360.0" y1="90.0" x2="360.0" y2="96.0" class="ax"/>
+  <text x="360.0" y="110.0" class="lbl" text-anchor="middle">45′</text>
+  <line x1="473.3" y1="90.0" x2="473.3" y2="96.0" class="ax"/>
+  <text x="473.3" y="110.0" class="lbl" text-anchor="middle">60′</text>
+  <line x1="586.7" y1="90.0" x2="586.7" y2="96.0" class="ax"/>
+  <text x="586.7" y="110.0" class="lbl" text-anchor="middle">75′</text>
+  <line x1="700.0" y1="90.0" x2="700.0" y2="96.0" class="ax"/>
+  <text x="700.0" y="110.0" class="lbl" text-anchor="middle">90′</text>
+  <text x="20.0" y="30.0" class="lblb">Session 5 · 90 minutes · four presenters</text>
+  <text x="20.0" y="140.0" class="lbl">Each slot: 15 min talk (strict) + 5 min questions led by the assigned discussant.</text>
+  <text x="20.0" y="158.0" class="lbl">Three presenters: 20 min talk + 8 min questions each; the spare time goes to a closing panel.</text>
+  <text x="20.0" y="176.0" class="lbl">Slides are uploaded the evening before so that the changeover takes seconds, not minutes.</text>
+</svg>

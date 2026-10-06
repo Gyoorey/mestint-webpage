@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Bit-level comparison of a 32-bit float, a 16-bit bfloat, and an 8-bit affine integer: the float spends bits on an exponent for per-value dynamic range, the integer shares one scale across the whole tensor"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <rect x="56.0" y="46.0" width="17.5" height="26.0" fill="none" stroke="currentColor" stroke-width="1" opacity="1"/>
+  
+  <rect x="73.5" y="46.0" width="140.0" height="26.0" class="accf" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+  <text x="143.5" y="63.0" class="lbl" text-anchor="middle">exponent · 8</text>
+  <rect x="213.5" y="46.0" width="402.5" height="26.0" class="tlf" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+  <text x="414.8" y="63.0" class="lbl" text-anchor="middle">mantissa · 23</text>
+  <text x="56.0" y="38.0" class="lblb">float32 — 32 bits per value: sign · exponent · mantissa</text>
+  <rect x="56.0" y="116.0" width="35.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1" opacity="1"/>
+  
+  <rect x="91.0" y="116.0" width="280.0" height="26.0" class="accf" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+  <text x="231.0" y="133.0" class="lbl" text-anchor="middle">exponent · 8</text>
+  <rect x="371.0" y="116.0" width="245.0" height="26.0" class="tlf" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+  <text x="493.5" y="133.0" class="lbl" text-anchor="middle">mantissa · 7</text>
+  <text x="56.0" y="108.0" class="lblb">bfloat16 — same exponent range, coarser steps</text>
+  <rect x="56.0" y="186.0" width="560.0" height="26.0" fill="none" stroke="currentColor" stroke-width="1" opacity="1"/>
+  <text x="336.0" y="203.0" class="lbl" text-anchor="middle">magnitude, 8 bits — plus ONE scale s and zero-point z shared by the whole tensor · 8</text>
+  <text x="56.0" y="178.0" class="lblb">int8 affine — 8 bits per value</text>
+  <text x="56.0" y="240.0" class="lbl">float: each value carries its own exponent → wide dynamic range, per-value</text>
+  <text x="56.0" y="258.0" class="lbl">int8: one shared scale → uniform steps, and the whole scheme works only</text>
+  <text x="56.0" y="276.0" class="lbl">because values inside one tensor have similar magnitudes.</text>
+  <text x="56.0" y="296.0" class="lblb" fill="var(--copper)">When they do not — depthwise channels, transformer activation outliers — quantization fails.</text>
+</svg>

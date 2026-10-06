@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" role="img" aria-label="MFCC pipeline: pre-emphasis, framing and windowing, FFT, magnitude squared, mel filterbank, logarithm, discrete cosine transform, liftering, with a branch after the logarithm labelled log-mel for CNNs"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <defs>
+    <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="11.5" fill="currentColor">
+    <g stroke="currentColor" stroke-width="1.2" fill="none">
+      <rect x="4" y="60" width="74" height="40"/><rect x="94" y="60" width="74" height="40"/>
+      <rect x="184" y="60" width="74" height="40"/><rect x="274" y="60" width="74" height="40"/>
+      <rect x="364" y="60" width="74" height="40"/><rect x="454" y="60" width="74" height="40"/>
+      <rect x="544" y="60" width="74" height="40"/><rect x="634" y="60" width="82" height="40"/>
+    </g>
+    <g text-anchor="middle" font-weight="600">
+      <text x="41" y="77">pre-</text><text x="41" y="91">emphasis</text>
+      <text x="131" y="77">frame +</text><text x="131" y="91">window</text>
+      <text x="221" y="84">FFT</text>
+      <text x="311" y="77">power</text><text x="311" y="91">|·|²</text>
+      <text x="401" y="77">mel</text><text x="401" y="91">filterbank</text>
+      <text x="491" y="84">log</text>
+      <text x="581" y="84">DCT-II</text>
+      <text x="675" y="77">keep 1–13,</text><text x="675" y="91">lifter</text>
+    </g>
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar3)">
+      <line x1="78" y1="80" x2="90" y2="80"/><line x1="168" y1="80" x2="180" y2="80"/>
+      <line x1="258" y1="80" x2="270" y2="80"/><line x1="348" y1="80" x2="360" y2="80"/>
+      <line x1="438" y1="80" x2="450" y2="80"/><line x1="528" y1="80" x2="540" y2="80"/>
+      <line x1="618" y1="80" x2="630" y2="80"/>
+    </g>
+    <g class="acc" stroke-width="1.4" fill="none" marker-end="url(#ar3)">
+      <path d="M491 100 L491 138 L640 138"/>
+    </g>
+    <text x="646" y="142" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">log-mel →</text>
+    <text x="491" y="160" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">stop here for a CNN</text>
+    <text x="140" y="30" font-family="IBM Plex Mono, monospace" opacity="0.78" font-size="10.86">cost per frame ≈ O(L log L) for the FFT + B·L/2 for the filterbank + B log B for the DCT</text>
+    <text x="140" y="46" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">→ the filterbank is sparse in practice: each bin touches at most 2 triangles</text>
+  </g>
+</svg>

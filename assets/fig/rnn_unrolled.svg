@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" role="img" aria-label="A recurrent neural network cell unrolled over four time steps: the same weights are applied at every step, and only the hidden state is carried forward"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <text x="14.0" y="22.0" class="lblb">recurrent cell, unrolled in time</text>
+  <rect x="60.0" y="80.0" width="90.0" height="56.0" class="ax" fill="none"/>
+  <text x="105.0" y="104.5" class="lblb" text-anchor="middle">cell</text>
+  <text x="105.0" y="119.5" class="lbl" text-anchor="middle">same W, U</text>
+  <circle cx="105.0" cy="196.0" r="14.0" class="ax" fill="none"/>
+  <text x="105.0" y="201.0" class="lblb" text-anchor="middle">x₁</text>
+  <line x1="105.0" y1="182.0" x2="105.0" y2="138.0" class="ax"/>
+  <path d="M105.0 138.0 L107.7 143.3 L102.3 143.3 Z" fill="currentColor"/>
+  <line x1="105.0" y1="80.0" x2="105.0" y2="52.0" class="ax"/>
+  <path d="M105.0 52.0 L107.7 57.3 L102.3 57.3 Z" fill="currentColor"/>
+  <text x="105.0" y="44.0" class="lblb" text-anchor="middle">y₁</text>
+  <line x1="150.0" y1="108.0" x2="218.0" y2="108.0" class="acc" stroke-width="1.8"/>
+  <path d="M218.0 108.0 L211.8 111.2 L211.8 104.8 Z" class="accf"/>
+  <text x="184.0" y="100.0" class="lbl accf" text-anchor="middle">h₁</text>
+  <rect x="220.0" y="80.0" width="90.0" height="56.0" class="ax" fill="none"/>
+  <text x="265.0" y="104.5" class="lblb" text-anchor="middle">cell</text>
+  <text x="265.0" y="119.5" class="lbl" text-anchor="middle">same W, U</text>
+  <circle cx="265.0" cy="196.0" r="14.0" class="ax" fill="none"/>
+  <text x="265.0" y="201.0" class="lblb" text-anchor="middle">x₂</text>
+  <line x1="265.0" y1="182.0" x2="265.0" y2="138.0" class="ax"/>
+  <path d="M265.0 138.0 L267.7 143.3 L262.3 143.3 Z" fill="currentColor"/>
+  <line x1="265.0" y1="80.0" x2="265.0" y2="52.0" class="ax"/>
+  <path d="M265.0 52.0 L267.7 57.3 L262.3 57.3 Z" fill="currentColor"/>
+  <text x="265.0" y="44.0" class="lblb" text-anchor="middle">y₂</text>
+  <line x1="310.0" y1="108.0" x2="378.0" y2="108.0" class="acc" stroke-width="1.8"/>
+  <path d="M378.0 108.0 L371.8 111.2 L371.8 104.8 Z" class="accf"/>
+  <text x="344.0" y="100.0" class="lbl accf" text-anchor="middle">h₂</text>
+  <rect x="380.0" y="80.0" width="90.0" height="56.0" class="ax" fill="none"/>
+  <text x="425.0" y="104.5" class="lblb" text-anchor="middle">cell</text>
+  <text x="425.0" y="119.5" class="lbl" text-anchor="middle">same W, U</text>
+  <circle cx="425.0" cy="196.0" r="14.0" class="ax" fill="none"/>
+  <text x="425.0" y="201.0" class="lblb" text-anchor="middle">x₃</text>
+  <line x1="425.0" y1="182.0" x2="425.0" y2="138.0" class="ax"/>
+  <path d="M425.0 138.0 L427.7 143.3 L422.3 143.3 Z" fill="currentColor"/>
+  <line x1="425.0" y1="80.0" x2="425.0" y2="52.0" class="ax"/>
+  <path d="M425.0 52.0 L427.7 57.3 L422.3 57.3 Z" fill="currentColor"/>
+  <text x="425.0" y="44.0" class="lblb" text-anchor="middle">y₃</text>
+  <line x1="470.0" y1="108.0" x2="538.0" y2="108.0" class="acc" stroke-width="1.8"/>
+  <path d="M538.0 108.0 L531.8 111.2 L531.8 104.8 Z" class="accf"/>
+  <text x="504.0" y="100.0" class="lbl accf" text-anchor="middle">h₃</text>
+  <rect x="540.0" y="80.0" width="90.0" height="56.0" class="ax" fill="none"/>
+  <text x="585.0" y="104.5" class="lblb" text-anchor="middle">cell</text>
+  <text x="585.0" y="119.5" class="lbl" text-anchor="middle">same W, U</text>
+  <circle cx="585.0" cy="196.0" r="14.0" class="ax" fill="none"/>
+  <text x="585.0" y="201.0" class="lblb" text-anchor="middle">x₄</text>
+  <line x1="585.0" y1="182.0" x2="585.0" y2="138.0" class="ax"/>
+  <path d="M585.0 138.0 L587.7 143.3 L582.3 143.3 Z" fill="currentColor"/>
+  <line x1="585.0" y1="80.0" x2="585.0" y2="52.0" class="ax"/>
+  <path d="M585.0 52.0 L587.7 57.3 L582.3 57.3 Z" fill="currentColor"/>
+  <text x="585.0" y="44.0" class="lblb" text-anchor="middle">y₄</text>
+  <text x="14.0" y="236.0" class="lbl">h_t = tanh(W·x_t + U·h_{t−1} + b): memory cost = one hidden state, regardless of sequence length</text>
+</svg>

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="The same teacher logits passed through a softmax at four temperatures: at temperature one the distribution is nearly one-hot, and as temperature rises the ranking over the wrong classes becomes visible"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="34.0" y1="190.0" x2="174.0" y2="190.0" class="ax"/>
+  <rect x="36.7" y="56.2" width="18.0" height="133.8" class="accf" opacity="0.85"/>
+  <text x="45.7" y="51.2" class="lbl" text-anchor="middle">0.98</text>
+  <rect x="60.0" y="188.8" width="18.0" height="1.2" class="tlf" opacity="0.6"/>
+  <rect x="83.3" y="189.2" width="18.0" height="0.8" class="tlf" opacity="0.6"/>
+  <rect x="106.7" y="189.9" width="18.0" height="0.1" class="tlf" opacity="0.6"/>
+  <rect x="130.0" y="190.0" width="18.0" height="0.0" class="tlf" opacity="0.6"/>
+  <rect x="153.3" y="190.0" width="18.0" height="0.0" class="tlf" opacity="0.6"/>
+  <text x="34.0" y="42.0" class="lblb" fill="var(--copper)">T = 1</text>
+  <text x="174.0" y="42.0" class="lbl" text-anchor="end">H = 0.10</text>
+  <text x="45.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">stop</text>
+  <text x="69.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">up</text>
+  <text x="92.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">off</text>
+  <text x="115.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">go</text>
+  <text x="139.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">yes</text>
+  <text x="162.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">dog</text>
+  <line x1="206.0" y1="190.0" x2="346.0" y2="190.0" class="ax"/>
+  <rect x="208.7" y="79.0" width="18.0" height="111.0" class="accf" opacity="0.85"/>
+  <text x="217.7" y="74.0" class="lbl" text-anchor="middle">0.82</text>
+  <rect x="232.0" y="179.4" width="18.0" height="10.6" class="tlf" opacity="0.6"/>
+  <text x="241.0" y="174.4" class="lbl" text-anchor="middle" font-size="9.62">0.08</text>
+  <rect x="255.3" y="181.3" width="18.0" height="8.7" class="tlf" opacity="0.6"/>
+  <text x="264.3" y="176.3" class="lbl" text-anchor="middle" font-size="9.62">0.06</text>
+  <rect x="278.7" y="186.5" width="18.0" height="3.5" class="tlf" opacity="0.6"/>
+  <rect x="302.0" y="188.4" width="18.0" height="1.6" class="tlf" opacity="0.6"/>
+  <rect x="325.3" y="189.3" width="18.0" height="0.7" class="tlf" opacity="0.6"/>
+  <text x="206.0" y="42.0" class="lblb" fill="var(--copper)">T = 2</text>
+  <text x="346.0" y="42.0" class="lbl" text-anchor="end">H = 0.71</text>
+  <text x="217.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">stop</text>
+  <text x="241.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">up</text>
+  <text x="264.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">off</text>
+  <text x="287.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">go</text>
+  <text x="311.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">yes</text>
+  <text x="334.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">dog</text>
+  <line x1="378.0" y1="190.0" x2="518.0" y2="190.0" class="ax"/>
+  <rect x="380.7" y="120.8" width="18.0" height="69.2" class="accf" opacity="0.85"/>
+  <text x="389.7" y="115.8" class="lbl" text-anchor="middle">0.51</text>
+  <rect x="404.0" y="168.6" width="18.0" height="21.4" class="tlf" opacity="0.6"/>
+  <text x="413.0" y="163.6" class="lbl" text-anchor="middle" font-size="9.64">0.16</text>
+  <rect x="427.3" y="170.6" width="18.0" height="19.4" class="tlf" opacity="0.6"/>
+  <text x="436.3" y="165.6" class="lbl" text-anchor="middle" font-size="9.64">0.14</text>
+  <rect x="450.7" y="177.7" width="18.0" height="12.3" class="tlf" opacity="0.6"/>
+  <text x="459.7" y="172.7" class="lbl" text-anchor="middle" font-size="9.62">0.09</text>
+  <rect x="474.0" y="181.7" width="18.0" height="8.3" class="tlf" opacity="0.6"/>
+  <text x="483.0" y="176.7" class="lbl" text-anchor="middle" font-size="9.62">0.06</text>
+  <rect x="497.3" y="184.6" width="18.0" height="5.4" class="tlf" opacity="0.6"/>
+  <text x="378.0" y="42.0" class="lblb" fill="var(--copper)">T = 4</text>
+  <text x="518.0" y="42.0" class="lbl" text-anchor="end">H = 1.43</text>
+  <text x="389.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">stop</text>
+  <text x="413.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">up</text>
+  <text x="436.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">off</text>
+  <text x="459.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">go</text>
+  <text x="483.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">yes</text>
+  <text x="506.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">dog</text>
+  <line x1="550.0" y1="190.0" x2="690.0" y2="190.0" class="ax"/>
+  <rect x="552.7" y="146.6" width="18.0" height="43.4" class="accf" opacity="0.85"/>
+  <text x="561.7" y="141.6" class="lbl" text-anchor="middle">0.32</text>
+  <rect x="576.0" y="165.9" width="18.0" height="24.1" class="tlf" opacity="0.6"/>
+  <text x="585.0" y="160.9" class="lbl" text-anchor="middle" font-size="9.62">0.18</text>
+  <rect x="599.3" y="167.0" width="18.0" height="23.0" class="tlf" opacity="0.6"/>
+  <text x="608.3" y="162.0" class="lbl" text-anchor="middle" font-size="9.62">0.17</text>
+  <rect x="622.7" y="171.7" width="18.0" height="18.3" class="tlf" opacity="0.6"/>
+  <text x="631.7" y="166.7" class="lbl" text-anchor="middle">0.13</text>
+  <rect x="646.0" y="175.0" width="18.0" height="15.0" class="tlf" opacity="0.6"/>
+  <text x="655.0" y="170.0" class="lbl" text-anchor="middle">0.11</text>
+  <rect x="669.3" y="177.9" width="18.0" height="12.1" class="tlf" opacity="0.6"/>
+  <text x="678.3" y="172.9" class="lbl" text-anchor="middle">0.09</text>
+  <text x="550.0" y="42.0" class="lblb" fill="var(--copper)">T = 8</text>
+  <text x="690.0" y="42.0" class="lbl" text-anchor="end">H = 1.70</text>
+  <text x="561.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">stop</text>
+  <text x="585.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">up</text>
+  <text x="608.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">off</text>
+  <text x="631.7" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">go</text>
+  <text x="655.0" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">yes</text>
+  <text x="678.3" y="204.0" class="lbl" text-anchor="middle" opacity="0.7">dog</text>
+  <text x="34.0" y="30.0" class="lblb">teacher logits  [8.1, 3.4, 3.0, 1.2, −0.4, −2.1]</text>
+  <text x="34.0" y="232.0" class="lbl">At T = 1 the teacher says only "stop". At T = 4 it says "stop, and it is much more like up and off</text>
+  <text x="34.0" y="250.0" class="lbl">than like dog" — a similarity metric the one-hot label never contained.</text>
+  <text x="34.0" y="276.0" class="lblb">That extra structure is the dark knowledge. It is also why the loss needs the T² correction:</text>
+  <text x="34.0" y="294.0" class="lblb">softening shrinks the gradient by about 1/T², and the factor puts it back.</text>
+</svg>

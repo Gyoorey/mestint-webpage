@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="A twenty-six band mel filterbank drawn over a linear frequency axis: the triangles are narrow and closely spaced below one kilohertz and become wide and sparse above four kilohertz"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="58.0" y1="190.0" x2="660.0" y2="190.0" class="ax"/>
+  <line x1="58.0" y1="40.0" x2="58.0" y2="190.0" class="ax"/>
+  <line x1="58.0" y1="40.0" x2="58.0" y2="190.0" class="grid"/>
+  <line x1="58.0" y1="190.0" x2="58.0" y2="194.0" class="ax"/>
+  <text x="58.0" y="207.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="133.2" y1="40.0" x2="133.2" y2="190.0" class="grid"/>
+  <line x1="133.2" y1="190.0" x2="133.2" y2="194.0" class="ax"/>
+  <text x="133.2" y="207.0" class="lbl" text-anchor="middle">1k</text>
+  <line x1="208.5" y1="40.0" x2="208.5" y2="190.0" class="grid"/>
+  <line x1="208.5" y1="190.0" x2="208.5" y2="194.0" class="ax"/>
+  <text x="208.5" y="207.0" class="lbl" text-anchor="middle">2k</text>
+  <line x1="359.0" y1="40.0" x2="359.0" y2="190.0" class="grid"/>
+  <line x1="359.0" y1="190.0" x2="359.0" y2="194.0" class="ax"/>
+  <text x="359.0" y="207.0" class="lbl" text-anchor="middle">4k</text>
+  <line x1="509.5" y1="40.0" x2="509.5" y2="190.0" class="grid"/>
+  <line x1="509.5" y1="190.0" x2="509.5" y2="194.0" class="ax"/>
+  <text x="509.5" y="207.0" class="lbl" text-anchor="middle">6k</text>
+  <line x1="660.0" y1="40.0" x2="660.0" y2="190.0" class="grid"/>
+  <line x1="660.0" y1="190.0" x2="660.0" y2="194.0" class="ax"/>
+  <text x="660.0" y="207.0" class="lbl" text-anchor="middle">8k</text>
+  <line x1="58.0" y1="190.0" x2="660.0" y2="190.0" class="grid"/>
+  <line x1="54.0" y1="190.0" x2="58.0" y2="190.0" class="ax"/>
+  <text x="50.0" y="193.6" class="lbl" text-anchor="end">0</text>
+  <line x1="58.0" y1="56.1" x2="660.0" y2="56.1" class="grid"/>
+  <line x1="54.0" y1="56.1" x2="58.0" y2="56.1" class="ax"/>
+  <text x="50.0" y="59.7" class="lbl" text-anchor="end">1</text>
+  <path d="M61.8 190.0 L67.1 56.1 L73.0 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M67.1 190.0 L73.0 56.1 L79.4 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M73.0 190.0 L79.4 56.1 L86.5 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M79.4 190.0 L86.5 56.1 L94.2 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M86.5 190.0 L94.2 56.1 L102.6 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M94.2 190.0 L102.6 56.1 L111.9 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M102.6 190.0 L111.9 56.1 L122.0 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M111.9 190.0 L122.0 56.1 L133.1 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M122.0 190.0 L133.1 56.1 L145.2 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M133.1 190.0 L145.2 56.1 L158.5 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M145.2 190.0 L158.5 56.1 L173.1 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M158.5 190.0 L173.1 56.1 L189.0 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M173.1 190.0 L189.0 56.1 L206.5 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M189.0 190.0 L206.5 56.1 L225.6 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M206.5 190.0 L225.6 56.1 L246.5 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M225.6 190.0 L246.5 56.1 L269.4 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M246.5 190.0 L269.4 56.1 L294.5 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M269.4 190.0 L294.5 56.1 L322.0 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M294.5 190.0 L322.0 56.1 L352.1 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M322.0 190.0 L352.1 56.1 L385.1 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M352.1 190.0 L385.1 56.1 L421.1 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M385.1 190.0 L421.1 56.1 L460.7 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M421.1 190.0 L460.7 56.1 L503.9 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M460.7 190.0 L503.9 56.1 L551.3 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M503.9 190.0 L551.3 56.1 L603.2 190.0" class="acc" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <path d="M551.3 190.0 L603.2 56.1 L660.0 190.0" class="tl" stroke-width="1.4" fill="none" opacity="0.9"/>
+  <text x="58.0" y="26.0" class="lbl">26 triangular filters, equally spaced on the mel axis, drawn on a linear Hz axis</text>
+  <line x1="58.0" y1="208.0" x2="133.2" y2="208.0" class="acc" stroke-width="2"/>
+  <text x="95.6" y="222.0" class="lblb" text-anchor="middle" fill="var(--copper)">6 filters</text>
+  <line x1="359.0" y1="208.0" x2="660.0" y2="208.0" class="acc" stroke-width="2"/>
+  <text x="509.5" y="222.0" class="lblb" text-anchor="middle" fill="var(--copper)">5 filters over the same 4 kHz span</text>
+  <text x="359.0" y="242.0" class="lbl" text-anchor="middle">frequency (Hz)</text>
+  <text x="58.0" y="262.0" class="lblb">m(f) = 2595 · log₁₀(1 + f / 700)</text>
+  <text x="58.0" y="282.0" class="lbl">Resolution is spent where human hearing has it — and thrown away where it does not.</text>
+</svg>

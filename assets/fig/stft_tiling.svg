@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" role="img" aria-label="Two time-frequency tiling diagrams: a short window gives wide frequency tiles and narrow time tiles, a long window gives the opposite, with the tile area constant in both"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <!-- left panel -->
+    <text x="26" y="20" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">short window L = 128 · Δt small, Δf large</text>
+    <line x1="34" y1="36" x2="34" y2="196" stroke="currentColor" stroke-width="1.1"/>
+    <line x1="34" y1="196" x2="330" y2="196" stroke="currentColor" stroke-width="1.1"/>
+    <g stroke="currentColor" stroke-width="0.9" fill="none" opacity="0.85">
+      <rect x="34" y="156" width="37" height="40"/><rect x="71" y="156" width="37" height="40"/>
+      <rect x="108" y="156" width="37" height="40"/><rect x="145" y="156" width="37" height="40"/>
+      <rect x="182" y="156" width="37" height="40"/><rect x="219" y="156" width="37" height="40"/>
+      <rect x="256" y="156" width="37" height="40"/><rect x="293" y="156" width="37" height="40"/>
+      <rect x="34" y="116" width="37" height="40"/><rect x="71" y="116" width="37" height="40"/>
+      <rect x="108" y="116" width="37" height="40"/><rect x="145" y="116" width="37" height="40"/>
+      <rect x="182" y="116" width="37" height="40"/><rect x="219" y="116" width="37" height="40"/>
+      <rect x="256" y="116" width="37" height="40"/><rect x="293" y="116" width="37" height="40"/>
+      <rect x="34" y="76" width="37" height="40"/><rect x="71" y="76" width="37" height="40"/>
+      <rect x="108" y="76" width="37" height="40"/><rect x="145" y="76" width="37" height="40"/>
+      <rect x="182" y="76" width="37" height="40"/><rect x="219" y="76" width="37" height="40"/>
+      <rect x="256" y="76" width="37" height="40"/><rect x="293" y="76" width="37" height="40"/>
+      <rect x="34" y="36" width="37" height="40"/><rect x="71" y="36" width="37" height="40"/>
+      <rect x="108" y="36" width="37" height="40"/><rect x="145" y="36" width="37" height="40"/>
+      <rect x="182" y="36" width="37" height="40"/><rect x="219" y="36" width="37" height="40"/>
+      <rect x="256" y="36" width="37" height="40"/><rect x="293" y="36" width="37" height="40"/>
+    </g>
+    <rect x="108" y="116" width="37" height="40" class="accf" opacity="0.35"/>
+    <text x="182" y="216" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">time</text>
+    <text x="20" y="118" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78" transform="rotate(-90 20 118)">frequency</text>
+
+    <!-- right panel -->
+    <text x="392" y="20" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">long window L = 1024 · Δt large, Δf small</text>
+    <line x1="400" y1="36" x2="400" y2="196" stroke="currentColor" stroke-width="1.1"/>
+    <line x1="400" y1="196" x2="696" y2="196" stroke="currentColor" stroke-width="1.1"/>
+    <g stroke="currentColor" stroke-width="0.9" fill="none" opacity="0.85">
+      <rect x="400" y="186" width="148" height="10"/><rect x="548" y="186" width="148" height="10"/>
+      <rect x="400" y="176" width="148" height="10"/><rect x="548" y="176" width="148" height="10"/>
+      <rect x="400" y="166" width="148" height="10"/><rect x="548" y="166" width="148" height="10"/>
+      <rect x="400" y="156" width="148" height="10"/><rect x="548" y="156" width="148" height="10"/>
+      <rect x="400" y="146" width="148" height="10"/><rect x="548" y="146" width="148" height="10"/>
+      <rect x="400" y="136" width="148" height="10"/><rect x="548" y="136" width="148" height="10"/>
+      <rect x="400" y="126" width="148" height="10"/><rect x="548" y="126" width="148" height="10"/>
+      <rect x="400" y="116" width="148" height="10"/><rect x="548" y="116" width="148" height="10"/>
+      <rect x="400" y="106" width="148" height="10"/><rect x="548" y="106" width="148" height="10"/>
+      <rect x="400" y="96" width="148" height="10"/><rect x="548" y="96" width="148" height="10"/>
+      <rect x="400" y="86" width="148" height="10"/><rect x="548" y="86" width="148" height="10"/>
+      <rect x="400" y="76" width="148" height="10"/><rect x="548" y="76" width="148" height="10"/>
+      <rect x="400" y="66" width="148" height="10"/><rect x="548" y="66" width="148" height="10"/>
+      <rect x="400" y="56" width="148" height="10"/><rect x="548" y="56" width="148" height="10"/>
+      <rect x="400" y="46" width="148" height="10"/><rect x="548" y="46" width="148" height="10"/>
+      <rect x="400" y="36" width="148" height="10"/><rect x="548" y="36" width="148" height="10"/>
+    </g>
+    <rect x="400" y="126" width="148" height="10" class="accf" opacity="0.35"/>
+    <text x="548" y="216" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">time</text>
+    <text x="360" y="240" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">every tile has the same area — the window chooses its shape, not its size</text>
+  </g>
+</svg>

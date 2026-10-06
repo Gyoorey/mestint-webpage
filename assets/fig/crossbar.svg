@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 338" role="img" aria-label="An analog resistive crossbar performing a matrix-vector product: input voltages on the rows, conductances at the crosspoints, and currents summing down each column by Kirchhoff&#x27;s law"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <defs><marker id="arG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+  <line x1="110.0" y1="60.0" x2="516.0" y2="60.0" class="ax" opacity="0.75"/>
+  <text x="104.0" y="64.0" class="lblb" text-anchor="end" fill="var(--teal)">V1</text>
+  <line x1="110.0" y1="100.0" x2="516.0" y2="100.0" class="ax" opacity="0.75"/>
+  <text x="104.0" y="104.0" class="lblb" text-anchor="end" fill="var(--teal)">V2</text>
+  <line x1="110.0" y1="140.0" x2="516.0" y2="140.0" class="ax" opacity="0.75"/>
+  <text x="104.0" y="144.0" class="lblb" text-anchor="end" fill="var(--teal)">V3</text>
+  <line x1="110.0" y1="180.0" x2="516.0" y2="180.0" class="ax" opacity="0.75"/>
+  <text x="104.0" y="184.0" class="lblb" text-anchor="end" fill="var(--teal)">V4</text>
+  <line x1="150.0" y1="32.0" x2="150.0" y2="224.0" class="ax" opacity="0.75"/>
+  <line x1="234.0" y1="32.0" x2="234.0" y2="224.0" class="ax" opacity="0.75"/>
+  <line x1="318.0" y1="32.0" x2="318.0" y2="224.0" class="ax" opacity="0.75"/>
+  <line x1="402.0" y1="32.0" x2="402.0" y2="224.0" class="ax" opacity="0.75"/>
+  <line x1="486.0" y1="32.0" x2="486.0" y2="224.0" class="ax" opacity="0.75"/>
+  <circle cx="150.0" cy="60.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="150.0" cy="60.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="234.0" cy="60.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="234.0" cy="60.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="318.0" cy="60.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="318.0" cy="60.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="402.0" cy="60.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="402.0" cy="60.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="486.0" cy="60.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="486.0" cy="60.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="150.0" cy="100.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="150.0" cy="100.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="234.0" cy="100.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="234.0" cy="100.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="318.0" cy="100.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="318.0" cy="100.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="402.0" cy="100.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="402.0" cy="100.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="486.0" cy="100.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="486.0" cy="100.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="150.0" cy="140.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="150.0" cy="140.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="234.0" cy="140.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="234.0" cy="140.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="318.0" cy="140.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="318.0" cy="140.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="402.0" cy="140.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="402.0" cy="140.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="486.0" cy="140.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="486.0" cy="140.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="150.0" cy="180.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="150.0" cy="180.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="234.0" cy="180.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="234.0" cy="180.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="318.0" cy="180.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="318.0" cy="180.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="402.0" cy="180.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="402.0" cy="180.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="486.0" cy="180.0" r="6.5" class="accf" opacity="0.55"/>
+  <circle cx="486.0" cy="180.0" r="6.5" fill="none" stroke="currentColor" stroke-width="1"/>
+  <line x1="150.0" y1="224.0" x2="150.0" y2="238.0" class="ax" marker-end="url(#arG)"/>
+  <text x="150.0" y="252.0" class="lblb" text-anchor="middle" fill="var(--copper)">I1</text>
+  <line x1="234.0" y1="224.0" x2="234.0" y2="238.0" class="ax" marker-end="url(#arG)"/>
+  <text x="234.0" y="252.0" class="lblb" text-anchor="middle" fill="var(--copper)">I2</text>
+  <line x1="318.0" y1="224.0" x2="318.0" y2="238.0" class="ax" marker-end="url(#arG)"/>
+  <text x="318.0" y="252.0" class="lblb" text-anchor="middle" fill="var(--copper)">I3</text>
+  <line x1="402.0" y1="224.0" x2="402.0" y2="238.0" class="ax" marker-end="url(#arG)"/>
+  <text x="402.0" y="252.0" class="lblb" text-anchor="middle" fill="var(--copper)">I4</text>
+  <line x1="486.0" y1="224.0" x2="486.0" y2="238.0" class="ax" marker-end="url(#arG)"/>
+  <text x="486.0" y="252.0" class="lblb" text-anchor="middle" fill="var(--copper)">I5</text>
+  <text x="150.0" y="34.0" class="lbl" fill="var(--copper)">conductance G_ij stores the weight</text>
+  <text x="24.0" y="254.0" class="lblb">Ohm:      I_ij = V_i · G_ij</text>
+  <text x="24.0" y="274.0" class="lblb">Kirchhoff: I_j = Σ_i V_i · G_ij</text>
+  <text x="24.0" y="294.0" class="lbl" fill="var(--copper)">one matrix–vector product, one step, weights never move</text>
+  <text x="392.0" y="272.0" class="lbl">But: the ADCs at the bottom dominate the energy,</text>
+  <text x="392.0" y="288.0" class="lbl">conductances drift with time and temperature,</text>
+  <text x="392.0" y="304.0" class="lbl">writes are slow and wear the device, and the</text>
+  <text x="392.0" y="320.0" class="lbl">effective precision is a few bits.</text>
+</svg>

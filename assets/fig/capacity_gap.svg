@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Student accuracy plotted against teacher capacity, rising to a maximum and then falling, showing that beyond some gap a stronger teacher makes a worse student"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="70.0" y1="210.0" x2="490.0" y2="210.0" class="ax"/>
+  <line x1="70.0" y1="38.0" x2="70.0" y2="210.0" class="ax"/>
+  <line x1="112.0" y1="38.0" x2="112.0" y2="210.0" class="grid"/>
+  <line x1="112.0" y1="210.0" x2="112.0" y2="214.0" class="ax"/>
+  <text x="112.0" y="227.0" class="lbl" text-anchor="middle">1×</text>
+  <line x1="196.0" y1="38.0" x2="196.0" y2="210.0" class="grid"/>
+  <line x1="196.0" y1="210.0" x2="196.0" y2="214.0" class="ax"/>
+  <text x="196.0" y="227.0" class="lbl" text-anchor="middle">3×</text>
+  <line x1="280.0" y1="38.0" x2="280.0" y2="210.0" class="grid"/>
+  <line x1="280.0" y1="210.0" x2="280.0" y2="214.0" class="ax"/>
+  <text x="280.0" y="227.0" class="lbl" text-anchor="middle">5×</text>
+  <line x1="364.0" y1="38.0" x2="364.0" y2="210.0" class="grid"/>
+  <line x1="364.0" y1="210.0" x2="364.0" y2="214.0" class="ax"/>
+  <text x="364.0" y="227.0" class="lbl" text-anchor="middle">7×</text>
+  <line x1="448.0" y1="38.0" x2="448.0" y2="210.0" class="grid"/>
+  <line x1="448.0" y1="210.0" x2="448.0" y2="214.0" class="ax"/>
+  <text x="448.0" y="227.0" class="lbl" text-anchor="middle">9×</text>
+  <line x1="70.0" y1="175.6" x2="490.0" y2="175.6" class="grid"/>
+  <line x1="66.0" y1="175.6" x2="70.0" y2="175.6" class="ax"/>
+  <text x="62.0" y="179.2" class="lbl" text-anchor="end">68</text>
+  <line x1="70.0" y1="141.2" x2="490.0" y2="141.2" class="grid"/>
+  <line x1="66.0" y1="141.2" x2="70.0" y2="141.2" class="ax"/>
+  <text x="62.0" y="144.8" class="lbl" text-anchor="end">70</text>
+  <line x1="70.0" y1="106.8" x2="490.0" y2="106.8" class="grid"/>
+  <line x1="66.0" y1="106.8" x2="70.0" y2="106.8" class="ax"/>
+  <text x="62.0" y="110.4" class="lbl" text-anchor="end">72</text>
+  <line x1="70.0" y1="72.4" x2="490.0" y2="72.4" class="grid"/>
+  <line x1="66.0" y1="72.4" x2="70.0" y2="72.4" class="ax"/>
+  <text x="62.0" y="76.0" class="lbl" text-anchor="end">74</text>
+  <line x1="70.0" y1="38.0" x2="490.0" y2="38.0" class="grid"/>
+  <line x1="66.0" y1="38.0" x2="70.0" y2="38.0" class="ax"/>
+  <text x="62.0" y="41.6" class="lbl" text-anchor="end">76</text>
+  <path d="M95.2 116.8 L101.9 111.3 L108.6 106.3 L115.3 101.5 L122.0 97.1 L128.7 93.0 L135.3 89.2 L142.0 85.7 L148.7 82.4 L155.4 79.3 L162.1 76.5 L168.8 73.8 L175.5 71.3 L182.2 69.0 L188.9 66.9 L195.6 64.9 L202.3 63.0 L209.0 61.3 L215.6 59.7 L222.3 58.2 L229.0 56.8 L235.7 55.5 L242.4 54.3 L249.1 53.1 L255.8 52.1 L262.5 51.1 L269.2 50.2 L275.9 49.4 L282.6 48.6 L289.3 47.9 L295.9 47.2 L302.6 46.5 L309.3 45.9 L316.0 45.4 L322.7 44.9 L329.4 44.4 L336.1 44.0 L342.8 43.6 L349.5 43.2 L356.2 42.8 L362.9 42.5 L369.6 42.2 L376.2 41.9 L382.9 41.6 L389.6 41.4 L396.3 41.1 L403.0 40.9 L409.7 40.7 L416.4 40.5 L423.1 40.3 L429.8 40.2 L436.5 40.0 L443.2 39.9 L449.9 39.8 L456.5 39.6 L463.2 39.5 L469.9 39.4 L476.6 39.3 L483.3 39.2 L490.0 39.1" class="grid" stroke-width="2" stroke-dasharray="5 3"/>
+  <path d="M95.2 133.3 L101.9 126.9 L108.6 121.4 L115.3 116.8 L122.0 112.9 L128.7 109.7 L135.3 107.0 L142.0 104.9 L148.7 103.2 L155.4 101.8 L162.1 100.9 L168.8 100.2 L175.5 99.8 L182.2 99.7 L188.9 99.8 L195.6 100.1 L202.3 100.6 L209.0 101.2 L215.6 102.0 L222.3 103.0 L229.0 104.1 L235.7 105.3 L242.4 106.6 L249.1 108.0 L255.8 109.6 L262.5 111.2 L269.2 112.9 L275.9 114.8 L282.6 116.7 L289.3 118.7 L295.9 120.7 L302.6 122.9 L309.3 125.1 L316.0 127.4 L322.7 129.8 L329.4 132.3 L336.1 134.8 L342.8 137.4 L349.5 140.1 L356.2 142.8 L362.9 145.6 L369.6 148.5 L376.2 151.4 L382.9 154.4 L389.6 157.5 L396.3 160.7 L403.0 163.9 L409.7 167.2 L416.4 170.5 L423.1 173.9 L429.8 177.4 L436.5 181.0 L443.2 184.6 L449.9 188.3 L456.5 192.0 L463.2 195.8 L469.9 199.7 L476.6 203.6 L483.3 207.7 L490.0 210.0" class="ser" stroke-width="2.6"/>
+  <circle cx="182.2" cy="99.7" r="6.0" class="accf"/>
+  <line x1="182.2" y1="99.7" x2="182.2" y2="210.0" class="grid" stroke-dasharray="3 3"/>
+  <text x="182.2" y="192.8" class="lblb" text-anchor="middle" fill="var(--copper)">best teacher for THIS student</text>
+  <text x="498.0" y="62.1" class="lbl">teacher accuracy</text>
+  <text x="498.0" y="113.7" class="lblb">student accuracy</text>
+  <text x="498.0" y="129.7" class="lbl">after distillation</text>
+  <text x="280.0" y="246.0" class="lbl" text-anchor="middle">teacher capacity, relative to the student</text>
+  <text x="30.0" y="124.0" class="lbl" text-anchor="middle" transform="rotate(-90 30.0 124.0)">top-1 accuracy (%)</text>
+  <text x="70.0" y="26.0" class="lbl">schematic — the shape is robust, the exact peak is task-specific</text>
+  <text x="70.0" y="268.0" class="lblb">A teacher the student cannot imitate is a worse teacher, however accurate it is.</text>
+  <text x="70.0" y="288.0" class="lbl">Remedies: a teacher assistant (large → medium → small), or pick the teacher by student score.</text>
+</svg>

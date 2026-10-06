@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 296" role="img" aria-label="A reliability diagram comparing an over-confident boosted ensemble, an under-confident random forest and a well-calibrated logistic regression against the diagonal of perfect calibration"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="74.0" y1="232.0" x2="340.0" y2="232.0" class="ax"/>
+  <line x1="74.0" y1="34.0" x2="74.0" y2="232.0" class="ax"/>
+  <line x1="74.0" y1="34.0" x2="74.0" y2="232.0" class="grid"/>
+  <line x1="74.0" y1="232.0" x2="74.0" y2="236.0" class="ax"/>
+  <text x="74.0" y="249.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="207.0" y1="34.0" x2="207.0" y2="232.0" class="grid"/>
+  <line x1="207.0" y1="232.0" x2="207.0" y2="236.0" class="ax"/>
+  <text x="207.0" y="249.0" class="lbl" text-anchor="middle">0.5</text>
+  <line x1="340.0" y1="34.0" x2="340.0" y2="232.0" class="grid"/>
+  <line x1="340.0" y1="232.0" x2="340.0" y2="236.0" class="ax"/>
+  <text x="340.0" y="249.0" class="lbl" text-anchor="middle">1</text>
+  <line x1="74.0" y1="232.0" x2="340.0" y2="232.0" class="grid"/>
+  <line x1="70.0" y1="232.0" x2="74.0" y2="232.0" class="ax"/>
+  <text x="66.0" y="235.6" class="lbl" text-anchor="end">0</text>
+  <line x1="74.0" y1="133.0" x2="340.0" y2="133.0" class="grid"/>
+  <line x1="70.0" y1="133.0" x2="74.0" y2="133.0" class="ax"/>
+  <text x="66.0" y="136.6" class="lbl" text-anchor="end">0.5</text>
+  <line x1="74.0" y1="34.0" x2="340.0" y2="34.0" class="grid"/>
+  <line x1="70.0" y1="34.0" x2="74.0" y2="34.0" class="ax"/>
+  <text x="66.0" y="37.6" class="lbl" text-anchor="end">1</text>
+  <path d="M74.0 232.0 L340.0 34.0" class="grid" stroke-dasharray="4 3" stroke-width="1.4"/>
+  <path d="M79.3 224.1 L102.5 193.3 L125.7 168.9 L149.0 150.8 L172.2 138.9 L195.4 133.4 L218.6 132.6 L241.8 127.1 L265.0 115.2 L288.3 97.1 L311.5 72.7 L334.7 41.9" class="acc" stroke-width="2"/>
+  <circle cx="79.3" cy="224.1" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="102.5" cy="193.3" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="125.7" cy="168.9" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="149.0" cy="150.8" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="172.2" cy="138.9" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="195.4" cy="133.4" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="218.6" cy="132.6" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="241.8" cy="127.1" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="265.0" cy="115.2" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="288.3" cy="97.1" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="311.5" cy="72.7" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="334.7" cy="41.9" r="2.6" fill="currentColor" opacity="0.6"/>
+  <path d="M79.3 185.3 L102.5 175.8 L125.7 166.3 L149.0 156.8 L172.2 147.3 L195.4 137.8 L218.6 128.2 L241.8 118.7 L265.0 109.2 L288.3 99.7 L311.5 90.2 L334.7 80.7" class="tl" stroke-width="2"/>
+  <circle cx="79.3" cy="185.3" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="102.5" cy="175.8" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="125.7" cy="166.3" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="149.0" cy="156.8" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="172.2" cy="147.3" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="195.4" cy="137.8" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="218.6" cy="128.2" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="241.8" cy="118.7" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="265.0" cy="109.2" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="288.3" cy="99.7" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="311.5" cy="90.2" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="334.7" cy="80.7" r="2.6" fill="currentColor" opacity="0.6"/>
+  <path d="M79.3 230.0 L102.5 212.8 L125.7 197.5 L149.0 182.3 L172.2 155.4 L195.4 142.1 L218.6 119.5 L241.8 97.7 L265.0 88.8 L288.3 74.3 L311.5 57.6 L334.7 36.4" class="ser" stroke-width="2"/>
+  <circle cx="79.3" cy="230.0" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="102.5" cy="212.8" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="125.7" cy="197.5" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="149.0" cy="182.3" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="172.2" cy="155.4" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="195.4" cy="142.1" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="218.6" cy="119.5" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="241.8" cy="97.7" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="265.0" cy="88.8" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="288.3" cy="74.3" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="311.5" cy="57.6" r="2.6" fill="currentColor" opacity="0.6"/>
+  <circle cx="334.7" cy="36.4" r="2.6" fill="currentColor" opacity="0.6"/>
+  <text x="207.0" y="264.0" class="lbl" text-anchor="middle">predicted probability</text>
+  <text x="36.0" y="133.0" class="lbl" text-anchor="middle" transform="rotate(-90 36.0 133.0)">observed frequency</text>
+  <text x="360.0" y="66.0" class="lblb" fill="var(--copper)">boosted ensemble</text>
+  <text x="360.0" y="82.0" class="lbl">pushes scores to 0 and 1</text>
+  <text x="360.0" y="112.0" class="lblb" fill="var(--teal)">random forest</text>
+  <text x="360.0" y="128.0" class="lbl">averaging pulls them to 0.5</text>
+  <text x="360.0" y="160.0" class="lbl">Neither is wrong about ranking.</text>
+  <text x="360.0" y="176.0" class="lbl">Both are wrong about probability.</text>
+  <text x="360.0" y="206.0" class="lblb">A cascade threshold set on an</text>
+  <text x="360.0" y="222.0" class="lblb">uncalibrated score does not</text>
+  <text x="360.0" y="238.0" class="lblb">transfer between deployments.</text>
+  <text x="74.0" y="290.0" class="lbl">Fix with Platt scaling or isotonic regression on held-out data — then re-measure.</text>
+</svg>

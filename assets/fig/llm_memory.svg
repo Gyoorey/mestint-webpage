@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-label="Bar chart of weight memory for language models of one, three and seven billion parameters at 16, 8 and 4 bits per weight, compared with the memory of a microcontroller, a single-board computer, an embedded GPU module and a smartphone"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="100.0" y1="250.0" x2="520.0" y2="250.0" class="ax"/>
+  <line x1="100.0" y1="30.0" x2="100.0" y2="250.0" class="ax"/>
+  <line x1="100.0" y1="250.0" x2="520.0" y2="250.0" class="grid"/>
+  <line x1="96.0" y1="250.0" x2="100.0" y2="250.0" class="ax"/>
+  <text x="93.0" y="253.6" class="lbl" text-anchor="end">1 MB</text>
+  <line x1="100.0" y1="206.0" x2="520.0" y2="206.0" class="grid"/>
+  <line x1="96.0" y1="206.0" x2="100.0" y2="206.0" class="ax"/>
+  <text x="93.0" y="209.6" class="lbl" text-anchor="end">10 MB</text>
+  <line x1="100.0" y1="162.0" x2="520.0" y2="162.0" class="grid"/>
+  <line x1="96.0" y1="162.0" x2="100.0" y2="162.0" class="ax"/>
+  <text x="93.0" y="165.6" class="lbl" text-anchor="end">100 MB</text>
+  <line x1="100.0" y1="118.0" x2="520.0" y2="118.0" class="grid"/>
+  <line x1="96.0" y1="118.0" x2="100.0" y2="118.0" class="ax"/>
+  <text x="93.0" y="121.6" class="lbl" text-anchor="end">1 GB</text>
+  <line x1="100.0" y1="74.0" x2="520.0" y2="74.0" class="grid"/>
+  <line x1="96.0" y1="74.0" x2="100.0" y2="74.0" class="ax"/>
+  <text x="93.0" y="77.6" class="lbl" text-anchor="end">10 GB</text>
+  <line x1="100.0" y1="30.0" x2="520.0" y2="30.0" class="grid"/>
+  <line x1="96.0" y1="30.0" x2="100.0" y2="30.0" class="ax"/>
+  <text x="93.0" y="33.6" class="lbl" text-anchor="end">100 GB</text>
+  <text x="40.0" y="140.0" class="lbl" text-anchor="middle" transform="rotate(-90 40.0 140.0)">weight memory (log)</text>
+  <rect x="123.3" y="104.8" width="20.0" height="145.2" class="fillsoft"/>
+  <text x="133.3" y="99.8" class="lbl" text-anchor="middle" font-size="9">2</text>
+  <rect x="160.7" y="118.0" width="20.0" height="132.0" class="tlf"/>
+  <text x="170.7" y="113.0" class="lbl" text-anchor="middle" font-size="9">1</text>
+  <rect x="198.0" y="131.2" width="20.0" height="118.8" class="accf"/>
+  <text x="208.0" y="126.2" class="lbl" text-anchor="middle" font-size="9">0.5</text>
+  <text x="170.7" y="268.0" class="lblb" text-anchor="middle">1 B params</text>
+  <rect x="263.3" y="83.8" width="20.0" height="166.2" class="fillsoft"/>
+  <text x="273.3" y="78.8" class="lbl" text-anchor="middle" font-size="9">6</text>
+  <rect x="300.7" y="97.0" width="20.0" height="153.0" class="tlf"/>
+  <text x="310.7" y="92.0" class="lbl" text-anchor="middle" font-size="9">3</text>
+  <rect x="338.0" y="110.3" width="20.0" height="139.7" class="accf"/>
+  <text x="348.0" y="105.3" class="lbl" text-anchor="middle" font-size="9">1.5</text>
+  <text x="310.7" y="268.0" class="lblb" text-anchor="middle">3 B params</text>
+  <rect x="403.3" y="67.6" width="20.0" height="182.4" class="fillsoft"/>
+  <text x="413.3" y="62.6" class="lbl" text-anchor="middle" font-size="9">14</text>
+  <rect x="440.7" y="80.8" width="20.0" height="169.2" class="tlf"/>
+  <text x="450.7" y="75.8" class="lbl" text-anchor="middle" font-size="9">7</text>
+  <rect x="478.0" y="94.1" width="20.0" height="155.9" class="accf"/>
+  <text x="488.0" y="89.1" class="lbl" text-anchor="middle" font-size="9">3.5</text>
+  <text x="450.7" y="268.0" class="lblb" text-anchor="middle">7 B params</text>
+  <line x1="100.0" y1="236.8" x2="520.0" y2="236.8" class="acc" stroke-dasharray="5 3"/>
+  <text x="526.0" y="240.8" class="lbl">MCU: ~2 MB</text>
+  <line x1="100.0" y1="78.3" x2="520.0" y2="78.3" class="tl" stroke-dasharray="5 3"/>
+  <text x="526.0" y="90.3" class="lbl">SBC / Jetson-class: 8 GB</text>
+  <line x1="100.0" y1="70.5" x2="520.0" y2="70.5" class="tl" stroke-dasharray="5 3"/>
+  <text x="526.0" y="66.5" class="lbl">flagship phone: ~12 GB</text>
+  <rect x="548.0" y="120.0" width="12.0" height="10.0" class="fillsoft"/>
+  <text x="566.0" y="129.0" class="lbl">16-bit weights</text>
+  <rect x="548.0" y="138.0" width="12.0" height="10.0" class="tlf"/>
+  <text x="566.0" y="147.0" class="lbl">8-bit weights</text>
+  <rect x="548.0" y="156.0" width="12.0" height="10.0" class="accf"/>
+  <text x="566.0" y="165.0" class="lbl">4-bit weights</text>
+  <text x="84.0" y="296.0" class="lbl">Weights only (params × bits / 8). KV cache, activations, runtime and OS come on top.</text>
+</svg>

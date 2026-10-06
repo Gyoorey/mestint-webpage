@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Roofline diagram with a bandwidth-limited diagonal and a compute-limited horizontal ceiling, showing dense and depthwise layers on the diagonal and standard and pointwise convolutions near the ceiling"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <line x1="70" y1="240" x2="700" y2="240" stroke="currentColor" stroke-width="1.2"/>
+    <line x1="70" y1="40" x2="70" y2="240" stroke="currentColor" stroke-width="1.2"/>
+    <!-- roofline -->
+    <path d="M70 240 L300 76" class="acc" stroke-width="2.2" fill="none"/>
+    <line x1="300" y1="76" x2="700" y2="76" class="acc" stroke-width="2.2"/>
+    <line x1="300" y1="76" x2="300" y2="240" stroke="currentColor" stroke-width="0.9" stroke-dasharray="4 4" opacity="0.55"/>
+    <text x="300" y="258" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">ridge point</text>
+    <text x="150" y="118" font-family="IBM Plex Mono, monospace" font-size="11" class="accf" transform="rotate(-35 150 118)">bandwidth limit</text>
+    <text x="500" y="66" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">peak compute limit</text>
+    <!-- points -->
+    <g fill="currentColor">
+      <circle cx="112" cy="210" r="5"/><circle cx="164" cy="173" r="5"/>
+      <circle cx="470" cy="96" r="5"/><circle cx="580" cy="90" r="5"/>
+    </g>
+    <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" font-weight="600">
+      <text x="124" y="214">dense 1024→1024</text>
+      <text x="176" y="177">depthwise 3×3</text>
+      <text x="386" y="100" text-anchor="end">pointwise 1×1</text>
+      <text x="496" y="94" text-anchor="end">standard 3×3</text>
+    </g>
+    <text x="385" y="284" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">arithmetic intensity — MAC per byte moved  →</text>
+    <text x="26" y="140" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78" transform="rotate(-90 26 140)">attainable MAC/s  →</text>
+    <text x="70" y="26" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">layers left of the ridge cannot reach peak compute no matter how few MACs they have</text>
+  </g>
+</svg>

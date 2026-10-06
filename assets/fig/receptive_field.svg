@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-label="Receptive field growth over ten layers for three designs: plain three by three convolutions grow linearly, adding stride grows it faster, and dilated convolutions grow it exponentially at the same cost per layer"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <line x1="66.0" y1="200.0" x2="470.0" y2="200.0" class="ax"/>
+  <line x1="66.0" y1="34.0" x2="66.0" y2="200.0" class="ax"/>
+  <line x1="66.0" y1="34.0" x2="66.0" y2="200.0" class="grid"/>
+  <line x1="66.0" y1="200.0" x2="66.0" y2="204.0" class="ax"/>
+  <text x="66.0" y="217.0" class="lbl" text-anchor="middle">0</text>
+  <line x1="146.8" y1="34.0" x2="146.8" y2="200.0" class="grid"/>
+  <line x1="146.8" y1="200.0" x2="146.8" y2="204.0" class="ax"/>
+  <text x="146.8" y="217.0" class="lbl" text-anchor="middle">2</text>
+  <line x1="227.6" y1="34.0" x2="227.6" y2="200.0" class="grid"/>
+  <line x1="227.6" y1="200.0" x2="227.6" y2="204.0" class="ax"/>
+  <text x="227.6" y="217.0" class="lbl" text-anchor="middle">4</text>
+  <line x1="308.4" y1="34.0" x2="308.4" y2="200.0" class="grid"/>
+  <line x1="308.4" y1="200.0" x2="308.4" y2="204.0" class="ax"/>
+  <text x="308.4" y="217.0" class="lbl" text-anchor="middle">6</text>
+  <line x1="389.2" y1="34.0" x2="389.2" y2="200.0" class="grid"/>
+  <line x1="389.2" y1="200.0" x2="389.2" y2="204.0" class="ax"/>
+  <text x="389.2" y="217.0" class="lbl" text-anchor="middle">8</text>
+  <line x1="470.0" y1="34.0" x2="470.0" y2="200.0" class="grid"/>
+  <line x1="470.0" y1="200.0" x2="470.0" y2="204.0" class="ax"/>
+  <text x="470.0" y="217.0" class="lbl" text-anchor="middle">10</text>
+  <line x1="66.0" y1="200.0" x2="470.0" y2="200.0" class="grid"/>
+  <line x1="62.0" y1="200.0" x2="66.0" y2="200.0" class="ax"/>
+  <text x="58.0" y="203.6" class="lbl" text-anchor="end">0</text>
+  <line x1="66.0" y1="159.1" x2="470.0" y2="159.1" class="grid"/>
+  <line x1="62.0" y1="159.1" x2="66.0" y2="159.1" class="ax"/>
+  <text x="58.0" y="162.7" class="lbl" text-anchor="end">64</text>
+  <line x1="66.0" y1="118.3" x2="470.0" y2="118.3" class="grid"/>
+  <line x1="62.0" y1="118.3" x2="66.0" y2="118.3" class="ax"/>
+  <text x="58.0" y="121.9" class="lbl" text-anchor="end">128</text>
+  <line x1="66.0" y1="77.4" x2="470.0" y2="77.4" class="grid"/>
+  <line x1="62.0" y1="77.4" x2="66.0" y2="77.4" class="ax"/>
+  <text x="58.0" y="81.0" class="lbl" text-anchor="end">192</text>
+  <line x1="66.0" y1="36.6" x2="470.0" y2="36.6" class="grid"/>
+  <line x1="62.0" y1="36.6" x2="66.0" y2="36.6" class="ax"/>
+  <text x="58.0" y="40.2" class="lbl" text-anchor="end">256</text>
+  <path d="M66.0 199.4 L106.4 198.1 L146.8 196.8 L187.2 195.5 L227.6 194.3 L268.0 193.0 L308.4 191.7 L348.8 190.4 L389.2 189.1 L429.6 187.9 L470.0 186.6" class="ser" stroke-width="2"/>
+  <path d="M66.0 199.4 L106.4 198.1 L146.8 196.8 L187.2 194.3 L227.6 191.7 L268.0 186.6 L308.4 181.5 L348.8 171.3 L389.2 161.1 L429.6 140.6 L470.0 120.2" class="tl" stroke-width="2"/>
+  <path d="M66.0 199.4 L106.4 198.1 L146.8 195.5 L187.2 190.4 L227.6 180.2 L268.0 159.8 L308.4 118.9 L348.8 37.2 L389.2 34.0 L429.6 34.0 L470.0 34.0" class="acc" stroke-width="2.4"/>
+  <text x="478.0" y="190.6" class="lblb">plain 3×3</text>
+  <text x="478.0" y="124.2" class="lblb" fill="var(--teal)">3×3 + stride 2</text>
+  <text x="478.0" y="24.4" class="lblb" fill="var(--copper)">3×3 dilated ×2</text>
+  <text x="268.0" y="236.0" class="lbl" text-anchor="middle">layer index</text>
+  <text x="24.0" y="117.0" class="lbl" text-anchor="middle" transform="rotate(-90 24.0 117.0)">receptive field (samples)</text>
+  <text x="66.0" y="24.0" class="lblb">R_i = R_{i−1} + (k_i − 1) · d_i · Π s_j</text>
+  <text x="66.0" y="252.0" class="lblb">A receptive field shorter than the event cannot detect it.</text>
+  <text x="66.0" y="272.0" class="lbl">At 16 kHz with a 128-sample hop, 10 dilated layers already span about 2 seconds of audio.</text>
+</svg>

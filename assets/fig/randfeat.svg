@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" role="img" aria-label="Left: an RBF SVM decision function evaluated against many stored support vectors. Right: the same decision made by an explicit random-feature map followed by a single linear layer, with cost independent of dataset size"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <defs>
+    <marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <text x="8" y="18" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">exact kernel SVM — cost O(n_SV · D)</text>
+    <rect x="8" y="34" width="60" height="34" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <text x="38" y="55" text-anchor="middle" font-weight="600">x</text>
+    <g stroke="currentColor" stroke-width="1.1" marker-end="url(#ar4)">
+      <line x1="68" y1="51" x2="104" y2="40"/><line x1="68" y1="51" x2="104" y2="62"/>
+      <line x1="68" y1="51" x2="104" y2="84"/><line x1="68" y1="51" x2="104" y2="128"/>
+    </g>
+    <g stroke="currentColor" stroke-width="1.1" fill="none">
+      <rect x="108" y="28" width="112" height="24"/><rect x="108" y="56" width="112" height="24"/>
+      <rect x="108" y="84" width="112" height="24"/><rect x="108" y="140" width="112" height="24"/>
+    </g>
+    <g text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11">
+      <text x="164" y="44">k(x, sv₁)</text><text x="164" y="72">k(x, sv₂)</text>
+      <text x="164" y="100">k(x, sv₃)</text><text x="164" y="156">k(x, sv_m)</text>
+    </g>
+    <text x="164" y="126" text-anchor="middle" font-size="15" opacity="0.6">⋮</text>
+    <g stroke="currentColor" stroke-width="1.1" marker-end="url(#ar4)">
+      <line x1="220" y1="40" x2="256" y2="88"/><line x1="220" y1="68" x2="256" y2="92"/>
+      <line x1="220" y1="96" x2="256" y2="96"/><line x1="220" y1="152" x2="256" y2="104"/>
+    </g>
+    <rect x="260" y="78" width="66" height="34" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <text x="293" y="99" text-anchor="middle" font-weight="600">Σ αᵢyᵢ·</text>
+    <text x="164" y="196" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">memory and time grow with the training set</text>
+
+    <!-- divider -->
+    <line x1="360" y1="24" x2="360" y2="212" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+
+    <text x="386" y="18" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">random-feature approximation — cost O(D · R)</text>
+    <rect x="386" y="34" width="60" height="34" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <text x="416" y="55" text-anchor="middle" font-weight="600">x</text>
+    <g stroke="currentColor" stroke-width="1.1" marker-end="url(#ar4)"><line x1="446" y1="51" x2="482" y2="51"/></g>
+    <rect x="486" y="30" width="120" height="42" fill="none" class="acc" stroke-width="1.4"/>
+    <text x="546" y="47" text-anchor="middle" font-weight="600">z(x) = √(2/R)·</text>
+    <text x="546" y="63" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11">cos(Ωᵀx + b)</text>
+    <g stroke="currentColor" stroke-width="1.1" marker-end="url(#ar4)"><line x1="606" y1="51" x2="642" y2="51"/></g>
+    <rect x="646" y="34" width="66" height="34" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <text x="679" y="55" text-anchor="middle" font-weight="600">wᵀz(x)</text>
+    <text x="546" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">Ω drawn once from the kernel's</text>
+    <text x="546" y="120" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">Fourier transform; store a seed, not a matrix</text>
+    <text x="546" y="150" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">E[z(x)ᵀz(y)] = k(x,y)</text>
+    <text x="546" y="196" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.78">one fixed-size linear model, dataset-independent</text>
+  </g>
+</svg>

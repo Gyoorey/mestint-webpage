@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 290" role="img" aria-label="Diagram of knowledge distillation: an input passes to both a frozen teacher and a student, the teacher's logits are softened by temperature to form soft targets, and the student is trained on a weighted sum of soft-target loss and hard-label loss"><style>text{fill:#14181A}svg{color:#14181A;font-family:"IBM Plex Sans Condensed",Arial,sans-serif}.acc{stroke:#A6512A;fill:none}.accf{fill:#A6512A}.tl{stroke:#255C61;fill:none}.tlf{fill:#255C61}.ax{stroke:currentColor;stroke-width:1.1;fill:none}.grid{stroke:currentColor;stroke-width:.6;opacity:.22;fill:none}.ser{fill:none;stroke:currentColor;stroke-width:1.8}.lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:currentColor;opacity:.75}.lblb{font-family:"IBM Plex Sans Condensed",Arial,sans-serif;font-size:12px;font-weight:600;fill:currentColor}.fillsoft{fill:currentColor;opacity:.14}text.accf{fill:#A6512A;opacity:1}text.tlf{fill:#255C61;opacity:1}</style>
+  <defs>
+    <marker id="ar10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g font-family="IBM Plex Sans Condensed, sans-serif" font-size="12" fill="currentColor">
+    <rect x="8" y="112" width="66" height="40" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <text x="41" y="137" text-anchor="middle" font-weight="600">input x</text>
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar10)">
+      <line x1="74" y1="124" x2="112" y2="70"/><line x1="74" y1="140" x2="112" y2="192"/>
+    </g>
+    <rect x="116" y="44" width="112" height="48" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5 3"/>
+    <text x="172" y="66" text-anchor="middle" font-weight="600">teacher (frozen)</text>
+    <text x="172" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">large, accurate</text>
+    <rect x="116" y="170" width="112" height="48" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <text x="172" y="192" text-anchor="middle" font-weight="600">student</text>
+    <text x="172" y="208" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">small, deployable</text>
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar10)">
+      <line x1="228" y1="68" x2="266" y2="68"/><line x1="228" y1="194" x2="266" y2="194"/>
+    </g>
+    <rect x="270" y="46" width="96" height="44" fill="none" stroke="currentColor" stroke-width="1.1"/>
+    <text x="318" y="64" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11">logits v</text>
+    <text x="318" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" opacity="0.75">[8.1, 2.0, 1.7, −3]</text>
+    <rect x="270" y="172" width="96" height="44" fill="none" stroke="currentColor" stroke-width="1.1"/>
+    <text x="318" y="190" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11">logits z</text>
+    <g class="acc" stroke-width="1.4" marker-end="url(#ar10)">
+      <line x1="366" y1="68" x2="404" y2="68"/><line x1="366" y1="194" x2="404" y2="194"/>
+    </g>
+    <rect x="408" y="46" width="112" height="44" fill="none" class="acc" stroke-width="1.4"/>
+    <text x="464" y="64" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">softmax(v / T)</text>
+    <text x="464" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" class="accf">[.71, .13, .11, .05]</text>
+    <rect x="408" y="172" width="112" height="44" fill="none" class="acc" stroke-width="1.4"/>
+    <text x="464" y="196" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" class="accf">softmax(z / T)</text>
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar10)">
+      <line x1="520" y1="68" x2="560" y2="112"/><line x1="520" y1="194" x2="560" y2="150"/>
+    </g>
+    <rect x="564" y="106" width="140" height="50" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <text x="634" y="126" text-anchor="middle" font-weight="600">L = αT²·KL(soft)</text>
+    <text x="634" y="144" text-anchor="middle" font-weight="600">+ (1−α)·CE(hard)</text>
+    <g stroke="currentColor" stroke-width="1.2" marker-end="url(#ar10)" stroke-dasharray="4 3">
+      <path d="M634 156 L634 246 L172 246 L172 222" fill="none"/>
+    </g>
+    <text x="404" y="264" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" opacity="0.8">gradients update the student only — the teacher is discarded after training</text>
+    <text x="240" y="22" text-anchor="middle" font-family="IBM Plex Mono, monospace" opacity="0.8" font-size="10.81">T &gt; 1 flattens the distribution, revealing the ranking over wrong classes</text>
+  </g>
+</svg>

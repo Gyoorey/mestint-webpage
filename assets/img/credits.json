@@ -1,0 +1,119 @@
+[
+ {
+  "file": "nucleo-board.jpg",
+  "subject": "STM32 Nucleo microcontroller development board",
+  "title": "File:Nucleo-board.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Nucleo-board.jpg",
+  "author": "Avandalen",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+ },
+ {
+  "file": "esp32-module.jpg",
+  "subject": "ESP32 Wi-Fi/Bluetooth microcontroller module",
+  "title": "File:ESP32 (30258172944).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:ESP32_(30258172944).jpg",
+  "author": "Billie Grace Ward from New York, USA",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0"
+ },
+ {
+  "file": "arduino-nano.jpg",
+  "subject": "Arduino Nano format board",
+  "title": "File:Arduino nano.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Arduino_nano.jpg",
+  "author": "MakeMagazinDE",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+ },
+ {
+  "file": "raspberry-pi-4.jpg",
+  "subject": "Raspberry Pi 4 Model B single-board computer",
+  "title": "File:Raspberry Pi 4 Model B - Side.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Raspberry_Pi_4_Model_B_-_Side.jpg",
+  "author": "Laserlicht",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+ },
+ {
+  "file": "mems-accelerometer.jpg",
+  "subject": "MEMS 3-axis accelerometer breakout board",
+  "title": "File:FreescaleSemiconductor 3-Axis-MEMS-Accelerometer MMA8452Q 10953-01b.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:FreescaleSemiconductor_3-Axis-MEMS-Accelerometer_MMA8452Q_10953-01b.jpg",
+  "author": "SparkFun",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0"
+ },
+ {
+  "file": "mpu6050.jpg",
+  "subject": "MPU-6050 6-axis IMU module",
+  "title": "File:Mpu6050-HD.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mpu6050-HD.jpg",
+  "author": "ZeptoBars",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0"
+ },
+ {
+  "file": "electret-microphone.svg",
+  "subject": "Electret condenser microphone schematic",
+  "title": "File:Electret condenser microphone schematic.svg",
+  "page": "https://commons.wikimedia.org/wiki/File:Electret_condenser_microphone_schematic.svg",
+  "author": "wdwd",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0"
+ },
+ {
+  "file": "stm32-chip.jpg",
+  "subject": "STM32 Cortex-M microcontroller package",
+  "title": "File:STM32F100C4T6B-HD.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:STM32F100C4T6B-HD.jpg",
+  "author": "ZeptoBars",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0"
+ },
+ {
+  "file": "bcm2711.jpg",
+  "subject": "Broadcom BCM2711 SoC of the Raspberry Pi 4",
+  "title": "File:BCM2711 Rpi4.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:BCM2711_Rpi4.jpg",
+  "author": "Elmepi",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+ },
+ {
+  "file": "jetson-nano.jpg",
+  "subject": "NVIDIA Jetson Nano developer kit",
+  "title": "File:NVIDIA Jetson Nano Developer Kit (47616885631) (cropped).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:NVIDIA_Jetson_Nano_Developer_Kit_(47616885631)_(cropped).jpg",
+  "author": "SparkFun Electronics from Boulder, USA",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0"
+ },
+ {
+  "file": "gpu-die.jpg",
+  "subject": "GPU die photograph",
+  "title": "File:NVidia GK107-860-A2.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:NVidia_GK107-860-A2.jpg",
+  "author": "Phiarc",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+ },
+ {
+  "file": "fpga-die.jpg",
+  "subject": "FPGA die photograph",
+  "title": "File:Xilinx Spartan FPGA die shot.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Xilinx_Spartan_FPGA_die_shot.jpg",
+  "author": "BGcrain03",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+ },
+ {
+  "file": "fpga-board.jpg",
+  "subject": "Small FPGA development board",
+  "title": "File:TEI0001 Altera MAX 10 FPGA MAX1000 IoT Maker Board top view.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:TEI0001_Altera_MAX_10_FPGA_MAX1000_IoT_Maker_Board_top_view.jpg",
+  "author": "Antti Lukats",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+ }
+]
